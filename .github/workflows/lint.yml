@@ -1,0 +1,15 @@
+name: Lint
+on: [push]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: bahmutov/npm-install@v1
+      - name: Check TypeScript
+        run: npx tsc
+        shell: bash
+      - name: Run ESLint
+        run: npm run lint
+        shell: bash

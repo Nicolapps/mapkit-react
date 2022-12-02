@@ -14,7 +14,9 @@
   },
   "scripts": {
     "rollup": "rollup -c",
-    "lint": "npx eslint src --ext .js,.jsx,.ts,.tsx"
+    "lint": "npx eslint src --ext .js,.jsx,.ts,.tsx",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -26,13 +28,23 @@
     "react": "^18.2.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.20.5",
     "@rollup/plugin-commonjs": "^23.0.2",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-typescript": "^9.0.2",
+    "@storybook/addon-actions": "^6.5.14",
+    "@storybook/addon-essentials": "^6.5.14",
+    "@storybook/addon-interactions": "^6.5.14",
+    "@storybook/addon-links": "^6.5.14",
+    "@storybook/builder-webpack4": "^6.5.14",
+    "@storybook/manager-webpack4": "^6.5.14",
+    "@storybook/react": "^6.5.14",
+    "@storybook/testing-library": "^0.0.13",
     "@types/apple-mapkit-js-browser": "^5.65.3",
     "@types/react": "^18.0.25",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
     "@typescript-eslint/parser": "^5.44.0",
+    "babel-loader": "^8.3.0",
     "eslint": "^8.28.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",
@@ -40,6 +52,8 @@
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-storybook": "^0.6.7",
+    "react-dom": "^18.2.0",
     "rollup": "^3.4.0",
     "rollup-plugin-dts": "^5.0.0",
     "tslib": "^2.4.1",

@@ -1,5 +1,9 @@
 import React from 'react';
 
 export default function Map() {
-  return <div />;
+  return (
+    <React.StrictMode>
+      <div />
+    </React.StrictMode>
+  );
 }

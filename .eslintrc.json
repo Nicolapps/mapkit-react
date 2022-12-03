@@ -16,6 +16,9 @@
         ],
         "peerDependencies": true
       }
-    ]
+    ],
+    "react/require-default-props": {
+      "functions": "defaultArguments"
+    }
   }
 }

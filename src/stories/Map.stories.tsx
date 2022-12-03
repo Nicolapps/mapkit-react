@@ -8,6 +8,9 @@ export default {
   args: {
     token: process.env.STORYBOOK_MAPKIT_JS_TOKEN,
   },
+  parameters: {
+    layout: 'fullscreen',
+  },
 } as ComponentMeta<typeof Map>;
 
 type MapProps = React.ComponentProps<typeof Map>;

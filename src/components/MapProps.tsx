@@ -1,4 +1,6 @@
-import { ColorScheme } from '../util/parameters';
+import {
+  ColorScheme, MapType, Distances, LoadPriority,
+} from '../util/parameters';
 
 export default interface MapProps {
   /**
@@ -11,6 +13,25 @@ export default interface MapProps {
    * @see {@link https://developer.apple.com/documentation/mapkitjs/map/3122649-colorscheme}
    */
   colorScheme?: ColorScheme;
+
+  /**
+   * The type of data that the map displays.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/map/2973919-maptype}
+   */
+  mapType?: MapType;
+
+  /**
+   * The system of measurement that displays on the map.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/map/3122650-distances}
+   */
+  distances?: Distances;
+
+  /**
+   * A value MapKit JS uses for prioritizing the visibility of specific map
+   * features before the underlaying map tiles.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/map/4096373-loadpriority}
+   */
+  loadPriority?: LoadPriority;
 
   /**
    * A Boolean value that determines whether the user may rotate the map using

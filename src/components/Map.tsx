@@ -1,12 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import load from '../util/loader';
-import { ColorScheme, toMapKitColorScheme } from '../util/parameters';
+import {
+  ColorScheme, Distances, LoadPriority, MapType,
+  toMapKitColorScheme, toMapKitDistances, toMapKitLoadPriority, toMapKitMapType,
+} from '../util/parameters';
 import MapProps from './MapProps';
 
 export default function Map({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   token,
+
   colorScheme = ColorScheme.Light,
+  mapType = MapType.Standard,
+  distances = Distances.Adaptive,
+  loadPriority = LoadPriority.LandCover,
 
   isRotationEnabled = true,
   isScrollEnabled = true,
@@ -34,11 +41,24 @@ export default function Map({
     };
   }, []);
 
-  // Color scheme
+  // Enum properties
   useEffect(() => {
     if (!map) return;
     map.colorScheme = toMapKitColorScheme(colorScheme);
   }, [map, colorScheme]);
+  useEffect(() => {
+    if (!map) return;
+    map.mapType = toMapKitMapType(mapType);
+  }, [map, mapType]);
+  useEffect(() => {
+    if (!map) return;
+    map.distances = toMapKitDistances(distances);
+  }, [map, distances]);
+  useEffect(() => {
+    if (!map) return;
+    // @ts-ignore
+    map.loadPriority = toMapKitLoadPriority(loadPriority);
+  }, [map, loadPriority]);
 
   // Boolean properties
   const booleanProperties = {

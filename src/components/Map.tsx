@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import MapContext from '../context/MapContext';
 import load from '../util/loader';
 import {
   ColorScheme, Distances, LoadPriority, MapType,
@@ -7,7 +8,8 @@ import {
 import MapProps from './MapProps';
 
 export default function Map({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  children = undefined,
+
   token,
 
   colorScheme = ColorScheme.Light,
@@ -24,7 +26,7 @@ export default function Map({
   showsPointsOfInterest = true,
   showsUserLocation = false,
   tracksUserLocation = false,
-}: MapProps) {
+}: React.PropsWithChildren<MapProps>) {
   const [map, setMap] = useState<mapkit.Map | null>(null);
   const element = useRef<HTMLDivElement>(null);
 
@@ -82,7 +84,11 @@ export default function Map({
 
   return (
     <React.StrictMode>
-      <div style={{ width: '100%', height: '100%' }} ref={element} />
+      <div style={{ width: '100%', height: '100%' }} ref={element}>
+        <MapContext.Provider value={map}>
+          {children}
+        </MapContext.Provider>
+      </div>
     </React.StrictMode>
   );
 }

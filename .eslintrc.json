@@ -23,5 +23,13 @@
         "functions": "defaultArguments"
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": "**/*.stories.*",
+      "rules": {
+        "react/jsx-props-no-spreading": 0
+      }
+    }
+  ] 
 }

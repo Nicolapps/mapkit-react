@@ -151,3 +151,46 @@ export function toMapKitLoadPriority(loadPriority: LoadPriority): string | null 
       throw new RangeError('Invalid load priority');
   }
 }
+
+/**
+ * Constants indicating the visibility of different adaptive map features.
+ * @see {@link https://developer.apple.com/documentation/mapkitjs/featurevisibility}
+ */
+export enum FeatureVisibility {
+  /**
+   * A constant indicating that the feature is always hidden.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/featurevisibility/hidden}
+   */
+  Hidden,
+
+  /**
+   * A constant indicating that the feature is always visible.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/featurevisibility/visible}
+   */
+  Visible,
+
+  /**
+   * A constant indicating that feature visibility adapts to the current map state.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/featurevisibility/adaptive}
+   */
+  Adaptive,
+}
+
+/**
+ * Converts a mapkit-react visibility to a MapKit JS visibility.
+ * Must be called after MapKit JS is loaded.
+ * @param featureVisibility The mapkit-react visibility
+ * @returns The MapKit JS visibility
+ */
+export function toMapKitFeatureVisibility(featureVisibility: FeatureVisibility): string {
+  switch (featureVisibility) {
+    case FeatureVisibility.Adaptive:
+      return mapkit.FeatureVisibility.Adaptive;
+    case FeatureVisibility.Visible:
+      return mapkit.FeatureVisibility.Visible;
+    case FeatureVisibility.Hidden:
+      return mapkit.FeatureVisibility.Hidden;
+    default:
+      throw new RangeError('Invalid feature visibility');
+  }
+}

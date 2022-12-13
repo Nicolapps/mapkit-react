@@ -15,7 +15,8 @@ export default {
 
 type MapProps = React.ComponentProps<typeof Map>;
 
-// eslint-disable-next-line
-const Template = (args: MapProps) => <Map {...args} />;
+function Template(args: MapProps) {
+  return <Map {...args} />;
+}
 
 export const Empty = Template.bind({});

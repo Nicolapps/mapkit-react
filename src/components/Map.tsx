@@ -62,7 +62,7 @@ export default function Map({
     map.loadPriority = toMapKitLoadPriority(loadPriority);
   }, [map, loadPriority]);
 
-  // Boolean properties
+  // Simple values properties
   const booleanProperties = {
     isRotationEnabled,
     isScrollEnabled,

@@ -1,0 +1,388 @@
+# Supported MapKit JS features
+
+## `mapkit`
+
+### Constructor parameters
+
+| Feature                                 | Supported                                                                             |
+| --------------------------------------- | ------------------------------------------------------------------------------------- |
+| MapKitInitOptions.language              | ❌                                                                                    |
+| MapKitInitOptions.authorizationCallback | ⚠️<br><small>You can only pass token as strings, callbacks are not supported.</small> |
+
+### Properties
+
+| Feature          | Supported |
+| ---------------- | --------- |
+| Librairies       | ❌        |
+| loadedLibrairies | ❌        |
+| maps             | ❌        |
+
+### Methods
+
+| Feature | Supported |
+| ------- | --------- |
+| load    | ❌        |
+
+### Events
+
+| Feature              | Supported |
+| -------------------- | --------- |
+| configuration-change | ❌        |
+| error                | ❌        |
+
+## `mapkit.Map`
+
+### Constructor parameters
+
+#### Visible portion of the map
+
+| Feature                              | Supported |
+| ------------------------------------ | --------- |
+| MapConstructorOptions.visibleMapRect | ❌        |
+| MapConstructorOptions.region         | ❌        |
+| MapConstructorOptions.center         | ❌        |
+| MapConstructorOptions.rotation       | ❌        |
+| MapConstructorOptions.tintColor      | ❌        |
+
+#### Appearance and controls
+
+| Feature                                   | Supported |
+| ----------------------------------------- | --------- |
+| MapConstructorOptions.colorScheme         | ✅        |
+| MapConstructorOptions.mapType             | ✅        |
+| MapConstructorOptions.padding             | ❌        |
+| MapConstructorOptions.showsMapTypeControl | ✅        |
+| MapConstructorOptions.isRotationEnabled   | ✅        |
+| MapConstructorOptions.showsCompass        | ✅        |
+| MapConstructorOptions.isZoomEnabled       | ✅        |
+| MapConstructorOptions.showsZoomControl    | ✅        |
+| MapConstructorOptions.isScrollEnabled     | ✅        |
+| MapConstructorOptions.showsScale          | ✅        |
+
+#### Annotations
+
+| Feature                                    | Supported |
+| ------------------------------------------ | --------- |
+| MapConstructorOptions.annotationForCluster | ❌        |
+| MapConstructorOptions.annotations          | ✅        |
+| MapConstructorOptions.selectedAnnotation   | ❌        |
+
+#### Overlays
+
+| Feature                                     | Supported |
+| ------------------------------------------- | --------- |
+| MapConstructorOptions.overlays              | ❌        |
+| MapConstructorOptions.selectedOverlay       | ❌        |
+| MapConstructorOptions.showsPointsOfInterest | ✅        |
+| MapConstructorOptions.pointOfInterestFilter | ❌        |
+
+#### User location
+
+| Feature                                        | Supported |
+| ---------------------------------------------- | --------- |
+| MapConstructorOptions.showsUserLocation        | ✅        |
+| MapConstructorOptions.tracksUserLocation       | ✅        |
+| MapConstructorOptions.showsUserLocationControl | ✅        |
+
+#### Loading priority
+
+| Feature                            | Supported |
+| ---------------------------------- | --------- |
+| MapConstructorOptions.loadPriority | ✅        |
+
+### Properties
+
+#### Interaction properties
+
+| Feature             | Supported |
+| ------------------- | --------- |
+| isRotationAvailable | ❌        |
+| isRotationEnabled   | ✅        |
+| isScrollEnabled     | ✅        |
+| isZoomEnabled       | ✅        |
+
+#### Visible portion of the map
+
+| Feature         | Supported |
+| --------------- | --------- |
+| center          | ❌        |
+| region          | ❌        |
+| rotation        | ❌        |
+| visibleMapRect  | ❌        |
+| cameraBoundary  | ❌        |
+| cameraDistance  | ❌        |
+| cameraZoomRange | ❌        |
+
+#### Controls
+
+| Feature                  | Supported |
+| ------------------------ | --------- |
+| showsCompass             | ✅        |
+| showsMapTypeControl      | ✅        |
+| showsScale               | ✅        |
+| showsUserLocationControl | ✅        |
+| showsZoomControl         | ✅        |
+
+#### Appearance
+
+| Feature               | Supported |
+| --------------------- | --------- |
+| colorScheme           | ✅        |
+| distances             | ✅        |
+| mapType               | ✅        |
+| padding               | ❌        |
+| pointOfInterestFilter | ❌        |
+| showsPointsOfInterest | ✅        |
+| tintColor             | ❌        |
+
+#### Annotations
+
+| Feature            | Supported |
+| ------------------ | --------- |
+| annotations        | ✅        |
+| selectedAnnotation | ❌        |
+
+#### Overlays
+
+| Feature         | Supported |
+| --------------- | --------- |
+| overlays        | ❌        |
+| selectedOverlay | ❌        |
+| tileOverlays    | ❌        |
+
+#### User location
+
+| Feature                | Supported |
+| ---------------------- | --------- |
+| showsUserLocation      | ✅        |
+| tracksUserLocation     | ✅        |
+| userLocationAnnotation | ❌        |
+
+#### Access the element
+
+| Feature | Supported |
+| ------- | --------- |
+| element | ❌        |
+
+#### Selectable map features
+
+| Feature               | Supported |
+| --------------------- | --------- |
+| selectableMapFeatures | ❌        |
+
+#### Feature loading prioritization
+
+| Feature      | Supported |
+| ------------ | --------- |
+| loadPriority | ✅        |
+
+### Events
+
+#### Respond to map display events
+
+| Feature             | Supported |
+| ------------------- | --------- |
+| region-change-start | ❌        |
+| region-change-end   | ❌        |
+| rotation-start      | ❌        |
+| rotation-end        | ❌        |
+| scroll-start        | ❌        |
+| scroll-end          | ❌        |
+| zoom-start          | ❌        |
+| zoom-end            | ❌        |
+| map-type-change     | ❌        |
+
+#### Respond to annotation and overlay events
+
+| Feature    | Supported |
+| ---------- | --------- |
+| select     | ❌        |
+| deselect   | ❌        |
+| drag-start | ❌        |
+| dragging   | ❌        |
+| drag-end   | ❌        |
+
+#### Respond to user location events
+
+| Feature              | Supported |
+| -------------------- | --------- |
+| user-location-change | ❌        |
+| user-location-error  | ❌        |
+
+#### Respond to map interaction events
+
+| Feature    | Supported |
+| ---------- | --------- |
+| single-tap | ❌        |
+| double-tap | ❌        |
+| long-press | ❌        |
+
+### Methods
+
+_❌ Not currently supported by mapkit-react._
+
+## `mapkit.Annotation`
+
+> **Note**
+> Only `MarkerAnnotation` can currently be used with mapkit-react. Annotations using a custom DOM element are not supported.
+
+### Constructor parameters
+
+| Feature                                           | Supported |
+| ------------------------------------------------- | --------- |
+| AnnotationConstructorOptions.title                | ✅        |
+| AnnotationConstructorOptions.subtitle             | ✅        |
+| AnnotationConstructorOptions.accessibilityLabel   | ✅        |
+| AnnotationConstructorOptions.data                 | ❌        |
+| AnnotationConstructorOptions.draggable            | ❌        |
+| AnnotationConstructorOptions.visible              | ❌        |
+| AnnotationConstructorOptions.enabled              | ❌        |
+| AnnotationConstructorOptions.selected             | ❌        |
+| AnnotationConstructorOptions.calloutEnabled       | ❌        |
+| AnnotationConstructorOptions.animates             | ❌        |
+| AnnotationConstructorOptions.appearanceAnimation  | ❌        |
+| AnnotationConstructorOptions.anchorOffset         | ❌        |
+| AnnotationConstructorOptions.calloutOffset        | ❌        |
+| AnnotationConstructorOptions.callout              | ❌        |
+| AnnotationConstructorOptions.size                 | ❌        |
+| AnnotationConstructorOptions.displayPriority      | ❌        |
+| AnnotationConstructorOptions.collisionMode        | ❌        |
+| AnnotationConstructorOptions.padding              | ❌        |
+| AnnotationConstructorOptions.clusteringIdentifier | ❌        |
+
+### Properties
+
+#### Getting the map and element
+
+| Feature | Supported |
+| ------- | --------- |
+| map     | ❌        |
+| element | ❌        |
+
+#### Data, titles, and accessibility label
+
+| Feature            | Supported |
+| ------------------ | --------- |
+| data               | ❌        |
+| title              | ✅        |
+| subtitle           | ✅        |
+| accessibilityLabel | ✅        |
+
+#### Appearance
+
+| Feature             | Supported |
+| ------------------- | --------- |
+| coordinate          | ✅        |
+| anchorOffset        | ❌        |
+| appearanceAnimation | ❌        |
+| displayPriority     | ❌        |
+| padding             | ❌        |
+| size                | ❌        |
+| visible             | ❌        |
+
+#### Interaction behavior
+
+| Feature   | Supported |
+| --------- | --------- |
+| animates  | ❌        |
+| draggable | ❌        |
+| selected  | ❌        |
+| enabled   | ❌        |
+
+#### Callouts
+
+| Feature        | Supported |
+| -------------- | --------- |
+| callout        | ❌        |
+| calloutEnabled | ❌        |
+| calloutOffset  | ❌        |
+
+#### Clustering
+
+| Feature              | Supported |
+| -------------------- | --------- |
+| memberAnnotations    | ❌        |
+| clusteringIdentifier | ❌        |
+| collisionMode        | ❌        |
+
+### Events
+
+_❌ Not currently supported by mapkit-react._
+
+## `mapkit.ImageAnnotation`
+
+_❌ Not currently supported by mapkit-react._
+
+## `mapkit.MarkerAnnotation`
+
+### Constructor parameters
+
+| Feature                                               | Supported |
+| ----------------------------------------------------- | --------- |
+| MarkerAnnotationConstructorOptions.titleVisibility    | ✅        |
+| MarkerAnnotationConstructorOptions.subtitleVisibility | ✅        |
+| MarkerAnnotationConstructorOptions.color              | ✅        |
+| MarkerAnnotationConstructorOptions.glyphColor         | ✅        |
+| MarkerAnnotationConstructorOptions.glyphText          | ✅        |
+| MarkerAnnotationConstructorOptions.glyphImage         | ✅        |
+| MarkerAnnotationConstructorOptions.selectedGlyphImage | ✅        |
+
+### Properties
+
+#### Visibility
+
+| Feature            | Supported |
+| ------------------ | --------- |
+| subtitleVisibility | ✅        |
+| titleVisibility    | ✅        |
+
+#### Appearance
+
+| Feature    | Supported |
+| ---------- | --------- |
+| color      | ✅        |
+| glyphColor | ✅        |
+
+#### Glyph image and text
+
+| Feature            | Supported |
+| ------------------ | --------- |
+| glyphText          | ✅        |
+| glyphImage         | ✅        |
+| selectedGlyphImage | ✅        |
+
+### Events
+
+_❌ Not currently supported by mapkit-react._
+
+## `mapkit.Geocoder`
+
+_❌ Not currently supported by mapkit-react._
+
+## `mapkit.Search`
+
+_❌ Not currently supported by mapkit-react._
+
+## `mapkit.PointOfInterestFilter`
+
+_❌ Not currently supported by mapkit-react._
+
+## `mapkit.PointOfInterestSearch`
+
+_❌ Not currently supported by mapkit-react._
+
+## `mapkit.MapFeatureAnnotation`
+
+_❌ Not currently supported by mapkit-react._
+
+## `mapkit.MapFeatureAnnotationGlyphImage`
+
+_❌ Not currently supported by mapkit-react._
+
+## `mapkit.Directions`
+
+_❌ Not currently supported by mapkit-react._
+
+## `mapkit.ItemCollection`
+
+_❌ Not currently supported by mapkit-react._

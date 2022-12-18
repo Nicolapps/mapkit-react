@@ -34,6 +34,9 @@ function MyComponent() {
 
 You can see all the supported parameters in Storybook (see above).
 
+## Features
+A complete list of MapKit JS features supported by this library is available on the [Supported MapKit JS features](support.md) page.
+
 ## Contributing
 If you have a question or an idea, you can create an issue. Pull requests are welcome! If you want to contribute, don’t hesitate to look into the unassigned issues.
 

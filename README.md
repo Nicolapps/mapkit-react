@@ -21,12 +21,12 @@ You can then use the library in your project like this:
 
 ```tsx
 import React from 'react';
-import { Map, Annotation } from 'mapkit-react';
+import { Map, Marker } from 'mapkit-react';
 
 function MyComponent() {
   return (
     <Map token="…">
-      <Annotation latitude={46.52} longitude={6.57} />
+      <Marker latitude={46.52} longitude={6.57} />
     </Map>
   );
 }

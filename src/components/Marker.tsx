@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
 import MapContext from '../context/MapContext';
 import { FeatureVisibility, toMapKitFeatureVisibility } from '../util/parameters';
-import AnnotationProps from './AnnotationProps';
+import MarkerProps from './MarkerProps';
 
-export default function Annotation({
+export default function Marker({
   latitude,
   longitude,
 
@@ -19,7 +19,7 @@ export default function Annotation({
   glyphText = '',
   glyphImage = null,
   selectedGlyphImage = undefined,
-}: AnnotationProps) {
+}: MarkerProps) {
   const [marker, setMarker] = useState<mapkit.MarkerAnnotation | null>(null);
   const map = useContext(MapContext);
 

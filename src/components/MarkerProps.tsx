@@ -1,6 +1,6 @@
 import { FeatureVisibility } from '../util/parameters';
 
-export default interface AnnotationProps {
+export default interface MarkerProps {
   /**
    * The latitude in degrees.
    */

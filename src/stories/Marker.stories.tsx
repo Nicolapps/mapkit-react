@@ -2,22 +2,22 @@ import React from 'react';
 import { ComponentMeta } from '@storybook/react';
 
 import Map from '../components/Map';
-import Annotation from '../components/Annotation';
+import Marker from '../components/Marker';
 
 export default {
-  component: Annotation,
+  component: Marker,
   args: {},
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof Annotation>;
+} as ComponentMeta<typeof Marker>;
 
-type AnnotationProps = React.ComponentProps<typeof Annotation>;
+type MarkerProps = React.ComponentProps<typeof Marker>;
 
-function Template(args: AnnotationProps) {
+function Template(args: MarkerProps) {
   return (
     <Map token={process.env.STORYBOOK_MAPKIT_JS_TOKEN!}>
-      <Annotation {...args} />
+      <Marker {...args} />
     </Map>
   );
 }

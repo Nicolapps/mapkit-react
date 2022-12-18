@@ -93,4 +93,32 @@ export default interface MapProps {
    * @see {@link https://developer.apple.com/documentation/mapkitjs/map/2973948-tracksuserlocation}
    */
   tracksUserLocation?: boolean;
+
+  /**
+   * The amount of padding, in CSS pixels, to inset the map from the top edge.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/padding}
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/map/2977645-padding}
+   */
+  paddingTop?: number;
+
+  /**
+   * The amount of padding, in CSS pixels, to inset the map from the right edge.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/padding}
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/map/2977645-padding}
+   */
+  paddingRight?: number;
+
+  /**
+   * The amount of padding, in CSS pixels, to inset the map from the bottom edge.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/padding}
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/map/2977645-padding}
+   */
+  paddingBottom?: number;
+
+  /**
+   * The amount of padding, in CSS pixels, to inset the map from the left edge.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/padding}
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/map/2977645-padding}
+   */
+  paddingLeft?: number;
 }

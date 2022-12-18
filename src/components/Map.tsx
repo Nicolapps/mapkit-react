@@ -26,6 +26,11 @@ export default function Map({
   showsPointsOfInterest = true,
   showsUserLocation = false,
   tracksUserLocation = false,
+
+  paddingTop = 0,
+  paddingRight = 0,
+  paddingBottom = 0,
+  paddingLeft = 0,
 }: React.PropsWithChildren<MapProps>) {
   const [map, setMap] = useState<mapkit.Map | null>(null);
   const element = useRef<HTMLDivElement>(null);
@@ -81,6 +86,12 @@ export default function Map({
       map[propertyName] = prop;
     }, [map, prop]);
   });
+
+  // Padding
+  useEffect(() => {
+    if (!map) return;
+    map.padding = new mapkit.Padding(paddingTop, paddingRight, paddingBottom, paddingLeft);
+  }, [map, paddingTop, paddingRight, paddingBottom, paddingLeft]);
 
   return (
     <React.StrictMode>

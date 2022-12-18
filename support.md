@@ -50,7 +50,7 @@
 | ----------------------------------------- | --------- |
 | MapConstructorOptions.colorScheme         | ✅        |
 | MapConstructorOptions.mapType             | ✅        |
-| MapConstructorOptions.padding             | ❌        |
+| MapConstructorOptions.padding             | ✅        |
 | MapConstructorOptions.showsMapTypeControl | ✅        |
 | MapConstructorOptions.isRotationEnabled   | ✅        |
 | MapConstructorOptions.showsCompass        | ✅        |
@@ -130,7 +130,7 @@
 | colorScheme           | ✅        |
 | distances             | ✅        |
 | mapType               | ✅        |
-| padding               | ❌        |
+| padding               | ✅        |
 | pointOfInterestFilter | ❌        |
 | showsPointsOfInterest | ✅        |
 | tintColor             | ❌        |

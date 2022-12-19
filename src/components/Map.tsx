@@ -31,6 +31,8 @@ export default function Map({
   paddingRight = 0,
   paddingBottom = 0,
   paddingLeft = 0,
+
+  cameraBoundary = undefined,
 }: React.PropsWithChildren<MapProps>) {
   const [map, setMap] = useState<mapkit.Map | null>(null);
   const element = useRef<HTMLDivElement>(null);
@@ -92,6 +94,16 @@ export default function Map({
     if (!map) return;
     map.padding = new mapkit.Padding(paddingTop, paddingRight, paddingBottom, paddingLeft);
   }, [map, paddingTop, paddingRight, paddingBottom, paddingLeft]);
+
+  // Camera boundary
+  useEffect(() => {
+    if (!map) return;
+    // @ts-ignore
+    map.cameraBoundary = cameraBoundary ? new mapkit.CoordinateRegion(
+      new mapkit.Coordinate(cameraBoundary.centerLatitude, cameraBoundary.centerLongitude),
+      new mapkit.CoordinateSpan(cameraBoundary.latitudeDelta, cameraBoundary.longitudeDelta),
+    ) : null;
+  }, [map, cameraBoundary]);
 
   return (
     <React.StrictMode>

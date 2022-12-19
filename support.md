@@ -109,7 +109,7 @@
 | region          | ❌        |
 | rotation        | ❌        |
 | visibleMapRect  | ❌        |
-| cameraBoundary  | ❌        |
+| cameraBoundary  | ✅        |
 | cameraDistance  | ❌        |
 | cameraZoomRange | ❌        |
 

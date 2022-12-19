@@ -160,4 +160,14 @@ export default interface MapProps {
    * @see {@link https://developer.apple.com/documentation/mapkitjs/map/3257748-cameraboundary}
    */
   cameraBoundary?: CoordinateRegion;
+
+  /**
+   * The minimum allowed distance of the camera from the center of the map in meters.
+   */
+  minCameraDistance?: number;
+
+  /**
+   * The maximum allowed distance of the camera from the center of the map in meters.
+   */
+  maxCameraDistance?: number;
 }

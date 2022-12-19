@@ -33,6 +33,8 @@ export default function Map({
   paddingLeft = 0,
 
   cameraBoundary = undefined,
+  minCameraDistance = 0,
+  maxCameraDistance = Infinity,
 }: React.PropsWithChildren<MapProps>) {
   const [map, setMap] = useState<mapkit.Map | null>(null);
   const element = useRef<HTMLDivElement>(null);
@@ -104,6 +106,13 @@ export default function Map({
       new mapkit.CoordinateSpan(cameraBoundary.latitudeDelta, cameraBoundary.longitudeDelta),
     ) : null;
   }, [map, cameraBoundary]);
+
+  // Camera zoom range
+  useEffect(() => {
+    if (!map) return;
+    // @ts-ignore
+    map.cameraZoomRange = new mapkit.CameraZoomRange(minCameraDistance, maxCameraDistance);
+  }, [map, minCameraDistance, maxCameraDistance]);
 
   return (
     <React.StrictMode>

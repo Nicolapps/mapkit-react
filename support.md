@@ -103,15 +103,15 @@
 
 #### Visible portion of the map
 
-| Feature         | Supported |
-| --------------- | --------- |
-| center          | ❌        |
-| region          | ❌        |
-| rotation        | ❌        |
-| visibleMapRect  | ❌        |
-| cameraBoundary  | ✅        |
-| cameraDistance  | ❌        |
-| cameraZoomRange | ❌        |
+| Feature         | Supported                                |
+| --------------- | ---------------------------------------- |
+| center          | ❌                                       |
+| region          | ❌                                       |
+| rotation        | ❌                                       |
+| visibleMapRect  | ❌                                       |
+| cameraBoundary  | ✅                                       |
+| cameraDistance  | ❌                                       |
+| cameraZoomRange | ✅ (minCameraDistance/maxCameraDistance) |
 
 #### Controls
 

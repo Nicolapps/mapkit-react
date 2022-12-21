@@ -3,11 +3,11 @@ import { ComponentMeta } from '@storybook/react';
 
 import Map from '../components/Map';
 
+const token = process.env.STORYBOOK_MAPKIT_JS_TOKEN!;
 export default {
+  title: 'Components/Map',
   component: Map,
-  args: {
-    token: process.env.STORYBOOK_MAPKIT_JS_TOKEN,
-  },
+  args: { token },
   parameters: {
     layout: 'fullscreen',
   },
@@ -15,8 +15,6 @@ export default {
 
 type MapProps = React.ComponentProps<typeof Map>;
 
-function Template(args: MapProps) {
-  return <Map {...args} />;
-}
+const Template = (args: MapProps) => <Map {...args} />;
 
 export const Empty = Template.bind({});

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentMeta } from '@storybook/react';
+import { ComponentMeta, Story } from '@storybook/react';
 
 import Map from '../components/Map';
 
@@ -15,6 +15,6 @@ export default {
 
 type MapProps = React.ComponentProps<typeof Map>;
 
-const Template = (args: MapProps) => <Map {...args} />;
+const Template: Story<MapProps> = (args) => <Map {...args} />;
 
 export const Empty = Template.bind({});

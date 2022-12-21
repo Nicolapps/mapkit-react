@@ -21,7 +21,5 @@ const Template = (args: MarkerProps) => (
   </Map>
 );
 
-export const Default = Template.bind({
-  latitude: 46.52,
-  longitude: 6.57,
-});
+export const Default = Template.bind({});
+Default.args = { latitude: 46.52, longitude: 6.57 };

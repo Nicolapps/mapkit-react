@@ -1,5 +1,5 @@
 import React, {
-  useState, useEffect, useRef, useLayoutEffect,
+  useState, useEffect, useRef, useLayoutEffect, useImperativeHandle,
 } from 'react';
 import MapContext from '../context/MapContext';
 import load from '../util/loader';
@@ -9,7 +9,7 @@ import {
 } from '../util/parameters';
 import MapProps from './MapProps';
 
-export default function Map({
+const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps>>(({
   children = undefined,
 
   token,
@@ -39,7 +39,7 @@ export default function Map({
   maxCameraDistance = Infinity,
 
   onReady = undefined,
-}: React.PropsWithChildren<MapProps>) {
+}, mapRef) => {
   const [map, setMap] = useState<mapkit.Map | null>(null);
   const element = useRef<HTMLDivElement>(null);
 
@@ -55,6 +55,9 @@ export default function Map({
       }
     };
   }, []);
+
+  // Expose the map using a forward ref
+  useImperativeHandle(mapRef, () => map!, [map]);
 
   // Fire the onReady event
   useLayoutEffect(() => {
@@ -134,4 +137,5 @@ export default function Map({
       </div>
     </React.StrictMode>
   );
-}
+});
+export default Map;

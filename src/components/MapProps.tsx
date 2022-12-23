@@ -170,4 +170,9 @@ export default interface MapProps {
    * The maximum allowed distance of the camera from the center of the map in meters.
    */
   maxCameraDistance?: number;
+
+  /**
+   * Called when MapKit JS is initialized and the map forward ref can be used.
+   */
+  onReady?: () => void;
 }

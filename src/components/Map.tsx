@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+  useState, useEffect, useRef, useLayoutEffect,
+} from 'react';
 import MapContext from '../context/MapContext';
 import load from '../util/loader';
 import {
@@ -35,6 +37,8 @@ export default function Map({
   cameraBoundary = undefined,
   minCameraDistance = 0,
   maxCameraDistance = Infinity,
+
+  onReady = undefined,
 }: React.PropsWithChildren<MapProps>) {
   const [map, setMap] = useState<mapkit.Map | null>(null);
   const element = useRef<HTMLDivElement>(null);
@@ -51,6 +55,13 @@ export default function Map({
       }
     };
   }, []);
+
+  // Fire the onReady event
+  useLayoutEffect(() => {
+    if (map !== null) {
+      onReady?.();
+    }
+  }, [map]);
 
   // Enum properties
   useEffect(() => {

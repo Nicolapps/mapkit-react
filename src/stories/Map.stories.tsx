@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React from 'react';
 import { ComponentMeta, Story } from '@storybook/react';
 import './stories.css';
 

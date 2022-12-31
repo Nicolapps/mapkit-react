@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId, useState } from 'react';
 import { ComponentMeta, Story } from '@storybook/react';
 import './stories.css';
 
@@ -57,4 +57,40 @@ RegionLock.args = {
   },
   minCameraDistance: 100,
   maxCameraDistance: 1000,
+};
+
+export const LiveStateUpdate: Story<MapProps> = (args) => {
+  const [theme, setTheme] = useState(ColorScheme.Light);
+
+  const options: { name: string, value: ColorScheme, id: string }[] = [
+    { name: 'Light', value: ColorScheme.Light, id: useId() },
+    { name: 'Dark', value: ColorScheme.Dark, id: useId() },
+  ];
+
+  return (
+    <>
+      <Map {...args} colorScheme={theme} />
+
+      <div className="map-overlay">
+        <div className="map-overlay-box">
+          {options.map((option) => (
+            <label htmlFor={option.id}>
+              <input
+                id={option.id}
+                type="radio"
+                name="theme"
+                value={option.value}
+                onChange={() => setTheme(option.value)}
+                checked={theme === option.value}
+              />
+              {option.name}
+            </label>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+};
+LiveStateUpdate.args = {
+  paddingBottom: 44,
 };

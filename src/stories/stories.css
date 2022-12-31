@@ -32,3 +32,13 @@ body {
 .map-overlay button:active {
   background-color: #f1f1f1;
 }
+
+.map-overlay-box {
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}

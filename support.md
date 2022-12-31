@@ -36,13 +36,13 @@
 
 #### Visible portion of the map
 
-| Feature                              | Supported |
-| ------------------------------------ | --------- |
-| MapConstructorOptions.visibleMapRect | ❌        |
-| MapConstructorOptions.region         | ❌        |
-| MapConstructorOptions.center         | ❌        |
-| MapConstructorOptions.rotation       | ❌        |
-| MapConstructorOptions.tintColor      | ❌        |
+| Feature                              | Supported          |
+| ------------------------------------ | ------------------ |
+| MapConstructorOptions.visibleMapRect | ❌                 |
+| MapConstructorOptions.region         | ✅ (initialRegion) |
+| MapConstructorOptions.center         | ❌                 |
+| MapConstructorOptions.rotation       | ❌                 |
+| MapConstructorOptions.tintColor      | ❌                 |
 
 #### Appearance and controls
 

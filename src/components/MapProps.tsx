@@ -156,6 +156,12 @@ export default interface MapProps {
   paddingLeft?: number;
 
   /**
+   * The initial area that the map is showing.
+   * Updates to this property after the map creation will not be reflected.
+   */
+  initialRegion?: CoordinateRegion;
+
+  /**
    * A constraint of the location of the center of the map.
    * @see {@link https://developer.apple.com/documentation/mapkitjs/map/3257748-cameraboundary}
    */

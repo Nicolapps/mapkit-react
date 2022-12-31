@@ -5,7 +5,7 @@ import MapContext from '../context/MapContext';
 import load from '../util/loader';
 import {
   ColorScheme, Distances, LoadPriority, MapType,
-  toMapKitColorScheme, toMapKitDistances, toMapKitLoadPriority, toMapKitMapType,
+  toMapKitColorScheme, toMapKitCoordinateRegion, toMapKitDistances, toMapKitLoadPriority, toMapKitMapType,
 } from '../util/parameters';
 import MapProps from './MapProps';
 
@@ -34,6 +34,7 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   paddingBottom = 0,
   paddingLeft = 0,
 
+  initialRegion = undefined,
   cameraBoundary = undefined,
   minCameraDistance = 0,
   maxCameraDistance = Infinity,
@@ -44,7 +45,10 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   // Load the map
   useEffect(() => {
     load(token).then(() => {
-      setMap(new mapkit.Map(element.current!));
+      const options = initialRegion
+        ? { region: toMapKitCoordinateRegion(initialRegion) }
+        : {};
+      setMap(new mapkit.Map(element.current!, options));
     });
 
     return () => {
@@ -106,10 +110,7 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   useEffect(() => {
     if (!map) return;
     // @ts-ignore
-    map.cameraBoundary = cameraBoundary ? new mapkit.CoordinateRegion(
-      new mapkit.Coordinate(cameraBoundary.centerLatitude, cameraBoundary.centerLongitude),
-      new mapkit.CoordinateSpan(cameraBoundary.latitudeDelta, cameraBoundary.longitudeDelta),
-    ) : null;
+    map.cameraBoundary = cameraBoundary ? toMapKitCoordinateRegion(cameraBoundary) : null;
   }, [map, cameraBoundary]);
 
   // Camera zoom range

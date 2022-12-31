@@ -41,14 +41,6 @@ type MapProps = React.ComponentProps<typeof Map>;
 export const MapReference: Story<MapProps> = (args) => {
   const mapRef = useRef<mapkit.Map>(null);
 
-  // Set the initial region to San Francisco
-  const ready = useCallback(() => {
-    mapRef.current!.region = new mapkit.CoordinateRegion(
-      new mapkit.Coordinate(37.7812, -122.44755),
-      new mapkit.CoordinateSpan(0.10, 0.11),
-    );
-  }, [mapRef]);
-
   // Animate a rotation when the button is pressed
   const rotate = useCallback(() => {
     if (mapRef.current === null) return;
@@ -64,7 +56,7 @@ export const MapReference: Story<MapProps> = (args) => {
 
   return (
     <>
-      <Map ref={mapRef} {...args} onReady={ready} />
+      <Map ref={mapRef} {...args} />
 
       <div className="map-overlay">
         <button type="button" onClick={rotate}>
@@ -76,4 +68,10 @@ export const MapReference: Story<MapProps> = (args) => {
 };
 MapReference.args = {
   paddingBottom: 44,
+  initialRegion: {
+    centerLatitude: 37.7812,
+    centerLongitude: -122.44755,
+    latitudeDelta: 0.10,
+    longitudeDelta: 0.11,
+  },
 };

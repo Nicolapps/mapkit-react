@@ -1,3 +1,5 @@
+import { CoordinateRegion } from "../components/MapProps";
+
 /**
  * Color schemes of the map.
  * @see {@link https://developer.apple.com/documentation/mapkitjs/map/colorschemes}
@@ -193,4 +195,17 @@ export function toMapKitFeatureVisibility(featureVisibility: FeatureVisibility):
     default:
       throw new RangeError('Invalid feature visibility');
   }
+}
+
+/**
+ * Converts a mapkit-react coordinate region to a MapKit JS coordinate region.
+ * Must be called after MapKit JS is loaded.
+ * @param region The mapkit-react coordinate region
+ * @returns The MapKit JS coordinate region
+ */
+export function toMapKitCoordinateRegion(region: CoordinateRegion) : mapkit.CoordinateRegion {
+  return new mapkit.CoordinateRegion(
+    new mapkit.Coordinate(region.centerLatitude, region.centerLongitude),
+    new mapkit.CoordinateSpan(region.latitudeDelta, region.longitudeDelta),
+  );
 }

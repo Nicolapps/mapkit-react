@@ -55,6 +55,12 @@ RegionLock.args = {
     latitudeDelta: 0.006,
     longitudeDelta: 0.008,
   },
+  initialRegion: {
+    centerLatitude: 40.44316701238923,
+    centerLongitude: -79.9431147637379,
+    latitudeDelta: 0.006337455593801167,
+    longitudeDelta: 0.011960061265583022,
+  },
   minCameraDistance: 100,
   maxCameraDistance: 1000,
 };

@@ -1,13 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+  useState, useEffect, useRef, useImperativeHandle,
+} from 'react';
 import MapContext from '../context/MapContext';
 import load from '../util/loader';
 import {
   ColorScheme, Distances, LoadPriority, MapType,
-  toMapKitColorScheme, toMapKitDistances, toMapKitLoadPriority, toMapKitMapType,
+  toMapKitColorScheme, toMapKitCoordinateRegion, toMapKitDistances,
+  toMapKitLoadPriority, toMapKitMapType,
 } from '../util/parameters';
 import MapProps from './MapProps';
 
-export default function Map({
+const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps>>(({
   children = undefined,
 
   token,
@@ -32,17 +35,21 @@ export default function Map({
   paddingBottom = 0,
   paddingLeft = 0,
 
+  initialRegion = undefined,
   cameraBoundary = undefined,
   minCameraDistance = 0,
   maxCameraDistance = Infinity,
-}: React.PropsWithChildren<MapProps>) {
+}, mapRef) => {
   const [map, setMap] = useState<mapkit.Map | null>(null);
   const element = useRef<HTMLDivElement>(null);
 
   // Load the map
   useEffect(() => {
     load(token).then(() => {
-      setMap(new mapkit.Map(element.current!));
+      const options = initialRegion
+        ? { region: toMapKitCoordinateRegion(initialRegion) }
+        : {};
+      setMap(new mapkit.Map(element.current!, options));
     });
 
     return () => {
@@ -51,6 +58,9 @@ export default function Map({
       }
     };
   }, []);
+
+  // Expose the map using a forward ref
+  useImperativeHandle(mapRef, () => map!, [map]);
 
   // Enum properties
   useEffect(() => {
@@ -101,10 +111,7 @@ export default function Map({
   useEffect(() => {
     if (!map) return;
     // @ts-ignore
-    map.cameraBoundary = cameraBoundary ? new mapkit.CoordinateRegion(
-      new mapkit.Coordinate(cameraBoundary.centerLatitude, cameraBoundary.centerLongitude),
-      new mapkit.CoordinateSpan(cameraBoundary.latitudeDelta, cameraBoundary.longitudeDelta),
-    ) : null;
+    map.cameraBoundary = cameraBoundary ? toMapKitCoordinateRegion(cameraBoundary) : null;
   }, [map, cameraBoundary]);
 
   // Camera zoom range
@@ -123,4 +130,5 @@ export default function Map({
       </div>
     </React.StrictMode>
   );
-}
+});
+export default Map;

@@ -36,13 +36,13 @@
 
 #### Visible portion of the map
 
-| Feature                              | Supported |
-| ------------------------------------ | --------- |
-| MapConstructorOptions.visibleMapRect | ❌        |
-| MapConstructorOptions.region         | ❌        |
-| MapConstructorOptions.center         | ❌        |
-| MapConstructorOptions.rotation       | ❌        |
-| MapConstructorOptions.tintColor      | ❌        |
+| Feature                              | Supported          |
+| ------------------------------------ | ------------------ |
+| MapConstructorOptions.visibleMapRect | ❌                 |
+| MapConstructorOptions.region         | ✅ (initialRegion) |
+| MapConstructorOptions.center         | ❌                 |
+| MapConstructorOptions.rotation       | ❌                 |
+| MapConstructorOptions.tintColor      | ❌                 |
 
 #### Appearance and controls
 
@@ -178,6 +178,8 @@
 
 ### Events
 
+It is possible to indirectly listen to the events by using the reference to `mapkit.Map` exposed by the `Map` component.
+
 #### Respond to map display events
 
 | Feature             | Supported |
@@ -219,7 +221,7 @@
 
 ### Methods
 
-_❌ Not currently supported by mapkit-react._
+To call methods on the `mapkit.Map` object, you can use the reference exposed by the `Map` component.
 
 ## `mapkit.Annotation`
 

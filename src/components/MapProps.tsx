@@ -1,39 +1,6 @@
 import {
-  ColorScheme, MapType, Distances, LoadPriority,
+  ColorScheme, MapType, Distances, LoadPriority, CoordinateRegion,
 } from '../util/parameters';
-
-/**
- * A rectangular geographic region that centers around a latitude and longitude coordinate.
- * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/coordinateregion/2973861-mapkit_coordinateregion}
- */
-export interface CoordinateRegion {
-  /**
-   * The latitude of the center point in degrees.
-   */
-  centerLatitude: number;
-
-  /**
-   * The longitude of the center point in degrees.
-   */
-  centerLongitude: number;
-
-  /**
-   * The amount of north-to-south distance (in degrees) to display for the map
-   * region. Unlike longitudinal distances, which vary based on the latitude,
-   * one degree of latitude is always approximately 111 km (69 mi.).
-   */
-  latitudeDelta: number;
-
-  /**
-   * The amount of east-to-west distance (in degrees) to display for the map
-   * region. The number of kilometers (or miles) that a longitude range spans
-   * varies based on the latitude. For example, one degree of longitude spans
-   * a distance of approximately 111 km (69 miles mi.) at the equator,
-   * approximately 88 km (or 55mi.) at 37º north latitude (the latitude of
-   * San Francisco), and shrinks to 0 km (0 mi.) at the poles.
-   */
-  longitudeDelta: number;
-}
 
 export default interface MapProps {
   /**
@@ -154,6 +121,12 @@ export default interface MapProps {
    * @see {@link https://developer.apple.com/documentation/mapkitjs/map/2977645-padding}
    */
   paddingLeft?: number;
+
+  /**
+   * The initial area that the map is showing.
+   * Updates to this property after the map creation will not be reflected.
+   */
+  initialRegion?: CoordinateRegion;
 
   /**
    * A constraint of the location of the center of the map.

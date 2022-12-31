@@ -1,5 +1,6 @@
 import React from 'react';
 import { ComponentMeta, Story } from '@storybook/react';
+import './stories.css';
 
 import Map from '../components/Map';
 import {

@@ -194,3 +194,49 @@ export function toMapKitFeatureVisibility(featureVisibility: FeatureVisibility):
       throw new RangeError('Invalid feature visibility');
   }
 }
+
+/**
+ * A rectangular geographic region that centers around a latitude and longitude coordinate.
+ * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/coordinateregion/2973861-mapkit_coordinateregion}
+ */
+export interface CoordinateRegion {
+  /**
+   * The latitude of the center point in degrees.
+   */
+  centerLatitude: number;
+
+  /**
+   * The longitude of the center point in degrees.
+   */
+  centerLongitude: number;
+
+  /**
+   * The amount of north-to-south distance (in degrees) to display for the map
+   * region. Unlike longitudinal distances, which vary based on the latitude,
+   * one degree of latitude is always approximately 111 km (69 mi.).
+   */
+  latitudeDelta: number;
+
+  /**
+   * The amount of east-to-west distance (in degrees) to display for the map
+   * region. The number of kilometers (or miles) that a longitude range spans
+   * varies based on the latitude. For example, one degree of longitude spans
+   * a distance of approximately 111 km (69 miles mi.) at the equator,
+   * approximately 88 km (or 55mi.) at 37º north latitude (the latitude of
+   * San Francisco), and shrinks to 0 km (0 mi.) at the poles.
+   */
+  longitudeDelta: number;
+}
+
+/**
+ * Converts a mapkit-react coordinate region to a MapKit JS coordinate region.
+ * Must be called after MapKit JS is loaded.
+ * @param region The mapkit-react coordinate region
+ * @returns The MapKit JS coordinate region
+ */
+export function toMapKitCoordinateRegion(region: CoordinateRegion) : mapkit.CoordinateRegion {
+  return new mapkit.CoordinateRegion(
+    new mapkit.Coordinate(region.centerLatitude, region.centerLongitude),
+    new mapkit.CoordinateSpan(region.latitudeDelta, region.longitudeDelta),
+  );
+}

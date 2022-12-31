@@ -59,7 +59,7 @@ RegionLock.args = {
   maxCameraDistance: 1000,
 };
 
-export const LiveStateUpdate: Story<MapProps> = (args) => {
+export const LiveStateUpdate = () => {
   const [theme, setTheme] = useState(ColorScheme.Light);
 
   const options: { name: string, value: ColorScheme, id: string }[] = [
@@ -69,7 +69,7 @@ export const LiveStateUpdate: Story<MapProps> = (args) => {
 
   return (
     <>
-      <Map {...args} colorScheme={theme} />
+      <Map token={token} colorScheme={theme} paddingBottom={44} />
 
       <div className="map-overlay">
         <div className="map-overlay-box">
@@ -90,7 +90,4 @@ export const LiveStateUpdate: Story<MapProps> = (args) => {
       </div>
     </>
   );
-};
-LiveStateUpdate.args = {
-  paddingBottom: 44,
 };

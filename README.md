@@ -2,7 +2,9 @@
 Use Apple Maps in your React apps!
 
 ## Demo
-You can see the library in action by cloning the project and running the following command:
+You can see the library in action on [**the Storybook examples**](https://nicolapps.github.io/mapkit-react/).
+
+You can run the examples locally by cloning the project and running the following command:
 
 ```sh
 STORYBOOK_MAPKIT_JS_TOKEN="…" npm run storybook

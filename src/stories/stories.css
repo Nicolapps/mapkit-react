@@ -40,5 +40,14 @@ body {
   gap: 20px;
   align-items: center;
   justify-content: center;
-  background-color: white;
+
+  background-color: rgba(255, 255, 255, .6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .15);
+}
+
+.map-overlay-box label {
+  display: flex;
+  gap: .3em;
 }

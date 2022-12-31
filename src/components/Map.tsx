@@ -5,7 +5,8 @@ import MapContext from '../context/MapContext';
 import load from '../util/loader';
 import {
   ColorScheme, Distances, LoadPriority, MapType,
-  toMapKitColorScheme, toMapKitCoordinateRegion, toMapKitDistances, toMapKitLoadPriority, toMapKitMapType,
+  toMapKitColorScheme, toMapKitCoordinateRegion, toMapKitDistances,
+  toMapKitLoadPriority, toMapKitMapType,
 } from '../util/parameters';
 import MapProps from './MapProps';
 

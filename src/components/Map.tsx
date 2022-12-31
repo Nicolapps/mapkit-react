@@ -1,5 +1,5 @@
 import React, {
-  useState, useEffect, useRef, useLayoutEffect, useImperativeHandle,
+  useState, useEffect, useRef, useImperativeHandle,
 } from 'react';
 import MapContext from '../context/MapContext';
 import load from '../util/loader';
@@ -37,8 +37,6 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   cameraBoundary = undefined,
   minCameraDistance = 0,
   maxCameraDistance = Infinity,
-
-  onReady = undefined,
 }, mapRef) => {
   const [map, setMap] = useState<mapkit.Map | null>(null);
   const element = useRef<HTMLDivElement>(null);
@@ -58,13 +56,6 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
 
   // Expose the map using a forward ref
   useImperativeHandle(mapRef, () => map!, [map]);
-
-  // Fire the onReady event
-  useLayoutEffect(() => {
-    if (map !== null) {
-      onReady?.();
-    }
-  }, [map]);
 
   // Enum properties
   useEffect(() => {

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { ComponentMeta, Story } from '@storybook/react';
 
 import Map from '../components/Map';
 import Marker from '../components/Marker';
-import { FeatureVisibility } from '../util/parameters';
+import { CoordinateRegion, FeatureVisibility } from '../util/parameters';
 
 const enumArgType = (e: object) => ({
   options: Object.values(e).filter((x) => typeof x === 'string'),
@@ -24,11 +24,19 @@ export default {
 
 type MarkerProps = React.ComponentProps<typeof Marker>;
 
-const Template: Story<MarkerProps> = (args) => (
-  <Map token={process.env.STORYBOOK_MAPKIT_JS_TOKEN!}>
-    <Marker {...args} />
-  </Map>
-);
+const Template: Story<MarkerProps> = (args) => {
+  const initialRegion: CoordinateRegion = useMemo(() => ({
+    centerLatitude: 48,
+    centerLongitude: 14,
+    latitudeDelta: 22,
+    longitudeDelta: 55,
+  }), []);
+  return (
+    <Map token={process.env.STORYBOOK_MAPKIT_JS_TOKEN!} initialRegion={initialRegion}>
+      <Marker {...args} />
+    </Map>
+  );
+};
 
 export const Default = Template.bind({});
 Default.args = { latitude: 46.52, longitude: 6.57 };

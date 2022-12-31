@@ -19,6 +19,10 @@ export default function Marker({
   glyphText = '',
   glyphImage = null,
   selectedGlyphImage = undefined,
+
+  selected = undefined,
+  onSelect = undefined,
+  onDeselect = undefined,
 }: MarkerProps) {
   const [marker, setMarker] = useState<mapkit.MarkerAnnotation | null>(null);
   const map = useContext(MapContext);
@@ -60,6 +64,8 @@ export default function Marker({
     glyphText,
     glyphImage,
     selectedGlyphImage,
+
+    selected,
   };
   Object.entries(properties).forEach(([propertyName, prop]) => {
     useEffect(() => {
@@ -67,6 +73,22 @@ export default function Marker({
       // @ts-ignore
       marker[propertyName] = prop;
     }, [marker, prop]);
+  });
+
+  // Events
+  const events = [
+    { name: 'select', handler: onSelect },
+    { name: 'deselect', handler: onDeselect },
+  ] as const;
+  events.forEach(({ name, handler }) => {
+    useEffect(() => {
+      if (!marker || !handler) return undefined;
+
+      const handlerWithoutParameters = () => handler();
+
+      marker.addEventListener(name, handlerWithoutParameters);
+      return () => marker.removeEventListener(name, handlerWithoutParameters);
+    }, [marker, handler]);
   });
 
   return null;

@@ -70,4 +70,19 @@ export default interface MarkerProps {
    * @see {@link https://developer.apple.com/documentation/mapkitjs/markerannotation/2973991-selectedglyphimage}
    */
   selectedGlyphImage?: object | undefined;
+
+  /**
+   * A Boolean value that determines whether the map displays the annotation in a selected state.
+   */
+  selected?: boolean;
+
+  /**
+   * Event fired when the marker is selected.
+   */
+  onSelect?: () => void;
+
+  /**
+   * Event fired when the marker is deselected.
+   */
+  onDeselect?: () => void;
 }

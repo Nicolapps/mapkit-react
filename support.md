@@ -194,16 +194,6 @@ It is possible to indirectly listen to the events by using the reference to `map
 | zoom-end            | ❌        |
 | map-type-change     | ❌        |
 
-#### Respond to annotation and overlay events
-
-| Feature    | Supported |
-| ---------- | --------- |
-| select     | ❌        |
-| deselect   | ❌        |
-| drag-start | ❌        |
-| dragging   | ❌        |
-| drag-end   | ❌        |
-
 #### Respond to user location events
 
 | Feature              | Supported |
@@ -288,7 +278,7 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 | --------- | --------- |
 | animates  | ❌        |
 | draggable | ❌        |
-| selected  | ❌        |
+| selected  | ✅        |
 | enabled   | ❌        |
 
 #### Callouts
@@ -309,7 +299,13 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 
 ### Events
 
-_❌ Not currently supported by mapkit-react._
+| Feature    | Supported |
+| ---------- | --------- |
+| select     | ✅        |
+| deselect   | ✅        |
+| drag-start | ❌        |
+| dragging   | ❌        |
+| drag-end   | ❌        |
 
 ## `mapkit.ImageAnnotation`
 

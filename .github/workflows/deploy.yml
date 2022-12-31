@@ -1,0 +1,20 @@
+name: Deploy docs
+on:
+  push:
+    branches: ['main']
+    paths: ['src/**', '.storybook/**']
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: bahmutov/npm-install@v1
+      - name: Build Storybook 🔧
+        run: STORYBOOK_MAPKIT_JS_TOKEN="${{ secrets.MAPKIT_JS_TOKEN }}" npm run build-storybook
+        shell: bash
+      - name: Deploy to GitHub Pages 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          folder: storybook-static

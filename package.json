@@ -5,6 +5,7 @@
   "author": "Nicolas Ettlin",
   "license": "MIT",
   "type": "module",
+  "homepage": "https://nicolapps.github.io/mapkit-react/",
   "repository": {
     "type": "git",
     "url": "https://github.com/Nicolapps/mapkit-react"

@@ -35,6 +35,12 @@ const Template: Story<MapProps> = (args) => <Map {...args} />;
 
 export const Empty = Template.bind({});
 
+export const FixedSize: Story<MapProps> = (args) => (
+  <div style={{ width: '300px', height: '200px' }}>
+    <Map {...args} />
+  </div>
+);
+
 export const CustomizedAppearance = Template.bind({});
 CustomizedAppearance.args = {
   colorScheme: ColorScheme.Dark,

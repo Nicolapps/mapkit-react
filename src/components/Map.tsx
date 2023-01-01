@@ -42,19 +42,23 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
 }, mapRef) => {
   const [map, setMap] = useState<mapkit.Map | null>(null);
   const element = useRef<HTMLDivElement>(null);
+  const exists = useRef<boolean>(false);
 
   // Load the map
   useEffect(() => {
     load(token).then(() => {
+      if (exists.current) return;
       const options = initialRegion
         ? { region: toMapKitCoordinateRegion(initialRegion) }
         : {};
       setMap(new mapkit.Map(element.current!, options));
+      exists.current = true;
     });
 
     return () => {
       if (map) {
         map.destroy();
+        exists.current = false;
       }
     };
   }, []);

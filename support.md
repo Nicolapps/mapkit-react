@@ -215,9 +215,6 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 
 ## `mapkit.Annotation`
 
-> **Note**
-> Only `MarkerAnnotation` can currently be used with mapkit-react. Annotations using a custom DOM element are not supported.
-
 ### Constructor parameters
 
 | Feature                                           | Supported |
@@ -229,7 +226,7 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 | AnnotationConstructorOptions.draggable            | ❌        |
 | AnnotationConstructorOptions.visible              | ❌        |
 | AnnotationConstructorOptions.enabled              | ❌        |
-| AnnotationConstructorOptions.selected             | ❌        |
+| AnnotationConstructorOptions.selected             | ✅        |
 | AnnotationConstructorOptions.calloutEnabled       | ❌        |
 | AnnotationConstructorOptions.animates             | ❌        |
 | AnnotationConstructorOptions.appearanceAnimation  | ❌        |

@@ -33,12 +33,12 @@ export default interface AnnotationProps {
   selected?: boolean;
 
   /**
-   * Event fired when the marker is selected.
+   * Event fired when the annotation is selected.
    */
   onSelect?: () => void;
 
   /**
-   * Event fired when the marker is deselected.
+   * Event fired when the annotation is deselected.
    */
   onDeselect?: () => void;
 

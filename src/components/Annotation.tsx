@@ -29,7 +29,6 @@ export default function Annotation({
     if (map === null) return undefined;
 
     const el = document.createElement('div');
-    el.id = 'annotation-content';
     setContentEl(el);
     const a = new mapkit.Annotation(
       new mapkit.Coordinate(latitude, longitude),

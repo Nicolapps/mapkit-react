@@ -2,7 +2,7 @@ import {
   useContext,
   useEffect,
   useState,
-  useRef,
+  useMemo,
 } from 'react';
 import { createPortal } from 'react-dom';
 import MapContext from '../context/MapContext';
@@ -22,17 +22,16 @@ export default function Annotation({
   children,
 }: AnnotationProps) {
   const [annotation, setAnnotation] = useState<mapkit.Annotation | null>(null);
-  const contentRef = useRef<HTMLDivElement>(document.createElement('div'));
+  const contentEl = useMemo<HTMLDivElement>(() => document.createElement('div'), []);
   const map = useContext(MapContext);
 
   // Coordinates
   useEffect(() => {
     if (map === null) return undefined;
-    if (!contentRef.current) return undefined;
 
     const a = new mapkit.Annotation(
       new mapkit.Coordinate(latitude, longitude),
-      () => contentRef.current,
+      () => contentEl,
     );
     map.addAnnotation(a);
     setAnnotation(a);
@@ -40,7 +39,7 @@ export default function Annotation({
     return () => {
       map.removeAnnotation(a);
     };
-  }, [map, contentRef, latitude, longitude]);
+  }, [map, latitude, longitude]);
 
   // Simple values properties
   const properties = {
@@ -74,5 +73,5 @@ export default function Annotation({
     }, [annotation, handler]);
   });
 
-  return contentRef.current && createPortal(children, contentRef.current);
+  return createPortal(children, contentEl);
 }

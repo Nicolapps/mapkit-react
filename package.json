@@ -17,7 +17,8 @@
     "build": "vite build",
     "lint": "npx eslint src --ext .js,.jsx,.ts,.tsx",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "prepublishOnly": "npm run build"
   },
   "main": "dist/mapkit-react.umd.js",
   "module": "dist/mapkit-react.js",

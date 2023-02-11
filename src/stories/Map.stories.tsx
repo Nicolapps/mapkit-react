@@ -1,4 +1,6 @@
-import React, { useId, useState } from 'react';
+import React, {
+  useId, useState,
+} from 'react';
 import { ComponentMeta, Story } from '@storybook/react';
 import './stories.css';
 
@@ -6,6 +8,8 @@ import Map from '../components/Map';
 import {
   ColorScheme, MapType, Distances, LoadPriority,
 } from '../util/parameters';
+import Marker from '../components/Marker';
+import { MapInteractionEvent } from '../components/MapProps';
 
 const token = process.env.STORYBOOK_MAPKIT_JS_TOKEN!;
 
@@ -101,5 +105,51 @@ export const LiveStateUpdate = () => {
         </div>
       </div>
     </>
+  );
+};
+
+export const MapInteractionEvents = () => {
+  type MarkerData = {
+    latitude: number,
+    longitude: number,
+    title: string,
+    color: string,
+  };
+
+  const [markers, setMarkers] = useState<MarkerData[]>([]);
+
+  const eventHandler = (title: string, color: string) => (e: MapInteractionEvent) => {
+    const { latitude, longitude } = e.toCoordinates();
+    const newMarker: MarkerData = {
+      latitude,
+      longitude,
+      title,
+      color,
+    };
+    setMarkers([...markers, newMarker]);
+  };
+
+  return (
+    <Map
+      token={token}
+      onSingleTap={eventHandler('Single tap', '#30b0c7')}
+      onDoubleTap={eventHandler('Double tap', '#5856d7')}
+      onLongPress={eventHandler('Long press', '#ff9500')}
+      isZoomEnabled={false}
+    >
+      {markers.map(({
+        latitude, longitude, title, color,
+      }, index) => (
+        <Marker
+          latitude={latitude}
+          longitude={longitude}
+          title={title}
+          subtitle={`(${latitude}, ${longitude})`}
+          color={color}
+          // eslint-disable-next-line react/no-array-index-key
+          key={index}
+        />
+      ))}
+    </Map>
   );
 };

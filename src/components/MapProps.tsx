@@ -2,6 +2,29 @@ import {
   ColorScheme, MapType, Distances, LoadPriority, CoordinateRegion,
 } from '../util/parameters';
 
+/**
+ * The details of an event caused by taps on the map.
+ */
+export interface MapInteractionEvent {
+  /**
+   * A DOM point with the coordinates (x, y) of the event on the page.
+   */
+  readonly pointOnPage: { x: number, y: number };
+
+  /**
+   * An array of DOM event objects listing the pertinent low-level events that
+   * led to the recognized gesture. You can inspect these and tailor the code to
+   * react according to the additional low-level events, such as modifier keys
+   * for the events.
+   */
+  readonly domEvents: Event[];
+
+  /**
+   * Gets the map coordinates of the event’s location.
+   */
+  toCoordinates(): { latitude: number, longitude: number };
+}
+
 export default interface MapProps {
   /**
    * The token provided by MapKit JS.
@@ -143,4 +166,25 @@ export default interface MapProps {
    * The maximum allowed distance of the camera from the center of the map in meters.
    */
   maxCameraDistance?: number;
+
+  /**
+   * A single tap occurs on the map outside an annotation or an overlay. If an
+   * annotation or an overlay is in a selected state when a single tap occurs,
+   * MapKit JS deselects the annotation or the overlay and dispatches a
+   * single-tap event.
+   */
+  onSingleTap?: (event: MapInteractionEvent) => void;
+
+  /**
+   * A double tap occurs on the map without zooming the map.
+   */
+  onDoubleTap?: (event: MapInteractionEvent) => void;
+
+  /**
+   * A long press occurs on the map outside an annotation. A long press may be
+   * the beginning of a panning or pinching gesture on the map. You can prevent
+   * the gesture from starting by calling the preventDefault() method of the
+   * event. Annotations need to be draggable to dispatch long-press events.
+   */
+  onLongPress?: (event: MapInteractionEvent) => void;
 }

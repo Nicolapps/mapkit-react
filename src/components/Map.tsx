@@ -39,6 +39,10 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   cameraBoundary = undefined,
   minCameraDistance = 0,
   maxCameraDistance = Infinity,
+
+  onSingleTap = undefined,
+  onDoubleTap = undefined,
+  onLongPress = undefined,
 }, mapRef) => {
   const [map, setMap] = useState<mapkit.Map | null>(null);
   const element = useRef<HTMLDivElement>(null);
@@ -124,6 +128,33 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
     // @ts-ignore
     map.cameraZoomRange = new mapkit.CameraZoomRange(minCameraDistance, maxCameraDistance);
   }, [map, minCameraDistance, maxCameraDistance]);
+
+  // Events
+  const events = [
+    { name: 'single-tap', handler: onSingleTap },
+    { name: 'double-tap', handler: onDoubleTap },
+    { name: 'long-press', handler: onLongPress },
+  ] as const;
+  events.forEach(({ name, handler }) => {
+    useEffect(() => {
+      if (!map || !handler) return undefined;
+
+      type MapkitMapInteractionEvent = {
+        domEvents: Event[],
+        pointOnPage: DOMPoint,
+      };
+      const mapkitHandler = ({ domEvents, pointOnPage }: MapkitMapInteractionEvent) => {
+        handler({
+          domEvents,
+          pointOnPage,
+          toCoordinates: () => map.convertPointOnPageToCoordinate(pointOnPage),
+        });
+      };
+
+      map.addEventListener(name, mapkitHandler);
+      return () => map.removeEventListener(name, mapkitHandler);
+    }, [map, handler]);
+  });
 
   return (
     <React.StrictMode>

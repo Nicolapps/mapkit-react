@@ -1,5 +1,5 @@
 export { default as Map } from './components/Map';
-export type { default as MapProps } from './components/MapProps';
+export type { default as MapProps, MapInteractionEvent } from './components/MapProps';
 export { default as Marker } from './components/Marker';
 export type { default as MarkerProps } from './components/MarkerProps';
 export { default as Annotation } from './components/Annotation';

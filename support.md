@@ -205,9 +205,9 @@ It is possible to indirectly listen to the events by using the reference to `map
 
 | Feature    | Supported |
 | ---------- | --------- |
-| single-tap | ❌        |
-| double-tap | ❌        |
-| long-press | ❌        |
+| single-tap | ✅        |
+| double-tap | ✅        |
+| long-press | ✅        |
 
 ### Methods
 

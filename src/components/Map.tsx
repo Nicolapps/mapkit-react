@@ -151,6 +151,7 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
         });
       };
 
+      // @ts-ignore
       map.addEventListener(name, mapkitHandler);
       return () => map.removeEventListener(name, mapkitHandler);
     }, [map, handler]);

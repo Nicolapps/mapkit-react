@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
       - uses: bahmutov/npm-install@v1
       - name: Build Storybook 🔧
         run: STORYBOOK_MAPKIT_JS_TOKEN="${{ secrets.MAPKIT_JS_TOKEN }}" npm run build-storybook

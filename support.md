@@ -61,20 +61,20 @@
 
 #### Annotations
 
-| Feature                                    | Supported |
-| ------------------------------------------ | --------- |
-| MapConstructorOptions.annotationForCluster | ❌        |
-| MapConstructorOptions.annotations          | ✅        |
-| MapConstructorOptions.selectedAnnotation   | ❌        |
+| Feature                                    | Supported                              |
+| ------------------------------------------ | -------------------------------------- |
+| MapConstructorOptions.annotationForCluster | ❌                                     |
+| MapConstructorOptions.annotations          | ✅                                     |
+| MapConstructorOptions.selectedAnnotation   | ✅ (use `selected` on the annotations) |
 
 #### Overlays
 
-| Feature                                     | Supported |
-| ------------------------------------------- | --------- |
-| MapConstructorOptions.overlays              | ❌        |
-| MapConstructorOptions.selectedOverlay       | ❌        |
-| MapConstructorOptions.showsPointsOfInterest | ✅        |
-| MapConstructorOptions.pointOfInterestFilter | ❌        |
+| Feature                                     | Supported                           |
+| ------------------------------------------- | ----------------------------------- |
+| MapConstructorOptions.overlays              | ✅                                  |
+| MapConstructorOptions.selectedOverlay       | ✅ (use `selected` on the overlays) |
+| MapConstructorOptions.showsPointsOfInterest | ✅                                  |
+| MapConstructorOptions.pointOfInterestFilter | ❌                                  |
 
 #### User location
 
@@ -144,11 +144,11 @@
 
 #### Overlays
 
-| Feature         | Supported |
-| --------------- | --------- |
-| overlays        | ❌        |
-| selectedOverlay | ❌        |
-| tileOverlays    | ❌        |
+| Feature         | Supported                           |
+| --------------- | ----------------------------------- |
+| overlays        | ✅                                  |
+| selectedOverlay | ✅ (use `selected` on the overlays) |
+| tileOverlays    | ❌                                  |
 
 #### User location
 
@@ -379,5 +379,47 @@ _❌ Not currently supported by mapkit-react._
 _❌ Not currently supported by mapkit-react._
 
 ## `mapkit.ItemCollection`
+
+_❌ Not currently supported by mapkit-react._
+
+## `mapkit.CircleOverlay`
+
+_❌ Not currently supported by mapkit-react._
+
+## `mapkit.PolylineOverlay`
+
+### Properties
+
+| Feature              | Supported |
+| -------------------- | --------- |
+| points               | ✅        |
+| data                 | ❌        |
+| visible              | ✅        |
+| enabled              | ✅        |
+| selected             | ✅        |
+| style.lineCap        | ✅        |
+| style.lineDash       | ✅        |
+| style.lineDashOffset | ✅        |
+| style.lineJoin       | ✅        |
+| style.lineWidth      | ✅        |
+| style.lineGradient   | ❌        |
+| style.strokeColor    | ✅        |
+| style.strokeOpacity  | ✅        |
+| style.strokeStart    | ✅        |
+| style.strokeEnd      | ✅        |
+| map                  | ❌        |
+
+### Events
+
+| Feature  | Supported |
+| -------- | --------- |
+| select   | ✅        |
+| deselect | ✅        |
+
+## `mapkit.PolygonOverlay`
+
+_❌ Not currently supported by mapkit-react._
+
+## `mapkit.TileOverlay`
 
 _❌ Not currently supported by mapkit-react._

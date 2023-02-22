@@ -10,5 +10,8 @@ module.exports = {
     '@storybook/addon-interactions',
     '@storybook/addon-storysource',
   ],
+  core: {
+    builder: '@storybook/builder-vite',
+  },
   framework: '@storybook/react',
 };

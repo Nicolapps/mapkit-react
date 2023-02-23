@@ -196,6 +196,21 @@ export function toMapKitFeatureVisibility(featureVisibility: FeatureVisibility):
 }
 
 /**
+ * A point on the Earth’s surface.
+ */
+export interface Coordinate {
+  /**
+   * The latitude in degrees.
+   */
+  latitude: number;
+
+  /**
+   * The longitude in degrees.
+   */
+  longitude: number;
+}
+
+/**
  * A rectangular geographic region that centers around a latitude and longitude coordinate.
  * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/coordinateregion/2973861-mapkit_coordinateregion}
  */

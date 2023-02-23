@@ -9,4 +9,4 @@ export type { default as PolylineProps } from './components/PolylineProps';
 export {
   ColorScheme, MapType, Distances, LoadPriority, FeatureVisibility,
 } from './util/parameters';
-export type { CoordinateRegion } from './util/parameters';
+export type { Coordinate, CoordinateRegion } from './util/parameters';

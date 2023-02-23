@@ -1,9 +1,11 @@
+import { Coordinate } from '../util/parameters';
+
 export default interface PolylineProps {
   /**
    * An array of coordinate points that define the polyline overlay’s shape.
    * @see {@link https://developer.apple.com/documentation/mapkitjs/polylineoverlay/2974014-points}
    */
-  points: { latitude: number, longitude: number }[];
+  points: Coordinate[];
 
   /**
    * A Boolean value that determines whether the polyline is visible.

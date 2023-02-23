@@ -1,5 +1,5 @@
 import {
-  ColorScheme, MapType, Distances, LoadPriority, CoordinateRegion,
+  ColorScheme, MapType, Distances, LoadPriority, CoordinateRegion, Coordinate,
 } from '../util/parameters';
 
 /**
@@ -22,7 +22,7 @@ export interface MapInteractionEvent {
   /**
    * Gets the map coordinates of the event’s location.
    */
-  toCoordinates(): { latitude: number, longitude: number };
+  toCoordinates(): Coordinate;
 }
 
 export default interface MapProps {

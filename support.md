@@ -418,7 +418,35 @@ _❌ Not currently supported by mapkit-react._
 
 ## `mapkit.PolygonOverlay`
 
-_❌ Not currently supported by mapkit-react._
+### Properties
+
+| Feature              | Supported |
+| -------------------- | --------- |
+| points               | ✅        |
+| data                 | ❌        |
+| visible              | ✅        |
+| enabled              | ✅        |
+| selected             | ✅        |
+| style.lineDash       | ✅        |
+| style.lineDashOffset | ✅        |
+| style.lineJoin       | ✅        |
+| style.lineWidth      | ✅        |
+| style.lineGradient   | ❌        |
+| style.strokeColor    | ✅        |
+| style.strokeOpacity  | ✅        |
+| style.strokeStart    | ✅        |
+| style.strokeEnd      | ✅        |
+| style.fillColor      | ✅        |
+| style.fillOpacity    | ✅        |
+| style.fillRule       | ✅        |
+| map                  | ❌        |
+
+### Events
+
+| Feature  | Supported |
+| -------- | --------- |
+| select   | ✅        |
+| deselect | ✅        |
 
 ## `mapkit.TileOverlay`
 

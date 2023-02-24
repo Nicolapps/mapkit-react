@@ -25,7 +25,12 @@ const Template: Story<PolygonProps> = (args) => {
     longitudeDelta: 0.0035,
   }), []);
   return (
-    <Map token={token} initialRegion={initialRegion} minCameraDistance={300}>
+    <Map
+      token={token}
+      initialRegion={initialRegion}
+      minCameraDistance={300}
+      includedPOICategories={[]}
+    >
       <Polygon {...args} />
     </Map>
   );

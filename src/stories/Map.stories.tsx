@@ -1,12 +1,12 @@
 import React, {
-  useId, useState,
+  useId, useMemo, useState,
 } from 'react';
 import { ComponentMeta, Story } from '@storybook/react';
 import './stories.css';
 
 import Map from '../components/Map';
 import {
-  ColorScheme, MapType, Distances, LoadPriority,
+  ColorScheme, MapType, Distances, LoadPriority, CoordinateRegion, PointOfInterestCategory,
 } from '../util/parameters';
 import Marker from '../components/Marker';
 import { MapInteractionEvent } from '../components/MapProps';
@@ -153,3 +153,55 @@ export const MapInteractionEvents = () => {
     </Map>
   );
 };
+
+export const PointOfInterestFilters = () => {
+  const initialRegion: CoordinateRegion = useMemo(() => ({
+    centerLatitude: 40.7538,
+    centerLongitude: -73.986,
+    latitudeDelta: 0.03,
+    longitudeDelta: 0.03,
+  }), []);
+
+  const categories: PointOfInterestCategory[] = useMemo(
+    () => (Object.values(PointOfInterestCategory) as Array<keyof typeof PointOfInterestCategory>)
+      .filter((val) => typeof val === 'string')
+      .map((str) => PointOfInterestCategory[str]),
+    [],
+  );
+
+  const [isEnabled, setIsEnabled] = useState(() => categories.map(() => true));
+
+  const idPrefix = useId();
+
+  return (
+    <>
+      <Map
+        token={token}
+        initialRegion={initialRegion}
+        showsMapTypeControl={false}
+        includedPOICategories={categories.filter((_, index) => isEnabled[index])}
+      />
+
+      <div className="map-overlay map-overlay-top">
+        <div className="map-overlay-box map-overlay-options">
+          {categories.map((category, categoryIndex) => (
+            <label key={category} htmlFor={idPrefix + categoryIndex}>
+              <input
+                id={idPrefix + categoryIndex}
+                type="checkbox"
+                checked={isEnabled[categoryIndex]}
+                onChange={() => {
+                  const newIsEnabled = [...isEnabled];
+                  newIsEnabled[categoryIndex] = !isEnabled[categoryIndex];
+                  setIsEnabled(newIsEnabled);
+                }}
+              />
+              {PointOfInterestCategory[category]}
+            </label>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+};
+PointOfInterestFilters.storyName = 'Point of Interest Filter';

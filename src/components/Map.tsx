@@ -6,7 +6,7 @@ import load from '../util/loader';
 import {
   ColorScheme, Distances, LoadPriority, MapType,
   toMapKitColorScheme, toMapKitCoordinateRegion, toMapKitDistances,
-  toMapKitLoadPriority, toMapKitMapType,
+  toMapKitLoadPriority, toMapKitMapType, toMapKitPOICategory,
 } from '../util/parameters';
 import MapProps from './MapProps';
 
@@ -29,6 +29,9 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   showsPointsOfInterest = true,
   showsUserLocation = false,
   tracksUserLocation = false,
+
+  includedPOICategories = undefined,
+  excludedPOICategories = undefined,
 
   paddingTop = 0,
   paddingRight = 0,
@@ -128,6 +131,26 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
     // @ts-ignore
     map.cameraZoomRange = new mapkit.CameraZoomRange(minCameraDistance, maxCameraDistance);
   }, [map, minCameraDistance, maxCameraDistance]);
+
+  // Point of interest filter
+  useEffect(() => {
+    if (!map) return;
+
+    if (includedPOICategories && excludedPOICategories) {
+      throw new Error('Can’t specify both includedPOICategories and excludedPOICategories.');
+    } else if (includedPOICategories) {
+      map.pointOfInterestFilter = mapkit.PointOfInterestFilter.including(
+        includedPOICategories.map(toMapKitPOICategory),
+      );
+    } else if (excludedPOICategories) {
+      map.pointOfInterestFilter = mapkit.PointOfInterestFilter.excluding(
+        excludedPOICategories.map(toMapKitPOICategory),
+      );
+    } else {
+      // @ts-ignore
+      map.pointOfInterestFilter = null;
+    }
+  }, [map, includedPOICategories, excludedPOICategories]);
 
   // Events
   const events = [

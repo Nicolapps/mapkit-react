@@ -14,6 +14,11 @@ body {
   padding: 8px;
 }
 
+.map-overlay-top {
+  top: 0;
+  bottom: auto;
+}
+
 .map-overlay button {
   display: block;
   background-color: white;
@@ -50,4 +55,10 @@ body {
 .map-overlay-box label {
   display: flex;
   gap: .3em;
+}
+
+.map-overlay-options {
+  height: auto;
+  flex-wrap: wrap;
+  padding: 20px;
 }

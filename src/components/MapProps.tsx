@@ -1,5 +1,6 @@
 import {
   ColorScheme, MapType, Distances, LoadPriority, CoordinateRegion, Coordinate,
+  PointOfInterestCategory,
 } from '../util/parameters';
 
 /**
@@ -116,6 +117,24 @@ export default interface MapProps {
    * @see {@link https://developer.apple.com/documentation/mapkitjs/map/2973948-tracksuserlocation}
    */
   tracksUserLocation?: boolean;
+
+  /**
+   * Include in the map only the given point of interest categories.
+   *
+   * Can't be used at the same time as excludedPOICategories.
+   *
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/pointofinterestfilter/3585975-including}
+   */
+  includedPOICategories?: PointOfInterestCategory[];
+
+  /**
+   * Hide the given point of interest categories from the map.
+   *
+   * Can't be used at the same time as includedPOICategories.
+   *
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/pointofinterestfilter/3585971-excluding}
+   */
+  excludedPOICategories?: PointOfInterestCategory[];
 
   /**
    * The amount of padding, in CSS pixels, to inset the map from the top edge.

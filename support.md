@@ -74,7 +74,8 @@
 | MapConstructorOptions.overlays              | ✅                                  |
 | MapConstructorOptions.selectedOverlay       | ✅ (use `selected` on the overlays) |
 | MapConstructorOptions.showsPointsOfInterest | ✅                                  |
-| MapConstructorOptions.pointOfInterestFilter | ❌                                  |
+| MapConstructorOptions.pointOfInterestFilter | ✅
+                                  |
 
 #### User location
 
@@ -131,7 +132,7 @@
 | distances             | ✅        |
 | mapType               | ✅        |
 | padding               | ✅        |
-| pointOfInterestFilter | ❌        |
+| pointOfInterestFilter | ✅        |
 | showsPointsOfInterest | ✅        |
 | tintColor             | ❌        |
 
@@ -355,10 +356,6 @@ _❌ Not currently supported by mapkit-react._
 _❌ Not currently supported by mapkit-react._
 
 ## `mapkit.Search`
-
-_❌ Not currently supported by mapkit-react._
-
-## `mapkit.PointOfInterestFilter`
 
 _❌ Not currently supported by mapkit-react._
 

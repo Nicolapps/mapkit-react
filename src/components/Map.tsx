@@ -29,6 +29,7 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   showsPointsOfInterest = true,
   showsUserLocation = false,
   tracksUserLocation = false,
+  allowWheelToZoom = false,
 
   includedPOICategories = undefined,
   excludedPOICategories = undefined,
@@ -111,6 +112,16 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
       map[propertyName] = prop;
     }, [map, prop]);
   });
+
+  // Experimental feature
+  useEffect(() => {
+    if (!map) return;
+    try {
+      // @ts-ignore
+      // eslint-disable-next-line no-underscore-dangle
+      map._allowWheelToZoom = allowWheelToZoom;
+    } catch { /* ignore errors */ }
+  }, [map, allowWheelToZoom]);
 
   // Padding
   useEffect(() => {

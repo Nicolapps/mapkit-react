@@ -119,6 +119,14 @@ export default interface MapProps {
   tracksUserLocation?: boolean;
 
   /**
+   * Allows the user to zoom on the map by scrolling. Disabled by default.
+   *
+   * ⚠️ This feature relies on an undocumented MapKit JS feature. Support is not
+   * guaranteed.
+   */
+  allowWheelToZoom?: boolean;
+
+  /**
    * Include in the map only the given point of interest categories.
    *
    * Can't be used at the same time as excludedPOICategories.

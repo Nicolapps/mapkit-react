@@ -6,6 +6,8 @@ export { default as Annotation } from './components/Annotation';
 export type { default as AnnotationProps } from './components/AnnotationProps';
 export { default as Polyline } from './components/Polyline';
 export type { default as PolylineProps } from './components/PolylineProps';
+export { default as Polygon } from './components/Polygon';
+export type { default as PolygonProps } from './components/PolygonProps';
 export {
   ColorScheme, MapType, Distances, LoadPriority, FeatureVisibility,
 } from './util/parameters';

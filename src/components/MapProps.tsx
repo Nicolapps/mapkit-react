@@ -214,4 +214,14 @@ export default interface MapProps {
    * event. Annotations need to be draggable to dispatch long-press events.
    */
   onLongPress?: (event: MapInteractionEvent) => void;
+
+  /**
+   * The browser's click event.
+   */
+  onClick?: (event: MapInteractionEvent) => void;
+
+  /**
+   * The browser's mouse move event.
+   */
+  onMouseMove?: (event: MapInteractionEvent) => void;
 }

@@ -47,6 +47,9 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   onSingleTap = undefined,
   onDoubleTap = undefined,
   onLongPress = undefined,
+
+  onClick = undefined,
+  onMouseMove = undefined,
 }, mapRef) => {
   const [map, setMap] = useState<mapkit.Map | null>(null);
   const element = useRef<HTMLDivElement>(null);
@@ -163,13 +166,13 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
     }
   }, [map, includedPOICategories, excludedPOICategories]);
 
-  // Events
-  const events = [
+  // MapKit JS events
+  const mapkitEvents = [
     { name: 'single-tap', handler: onSingleTap },
     { name: 'double-tap', handler: onDoubleTap },
     { name: 'long-press', handler: onLongPress },
   ] as const;
-  events.forEach(({ name, handler }) => {
+  mapkitEvents.forEach(({ name, handler }) => {
     useEffect(() => {
       if (!map || !handler) return undefined;
 
@@ -188,6 +191,32 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
       // @ts-ignore
       map.addEventListener(name, mapkitHandler);
       return () => map.removeEventListener(name, mapkitHandler);
+    }, [map, handler]);
+  });
+
+  // Native JavaScript events
+  const domEvents = [
+    { name: 'click', handler: onClick },
+    { name: 'mousemove', handler: onMouseMove },
+  ] as const;
+  domEvents.forEach(({ name, handler }) => {
+    useEffect(() => {
+      if (!map || !handler) return undefined;
+
+      const listener = (e: MouseEvent) => {
+        handler({
+          domEvents: [e],
+          pointOnPage: { x: e.pageX, y: e.pageY },
+          toCoordinates() {
+            const { latitude, longitude }: mapkit.Coordinate = map
+              .convertPointOnPageToCoordinate(new DOMPoint(e.pageX, e.pageY));
+            return { latitude, longitude };
+          },
+        });
+      };
+
+      element.current?.addEventListener(name, listener);
+      return () => element.current?.removeEventListener(name, listener);
     }, [map, handler]);
   });
 

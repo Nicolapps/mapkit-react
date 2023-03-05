@@ -1,4 +1,4 @@
-import { MapInteractionEvent } from '../events';
+import { MapInteractionEvent, UserLocationChangeEvent, UserLocationErrorEvent } from '../events';
 import {
   ColorScheme, MapType, Distances, LoadPriority, CoordinateRegion, Coordinate,
   PointOfInterestCategory,
@@ -202,4 +202,17 @@ export default interface MapProps {
    * The browser's mouse move event.
    */
   onMouseMove?: (event: MapInteractionEvent) => void;
+
+  /**
+   * An event sent when `showsUserLocation` is true and the map acquires
+   * the user’s location, or after an automatic update.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/map/handling_map_events#2993302}
+   */
+  onUserLocationChange?: (event: UserLocationChangeEvent) => void;
+
+  /**
+   * An event sent when MapKit JS coudln't acquire the user’s location.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/map/handling_map_events#2993302}
+   */
+  onUserLocationError?: (event: UserLocationErrorEvent) => void;
 }

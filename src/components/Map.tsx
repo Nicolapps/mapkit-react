@@ -23,7 +23,7 @@ function forwardMapkitEvent<E>(
   map: mapkit.Map | null,
   name: String,
   handler: ((mapkitReactEvent: E) => void) | undefined,
-  eventMap: (mapkitEvent: any) => E, // @todo
+  eventMap: (mapkitEvent: any) => E,
 ) {
   useEffect(() => {
     if (!map || !handler) return undefined;
@@ -77,6 +77,8 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   onSingleTap = undefined,
   onDoubleTap = undefined,
   onLongPress = undefined,
+  onUserLocationChange = undefined,
+  onUserLocationError = undefined,
 
   onClick = undefined,
   onMouseMove = undefined,
@@ -197,11 +199,11 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   }, [map, includedPOICategories, excludedPOICategories]);
 
   // MapKit JS events
-  type MapkitMapInteractionEvent = {
+  type MapKitMapInteractionEvent = {
     domEvents: Event[],
     pointOnPage: DOMPoint,
   };
-  const interactionEvent = ({ domEvents, pointOnPage }: MapkitMapInteractionEvent) => ({
+  const interactionEvent = ({ domEvents, pointOnPage }: MapKitMapInteractionEvent) => ({
     domEvents,
     pointOnPage,
     toCoordinates: () => map!.convertPointOnPageToCoordinate(pointOnPage),
@@ -209,6 +211,22 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   forwardMapkitEvent(map, 'single-tap', onSingleTap, interactionEvent);
   forwardMapkitEvent(map, 'double-tap', onDoubleTap, interactionEvent);
   forwardMapkitEvent(map, 'long-press', onLongPress, interactionEvent);
+
+  type MapKitUserLocationChangeEvent = {
+    coordinate: mapkit.Coordinate,
+    timestamp: Date,
+    floorLevel: number | undefined | null,
+  };
+  forwardMapkitEvent(map, 'user-location-change', onUserLocationChange, ({ coordinate: { latitude, longitude }, timestamp, floorLevel }: MapKitUserLocationChangeEvent) => ({
+    coordinate: { latitude, longitude },
+    timestamp,
+    floorLevel,
+  }));
+  type MapKitUserLocationErrorEvent = {
+    code: 1 | 2 | 3 | 4,
+    message: string,
+  };
+  forwardMapkitEvent(map, 'user-location-error', onUserLocationError, ({ code, message }: MapKitUserLocationErrorEvent) => ({ code, message }));
 
   // Native JavaScript events
   const domEvents = [

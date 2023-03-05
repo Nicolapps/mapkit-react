@@ -209,6 +209,16 @@ export default interface MapProps {
   onMouseMove?: (event: MapInteractionEvent) => void;
 
   /**
+   * The browser's mouse down event.
+   */
+  onMouseDown?: (event: MapInteractionEvent) => void;
+
+  /**
+   * The browser's mouse up event.
+   */
+  onMouseUp?: (event: MapInteractionEvent) => void;
+
+  /**
    * An event sent when `showsUserLocation` is true and the map acquires
    * the user’s location, or after an automatic update.
    * @see {@link https://developer.apple.com/documentation/mapkitjs/map/handling_map_events#2993302}

@@ -85,6 +85,8 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
 
   onClick = undefined,
   onMouseMove = undefined,
+  onMouseDown = undefined,
+  onMouseUp = undefined,
 }, mapRef) => {
   const [map, setMap] = useState<mapkit.Map | null>(null);
   const element = useRef<HTMLDivElement>(null);
@@ -237,6 +239,8 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   const domEvents = [
     { name: 'click', handler: onClick },
     { name: 'mousemove', handler: onMouseMove },
+    { name: 'mousedown', handler: onMouseDown },
+    { name: 'mouseup', handler: onMouseUp },
   ] as const;
   domEvents.forEach(({ name, handler }) => {
     useEffect(() => {

@@ -10,6 +10,36 @@ import {
 } from '../util/parameters';
 import MapProps from './MapProps';
 
+/**
+ * Forwards a given MapKit JS event to a mapkit-react event.
+ * @param map The current map instance
+ * @param name The name of the MapKit JS event.
+ * @param handler The event handler of the mapkit-react Map component
+ * @param eventMap A function that transforms the parameter of the
+ *                 MapKit JS event handler to a parameter for the
+ *                 mapkit-react event handler.
+ */
+function forwardMapkitEvent<E>(
+  map: mapkit.Map | null,
+  name: String,
+  handler: ((mapkitReactEvent: E) => void) | undefined,
+  eventMap: (mapkitEvent: any) => E, // @todo
+) {
+  useEffect(() => {
+    if (!map || !handler) return undefined;
+
+    // @ts-ignore
+    const mapkitHandler = (e) => {
+      handler(eventMap(e));
+    };
+
+    // @ts-ignore
+    map.addEventListener(name, mapkitHandler);
+    // @ts-ignore
+    return () => map.removeEventListener(name, mapkitHandler);
+  }, [map, handler]);
+}
+
 const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps>>(({
   children = undefined,
 
@@ -167,32 +197,18 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   }, [map, includedPOICategories, excludedPOICategories]);
 
   // MapKit JS events
-  const mapkitEvents = [
-    { name: 'single-tap', handler: onSingleTap },
-    { name: 'double-tap', handler: onDoubleTap },
-    { name: 'long-press', handler: onLongPress },
-  ] as const;
-  mapkitEvents.forEach(({ name, handler }) => {
-    useEffect(() => {
-      if (!map || !handler) return undefined;
-
-      type MapkitMapInteractionEvent = {
-        domEvents: Event[],
-        pointOnPage: DOMPoint,
-      };
-      const mapkitHandler = ({ domEvents, pointOnPage }: MapkitMapInteractionEvent) => {
-        handler({
-          domEvents,
-          pointOnPage,
-          toCoordinates: () => map.convertPointOnPageToCoordinate(pointOnPage),
-        });
-      };
-
-      // @ts-ignore
-      map.addEventListener(name, mapkitHandler);
-      return () => map.removeEventListener(name, mapkitHandler);
-    }, [map, handler]);
+  type MapkitMapInteractionEvent = {
+    domEvents: Event[],
+    pointOnPage: DOMPoint,
+  };
+  const interactionEvent = ({ domEvents, pointOnPage }: MapkitMapInteractionEvent) => ({
+    domEvents,
+    pointOnPage,
+    toCoordinates: () => map!.convertPointOnPageToCoordinate(pointOnPage),
   });
+  forwardMapkitEvent(map, 'single-tap', onSingleTap, interactionEvent);
+  forwardMapkitEvent(map, 'double-tap', onDoubleTap, interactionEvent);
+  forwardMapkitEvent(map, 'long-press', onLongPress, interactionEvent);
 
   // Native JavaScript events
   const domEvents = [

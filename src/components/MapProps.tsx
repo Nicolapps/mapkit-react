@@ -1,30 +1,8 @@
+import { MapInteractionEvent, UserLocationChangeEvent, UserLocationErrorEvent } from '../events';
 import {
-  ColorScheme, MapType, Distances, LoadPriority, CoordinateRegion, Coordinate,
+  ColorScheme, MapType, Distances, LoadPriority, CoordinateRegion,
   PointOfInterestCategory,
 } from '../util/parameters';
-
-/**
- * The details of an event caused by taps on the map.
- */
-export interface MapInteractionEvent {
-  /**
-   * A DOM point with the coordinates (x, y) of the event on the page.
-   */
-  readonly pointOnPage: { x: number, y: number };
-
-  /**
-   * An array of DOM event objects listing the pertinent low-level events that
-   * led to the recognized gesture. You can inspect these and tailor the code to
-   * react according to the additional low-level events, such as modifier keys
-   * for the events.
-   */
-  readonly domEvents: Event[];
-
-  /**
-   * Gets the map coordinates of the event’s location.
-   */
-  toCoordinates(): Coordinate;
-}
 
 export default interface MapProps {
   /**
@@ -195,6 +173,11 @@ export default interface MapProps {
   maxCameraDistance?: number;
 
   /**
+   * A program event or a user interaction causes the map’s type to change.
+   */
+  onMapTypeChange?: (newValue: MapType) => void;
+
+  /**
    * A single tap occurs on the map outside an annotation or an overlay. If an
    * annotation or an overlay is in a selected state when a single tap occurs,
    * MapKit JS deselects the annotation or the overlay and dispatches a
@@ -214,4 +197,27 @@ export default interface MapProps {
    * event. Annotations need to be draggable to dispatch long-press events.
    */
   onLongPress?: (event: MapInteractionEvent) => void;
+
+  /**
+   * The browser's click event.
+   */
+  onClick?: (event: MapInteractionEvent) => void;
+
+  /**
+   * The browser's mouse move event.
+   */
+  onMouseMove?: (event: MapInteractionEvent) => void;
+
+  /**
+   * An event sent when `showsUserLocation` is true and the map acquires
+   * the user’s location, or after an automatic update.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/map/handling_map_events#2993302}
+   */
+  onUserLocationChange?: (event: UserLocationChangeEvent) => void;
+
+  /**
+   * An event sent when MapKit JS coudln't acquire the user’s location.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/map/handling_map_events#2993302}
+   */
+  onUserLocationError?: (event: UserLocationErrorEvent) => void;
 }

@@ -74,8 +74,8 @@
 | MapConstructorOptions.overlays              | ✅                                  |
 | MapConstructorOptions.selectedOverlay       | ✅ (use `selected` on the overlays) |
 | MapConstructorOptions.showsPointsOfInterest | ✅                                  |
-| MapConstructorOptions.pointOfInterestFilter | ✅
-                                  |
+| MapConstructorOptions.pointOfInterestFilter | ✅                                  |
+|  |
 
 #### User location
 
@@ -193,14 +193,14 @@ It is possible to indirectly listen to the events by using the reference to `map
 | scroll-end          | ❌        |
 | zoom-start          | ❌        |
 | zoom-end            | ❌        |
-| map-type-change     | ❌        |
+| map-type-change     | ✅        |
 
 #### Respond to user location events
 
 | Feature              | Supported |
 | -------------------- | --------- |
-| user-location-change | ❌        |
-| user-location-error  | ❌        |
+| user-location-change | ✅        |
+| user-location-error  | ✅        |
 
 #### Respond to map interaction events
 

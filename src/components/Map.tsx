@@ -4,11 +4,41 @@ import React, {
 import MapContext from '../context/MapContext';
 import load from '../util/loader';
 import {
-  ColorScheme, Distances, LoadPriority, MapType,
+  ColorScheme, Distances, fromMapKitMapType, LoadPriority, MapType,
   toMapKitColorScheme, toMapKitCoordinateRegion, toMapKitDistances,
   toMapKitLoadPriority, toMapKitMapType, toMapKitPOICategory,
 } from '../util/parameters';
 import MapProps from './MapProps';
+
+/**
+ * Forwards a given MapKit JS event to a mapkit-react event.
+ * @param map The current map instance
+ * @param name The name of the MapKit JS event.
+ * @param handler The event handler of the mapkit-react Map component
+ * @param eventMap A function that transforms the parameter of the
+ *                 MapKit JS event handler to a parameter for the
+ *                 mapkit-react event handler.
+ */
+function forwardMapkitEvent<E>(
+  map: mapkit.Map | null,
+  name: String,
+  handler: ((mapkitReactEvent: E) => void) | undefined,
+  eventMap: (mapkitEvent: any) => E,
+) {
+  useEffect(() => {
+    if (!map || !handler) return undefined;
+
+    // @ts-ignore
+    const mapkitHandler = (e) => {
+      handler(eventMap(e));
+    };
+
+    // @ts-ignore
+    map.addEventListener(name, mapkitHandler);
+    // @ts-ignore
+    return () => map.removeEventListener(name, mapkitHandler);
+  }, [map, handler]);
+}
 
 const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps>>(({
   children = undefined,
@@ -44,9 +74,17 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   minCameraDistance = 0,
   maxCameraDistance = Infinity,
 
+  onMapTypeChange = undefined,
+
   onSingleTap = undefined,
   onDoubleTap = undefined,
   onLongPress = undefined,
+
+  onUserLocationChange = undefined,
+  onUserLocationError = undefined,
+
+  onClick = undefined,
+  onMouseMove = undefined,
 }, mapRef) => {
   const [map, setMap] = useState<mapkit.Map | null>(null);
   const element = useRef<HTMLDivElement>(null);
@@ -163,31 +201,61 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
     }
   }, [map, includedPOICategories, excludedPOICategories]);
 
-  // Events
-  const events = [
-    { name: 'single-tap', handler: onSingleTap },
-    { name: 'double-tap', handler: onDoubleTap },
-    { name: 'long-press', handler: onLongPress },
+  // MapKit JS events
+  forwardMapkitEvent(map, 'map-type-change', onMapTypeChange, () => fromMapKitMapType(map!.mapType));
+
+  type MapKitMapInteractionEvent = {
+    domEvents: Event[],
+    pointOnPage: DOMPoint,
+  };
+  const interactionEvent = ({ domEvents, pointOnPage }: MapKitMapInteractionEvent) => ({
+    domEvents,
+    pointOnPage,
+    toCoordinates: () => map!.convertPointOnPageToCoordinate(pointOnPage),
+  });
+  forwardMapkitEvent(map, 'single-tap', onSingleTap, interactionEvent);
+  forwardMapkitEvent(map, 'double-tap', onDoubleTap, interactionEvent);
+  forwardMapkitEvent(map, 'long-press', onLongPress, interactionEvent);
+
+  type MapKitUserLocationChangeEvent = {
+    coordinate: mapkit.Coordinate,
+    timestamp: Date,
+    floorLevel: number | undefined | null,
+  };
+  forwardMapkitEvent(map, 'user-location-change', onUserLocationChange, ({ coordinate: { latitude, longitude }, timestamp, floorLevel }: MapKitUserLocationChangeEvent) => ({
+    coordinate: { latitude, longitude },
+    timestamp,
+    floorLevel,
+  }));
+  type MapKitUserLocationErrorEvent = {
+    code: 1 | 2 | 3 | 4,
+    message: string,
+  };
+  forwardMapkitEvent(map, 'user-location-error', onUserLocationError, ({ code, message }: MapKitUserLocationErrorEvent) => ({ code, message }));
+
+  // Native JavaScript events
+  const domEvents = [
+    { name: 'click', handler: onClick },
+    { name: 'mousemove', handler: onMouseMove },
   ] as const;
-  events.forEach(({ name, handler }) => {
+  domEvents.forEach(({ name, handler }) => {
     useEffect(() => {
       if (!map || !handler) return undefined;
 
-      type MapkitMapInteractionEvent = {
-        domEvents: Event[],
-        pointOnPage: DOMPoint,
-      };
-      const mapkitHandler = ({ domEvents, pointOnPage }: MapkitMapInteractionEvent) => {
+      const listener = (e: MouseEvent) => {
         handler({
-          domEvents,
-          pointOnPage,
-          toCoordinates: () => map.convertPointOnPageToCoordinate(pointOnPage),
+          domEvents: [e],
+          pointOnPage: { x: e.pageX, y: e.pageY },
+          toCoordinates() {
+            const { latitude, longitude }: mapkit.Coordinate = map
+              .convertPointOnPageToCoordinate(new DOMPoint(e.pageX, e.pageY));
+            return { latitude, longitude };
+          },
         });
       };
 
-      // @ts-ignore
-      map.addEventListener(name, mapkitHandler);
-      return () => map.removeEventListener(name, mapkitHandler);
+      element.current?.addEventListener(name, listener);
+      return () => element.current?.removeEventListener(name, listener);
     }, [map, handler]);
   });
 

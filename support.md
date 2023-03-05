@@ -193,7 +193,7 @@ It is possible to indirectly listen to the events by using the reference to `map
 | scroll-end          | ❌        |
 | zoom-start          | ❌        |
 | zoom-end            | ❌        |
-| map-type-change     | ❌        |
+| map-type-change     | ✅        |
 
 #### Respond to user location events
 

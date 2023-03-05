@@ -74,6 +74,27 @@ export function toMapKitMapType(mapType: MapType): string {
 }
 
 /**
+ * Converts a MapKit JS map type value to a mapkit-react map type value.
+ * Must be called after MapKit JS is loaded.
+ * @param mapType The MapKit JS map type value
+ * @returns The mapkit-react map type value
+ */
+export function fromMapKitMapType(mapType: string): MapType {
+  switch (mapType) {
+    case mapkit.Map.MapTypes.Standard:
+      return MapType.Standard;
+    case mapkit.Map.MapTypes.MutedStandard:
+      return MapType.MutedStandard;
+    case mapkit.Map.MapTypes.Hybrid:
+      return MapType.Hybrid;
+    case mapkit.Map.MapTypes.Satellite:
+      return MapType.Satellite;
+    default:
+      throw new RangeError('Invalid map type');
+  }
+}
+
+/**
  * System of measurement that displays on the map.
  * @see {@link https://developer.apple.com/documentation/mapkitjs/map/distances}
  */

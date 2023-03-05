@@ -173,6 +173,11 @@ export default interface MapProps {
   maxCameraDistance?: number;
 
   /**
+   * A program event or a user interaction causes the map’s type to change.
+   */
+  onMapTypeChange?: (newValue: MapType) => void;
+
+  /**
    * A single tap occurs on the map outside an annotation or an overlay. If an
    * annotation or an overlay is in a selected state when a single tap occurs,
    * MapKit JS deselects the annotation or the overlay and dispatches a

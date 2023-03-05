@@ -4,7 +4,7 @@ import React, {
 import MapContext from '../context/MapContext';
 import load from '../util/loader';
 import {
-  ColorScheme, Distances, LoadPriority, MapType,
+  ColorScheme, Distances, fromMapKitMapType, LoadPriority, MapType,
   toMapKitColorScheme, toMapKitCoordinateRegion, toMapKitDistances,
   toMapKitLoadPriority, toMapKitMapType, toMapKitPOICategory,
 } from '../util/parameters';
@@ -74,9 +74,12 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   minCameraDistance = 0,
   maxCameraDistance = Infinity,
 
+  onMapTypeChange = undefined,
+
   onSingleTap = undefined,
   onDoubleTap = undefined,
   onLongPress = undefined,
+
   onUserLocationChange = undefined,
   onUserLocationError = undefined,
 
@@ -199,6 +202,8 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   }, [map, includedPOICategories, excludedPOICategories]);
 
   // MapKit JS events
+  forwardMapkitEvent(map, 'map-type-change', onMapTypeChange, () => fromMapKitMapType(map!.mapType));
+
   type MapKitMapInteractionEvent = {
     domEvents: Event[],
     pointOnPage: DOMPoint,

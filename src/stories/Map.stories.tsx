@@ -9,7 +9,7 @@ import {
   ColorScheme, MapType, Distances, LoadPriority, CoordinateRegion, PointOfInterestCategory,
 } from '../util/parameters';
 import Marker from '../components/Marker';
-import { MapInteractionEvent } from '../components/MapProps';
+import { MapInteractionEvent } from '..';
 
 const token = process.env.STORYBOOK_MAPKIT_JS_TOKEN!;
 

@@ -1,6 +1,6 @@
 import { MapInteractionEvent, UserLocationChangeEvent, UserLocationErrorEvent } from '../events';
 import {
-  ColorScheme, MapType, Distances, LoadPriority, CoordinateRegion, Coordinate,
+  ColorScheme, MapType, Distances, LoadPriority, CoordinateRegion,
   PointOfInterestCategory,
 } from '../util/parameters';
 

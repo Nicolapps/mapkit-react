@@ -232,7 +232,7 @@ export enum PointOfInterestCategory {
 /**
  * Converts a mapkit-react POI category value to a MapKit JS POI category value.
  * Must be called after MapKit JS is loaded.
- * @param mapType The mapkit-react point of interest category value
+ * @param category The mapkit-react point of interest category value
  * @returns The MapKit JS point of interest category value
  */
 export function toMapKitPOICategory(category: PointOfInterestCategory):

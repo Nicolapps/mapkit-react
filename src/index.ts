@@ -15,6 +15,7 @@ export type { default as PolygonProps } from './components/PolygonProps';
 
 export {
   ColorScheme, MapType, Distances, LoadPriority, FeatureVisibility,
+  PointOfInterestCategory,
 } from './util/parameters';
 export type { Coordinate, CoordinateRegion } from './util/parameters';
 

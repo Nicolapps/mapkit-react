@@ -205,3 +205,43 @@ export const PointOfInterestFilters = () => {
   );
 };
 PointOfInterestFilters.storyName = 'Point of Interest Filter';
+
+export const CustomLoadFunction = () => {
+  const initialRegion: CoordinateRegion = useMemo(() => ({
+    centerLatitude: 40.7538,
+    centerLongitude: -73.986,
+    latitudeDelta: 0.03,
+    longitudeDelta: 0.03,
+  }), []);
+
+  return (
+    <Map
+      load={(customLoadToken) => (
+        new Promise((resolve) => {
+          const element = document.createElement('script');
+          // @ts-ignore-next-line
+          window.initMapKit = () => {
+            // @ts-ignore-next-line
+            delete window.initMapKit;
+            window.mapkit.init({
+              authorizationCallback: (done) => {
+                done(customLoadToken);
+              },
+            });
+            resolve();
+          };
+          element.src = 'https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.core.js';
+          element.dataset.callback = 'initMapKit';
+          element.dataset.initialToken = customLoadToken;
+          element.dataset.libraries = 'map';
+          element.crossOrigin = 'anonymous';
+          document.head.appendChild(element);
+        })
+      )}
+      token={token}
+      initialRegion={initialRegion}
+      showsMapTypeControl={false}
+    />
+  );
+};
+CustomLoadFunction.storyName = 'Custom `load` Function';

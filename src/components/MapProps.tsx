@@ -6,6 +6,11 @@ import {
 
 export default interface MapProps {
   /**
+   * Custom load method for MapKit JS.
+   */
+  load?: (token: string) => Promise<void>;
+
+  /**
    * The token provided by MapKit JS.
    */
   token: string;

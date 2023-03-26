@@ -43,6 +43,7 @@ function forwardMapkitEvent<E>(
 const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps>>(({
   children = undefined,
 
+  load: customLoad,
   token,
 
   colorScheme = ColorScheme.Light,
@@ -94,7 +95,8 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
 
   // Load the map
   useEffect(() => {
-    load(token).then(() => {
+    const loadMap = typeof customLoad === 'function' ? customLoad : load;
+    loadMap(token).then(() => {
       if (exists.current) return;
       const options = initialRegion
         ? { region: toMapKitCoordinateRegion(initialRegion) }

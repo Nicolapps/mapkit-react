@@ -2,6 +2,7 @@ import { MapInteractionEvent, UserLocationChangeEvent, UserLocationErrorEvent } 
 import {
   ColorScheme, MapType, Distances, LoadPriority, CoordinateRegion,
   PointOfInterestCategory,
+  FeatureVisibility,
 } from '../util/parameters';
 
 export default interface MapProps {
@@ -60,6 +61,19 @@ export default interface MapProps {
    * @see {@link https://developer.apple.com/documentation/mapkitjs/map/2978330-iszoomenabled}
    */
   isZoomEnabled?: boolean;
+
+  /**
+   * A feature visibility setting that determines when the compass is visible.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/map/2992819-showscompass}
+   */
+  showsCompass?: FeatureVisibility;
+
+  /**
+   * A feature visibility setting that determines when the map displays
+   * the map’s scale indicator.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/map/2973941-showsscale}
+   */
+  showsScale?: FeatureVisibility;
 
   /**
    * A Boolean value that determines whether to display a control that lets

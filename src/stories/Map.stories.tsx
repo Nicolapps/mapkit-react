@@ -6,7 +6,8 @@ import './stories.css';
 
 import Map from '../components/Map';
 import {
-  ColorScheme, MapType, Distances, LoadPriority, CoordinateRegion, PointOfInterestCategory,
+  ColorScheme, MapType, Distances, LoadPriority, CoordinateRegion,
+  PointOfInterestCategory, FeatureVisibility,
 } from '../util/parameters';
 import Marker from '../components/Marker';
 import { MapInteractionEvent } from '..';
@@ -29,6 +30,8 @@ export default {
     mapType: enumArgType(MapType),
     distances: enumArgType(Distances),
     loadPriority: enumArgType(LoadPriority),
+    showsCompass: enumArgType(FeatureVisibility),
+    showsScale: enumArgType(FeatureVisibility),
   },
   parameters: { layout: 'fullscreen' },
 } as ComponentMeta<typeof Map>;

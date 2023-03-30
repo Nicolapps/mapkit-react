@@ -4,9 +4,10 @@ import React, {
 import MapContext from '../context/MapContext';
 import load from '../util/loader';
 import {
-  ColorScheme, Distances, fromMapKitMapType, LoadPriority, MapType,
+  ColorScheme, Distances, FeatureVisibility, LoadPriority, MapType,
+  fromMapKitMapType,
   toMapKitColorScheme, toMapKitCoordinateRegion, toMapKitDistances,
-  toMapKitLoadPriority, toMapKitMapType, toMapKitPOICategory,
+  toMapKitLoadPriority, toMapKitMapType, toMapKitPOICategory, toMapKitFeatureVisibility,
 } from '../util/parameters';
 import MapProps from './MapProps';
 
@@ -54,6 +55,8 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   isRotationEnabled = true,
   isScrollEnabled = true,
   isZoomEnabled = true,
+  showsCompass = FeatureVisibility.Adaptive,
+  showsScale = FeatureVisibility.Hidden,
   showsMapTypeControl = true,
   showsZoomControl = true,
   showsUserLocationControl = false,
@@ -152,6 +155,19 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
       if (!map) return;
       // @ts-ignore
       map[propertyName] = prop;
+    }, [map, prop]);
+  });
+
+  // Feature visibility properties
+  const featureVisibilityProperties = {
+    showsCompass,
+    showsScale,
+  };
+  Object.entries(featureVisibilityProperties).forEach(([propertyName, prop]) => {
+    useEffect(() => {
+      if (!map) return;
+      // @ts-ignore
+      map[propertyName] = toMapKitFeatureVisibility(prop);
     }, [map, prop]);
   });
 

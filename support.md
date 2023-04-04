@@ -185,8 +185,8 @@ It is possible to indirectly listen to the events by using the reference to `map
 
 | Feature             | Supported |
 | ------------------- | --------- |
-| region-change-start | ❌        |
-| region-change-end   | ❌        |
+| region-change-start | ✅        |
+| region-change-end   | ✅        |
 | rotation-start      | ❌        |
 | rotation-end        | ❌        |
 | scroll-start        | ❌        |

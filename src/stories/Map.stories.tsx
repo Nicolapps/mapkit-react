@@ -228,10 +228,10 @@ function ReadOnlyInput({ label, value }: { label: string, value: string }) {
 }
 
 export const RegionChangeEvent = () => {
-  const [centerLatitude, setCenterLatitude] = useState(40.7538);
-  const [centerLongitude, setCenterLongitude] = useState(-73.986);
-  const [latitudeDelta, setLatitudeDelta] = useState(0.03);
-  const [longitudeDelta, setLongitudeDelta] = useState(0.03);
+  const [centerLatitude, setCenterLatitude] = useState(46.94869130019719);
+  const [centerLongitude, setCenterLongitude] = useState(7.447300186911917);
+  const [latitudeDelta, setLatitudeDelta] = useState(0.010188625378894756);
+  const [longitudeDelta, setLongitudeDelta] = useState(0.024314821659999097);
 
   const initialRegion: CoordinateRegion = useMemo(() => ({
     centerLatitude,

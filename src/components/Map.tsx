@@ -7,7 +7,8 @@ import {
   ColorScheme, Distances, FeatureVisibility, LoadPriority, MapType,
   fromMapKitMapType,
   toMapKitColorScheme, toMapKitCoordinateRegion, toMapKitDistances,
-  toMapKitLoadPriority, toMapKitMapType, toMapKitPOICategory, toMapKitFeatureVisibility,
+  toMapKitLoadPriority, toMapKitMapType, toMapKitPOICategory,
+  toMapKitFeatureVisibility, fromMapKitRegion,
 } from '../util/parameters';
 import MapProps from './MapProps';
 
@@ -78,6 +79,8 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   minCameraDistance = 0,
   maxCameraDistance = Infinity,
 
+  onRegionChangeStart = undefined,
+  onRegionChangeEnd = undefined,
   onMapTypeChange = undefined,
 
   onSingleTap = undefined,
@@ -222,6 +225,9 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   }, [map, includedPOICategories, excludedPOICategories]);
 
   // MapKit JS events
+  const regionHandler = () => fromMapKitRegion(map!.region);
+  forwardMapkitEvent(map, 'region-change-start', onRegionChangeStart, regionHandler);
+  forwardMapkitEvent(map, 'region-change-end', onRegionChangeEnd, regionHandler);
   forwardMapkitEvent(map, 'map-type-change', onMapTypeChange, () => fromMapKitMapType(map!.mapType));
 
   type MapKitMapInteractionEvent = {

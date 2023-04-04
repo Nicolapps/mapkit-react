@@ -74,6 +74,20 @@ export function toMapKitMapType(mapType: MapType): string {
 }
 
 /**
+ * Converts a MapKit JS region value to a mapkit-react region value.
+ * @param region The MapKit JS region value
+ * @returns The mapkit-react region value
+ */
+export function fromMapKitRegion(region: mapkit.CoordinateRegion): CoordinateRegion {
+  return {
+    centerLatitude: region.center.latitude,
+    centerLongitude: region.center.longitude,
+    latitudeDelta: region.span.latitudeDelta,
+    longitudeDelta: region.span.longitudeDelta,
+  };
+}
+
+/**
  * Converts a MapKit JS map type value to a mapkit-react map type value.
  * Must be called after MapKit JS is loaded.
  * @param mapType The MapKit JS map type value

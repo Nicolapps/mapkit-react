@@ -209,6 +209,74 @@ export const PointOfInterestFilters = () => {
 };
 PointOfInterestFilters.storyName = 'Point of Interest Filter';
 
+function ReadOnlyInput({ label, value }: { label: string, value: string }) {
+  const id = useId();
+  return (
+    <label
+      className="form-group"
+      htmlFor={id}
+    >
+      {label}
+      <input
+        type="text"
+        className="input"
+        value={value}
+        readOnly
+      />
+    </label>
+  );
+}
+
+export const RegionChangeEvent = () => {
+  const [centerLatitude, setCenterLatitude] = useState(40.7538);
+  const [centerLongitude, setCenterLongitude] = useState(-73.986);
+  const [latitudeDelta, setLatitudeDelta] = useState(0.03);
+  const [longitudeDelta, setLongitudeDelta] = useState(0.03);
+
+  const initialRegion: CoordinateRegion = useMemo(() => ({
+    centerLatitude,
+    centerLongitude,
+    latitudeDelta,
+    longitudeDelta,
+  }), []);
+
+  return (
+    <>
+      <Map
+        token={token}
+        initialRegion={initialRegion}
+        onRegionChangeEnd={(region) => {
+          setCenterLatitude(region.centerLatitude);
+          setCenterLongitude(region.centerLongitude);
+          setLatitudeDelta(region.latitudeDelta);
+          setLongitudeDelta(region.longitudeDelta);
+        }}
+      />
+
+      <div className="map-overlay map-overlay-top">
+        <div className="map-overlay-box map-overlay-inputs">
+          <ReadOnlyInput
+            label="Center latitude"
+            value={centerLatitude.toString()}
+          />
+          <ReadOnlyInput
+            label="Center longitude"
+            value={centerLongitude.toString()}
+          />
+          <ReadOnlyInput
+            label="Latitude delta"
+            value={latitudeDelta.toString()}
+          />
+          <ReadOnlyInput
+            label="Longitude delta"
+            value={longitudeDelta.toString()}
+          />
+        </div>
+      </div>
+    </>
+  );
+};
+
 export const CustomLoadFunction = () => {
   const initialRegion: CoordinateRegion = useMemo(() => ({
     centerLatitude: 40.7538,

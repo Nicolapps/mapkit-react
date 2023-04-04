@@ -192,6 +192,16 @@ export default interface MapProps {
   maxCameraDistance?: number;
 
   /**
+   * The map’s visible region is about to change.
+   */
+  onRegionChangeStart: (currentValue: CoordinateRegion) => void;
+
+  /**
+   * The map’s visible region finishes changing.
+   */
+  onRegionChangeEnd: (newValue: CoordinateRegion) => void;
+
+  /**
    * A program event or a user interaction causes the map’s type to change.
    */
   onMapTypeChange?: (newValue: MapType) => void;

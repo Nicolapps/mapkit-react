@@ -12,7 +12,7 @@ export default function Marker({
   accessibilityLabel = null,
   subtitleVisibility = FeatureVisibility.Adaptive,
   titleVisibility = FeatureVisibility.Adaptive,
-
+  clusteringIdentifier = null,
   color = '#ff5b40',
   glyphColor = 'white',
 
@@ -64,7 +64,7 @@ export default function Marker({
     glyphText,
     glyphImage,
     selectedGlyphImage,
-
+    clusteringIdentifier,
     selected,
   };
   Object.entries(properties).forEach(([propertyName, prop]) => {

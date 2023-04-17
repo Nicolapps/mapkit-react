@@ -85,4 +85,11 @@ export default interface MarkerProps {
    * Event fired when the marker is deselected.
    */
   onDeselect?: () => void;
+
+  /**
+  * A shared identifier for all of the member annotations. 
+  * An annotation needs a clusteringIdentifier to be part of an annotation cluster.
+  * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotations/clustering_annotations}
+  */
+  clusteringIdentifier?: string | null
 }

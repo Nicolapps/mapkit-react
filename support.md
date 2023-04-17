@@ -75,7 +75,6 @@
 | MapConstructorOptions.selectedOverlay       | ✅ (use `selected` on the overlays) |
 | MapConstructorOptions.showsPointsOfInterest | ✅                                  |
 | MapConstructorOptions.pointOfInterestFilter | ✅                                  |
-|  |
 
 #### User location
 
@@ -238,7 +237,7 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 | AnnotationConstructorOptions.displayPriority      | ❌        |
 | AnnotationConstructorOptions.collisionMode        | ❌        |
 | AnnotationConstructorOptions.padding              | ❌        |
-| AnnotationConstructorOptions.clusteringIdentifier | ❌        |
+| AnnotationConstructorOptions.clusteringIdentifier | ✅        |
 
 ### Properties
 
@@ -292,7 +291,7 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 | Feature              | Supported |
 | -------------------- | --------- |
 | memberAnnotations    | ❌        |
-| clusteringIdentifier | ❌        |
+| clusteringIdentifier | ✅        |
 | collisionMode        | ❌        |
 
 ### Events

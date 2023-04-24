@@ -79,6 +79,8 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   minCameraDistance = 0,
   maxCameraDistance = Infinity,
 
+  onLoad = undefined,
+
   onRegionChangeStart = undefined,
   onRegionChangeEnd = undefined,
   onMapTypeChange = undefined,
@@ -118,6 +120,13 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
       }
     };
   }, []);
+
+  // Fire the `onLoad` event
+  useEffect(() => {
+    if (map !== null) {
+      onLoad?.();
+    }
+  }, [map]);
 
   // Expose the map using a forward ref
   useImperativeHandle(mapRef, () => map!, [map]);

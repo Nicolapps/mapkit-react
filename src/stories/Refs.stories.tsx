@@ -1,10 +1,10 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { ComponentMeta, Story } from '@storybook/react';
 import './stories.css';
 
 import Map from '../components/Map';
 import {
-  ColorScheme, MapType, Distances, LoadPriority,
+  ColorScheme, MapType, Distances, LoadPriority, CoordinateRegion,
 } from '../util/parameters';
 
 const token = process.env.STORYBOOK_MAPKIT_JS_TOKEN!;
@@ -75,3 +75,35 @@ MapReference.args = {
     longitudeDelta: 0.11,
   },
 };
+
+export const OnLoadEvent = () => {
+  const mapRef = useRef<mapkit.Map>(null);
+
+  const initialRegion: CoordinateRegion = useMemo(() => ({
+    centerLatitude: 48.92630099185955,
+    centerLongitude: 10.615092941674959,
+    latitudeDelta: 24.17307048317351,
+    longitudeDelta: 43.4436668867213,
+  }), []);
+
+  return (
+    <Map
+      token={token}
+      ref={mapRef}
+      initialRegion={initialRegion}
+      onLoad={() => {
+        mapRef.current!.setRegionAnimated(new mapkit.CoordinateRegion(
+          new mapkit.Coordinate(
+            46.76753351386031,
+            8.208099002907204,
+          ),
+          new mapkit.CoordinateSpan(
+            2.017148245608759,
+            4.684076997007793,
+          ),
+        ));
+      }}
+    />
+  );
+};
+OnLoadEvent.storyName = '`onLoad` Event';

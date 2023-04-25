@@ -192,6 +192,11 @@ export default interface MapProps {
   maxCameraDistance?: number;
 
   /**
+   * The map has loaded.
+   */
+  onLoad?: () => void;
+
+  /**
    * The map’s visible region is about to change.
    */
   onRegionChangeStart?: (currentValue: CoordinateRegion) => void;

@@ -24,6 +24,7 @@
   "module": "dist/mapkit-react.js",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/mapkit-react.js",
       "require": "./dist/mapkit-react.umd.js"
     }

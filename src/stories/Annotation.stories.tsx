@@ -89,3 +89,28 @@ export const MoveableAnnotation = () => {
 };
 
 MoveableAnnotation.storyName = 'Moveable Annotation';
+
+export const AnimatedAnnotation = () => {
+  const initialRegion: CoordinateRegion = useMemo(() => ({
+    centerLatitude: 46.20738751546706,
+    centerLongitude: 6.155891756231,
+    latitudeDelta: 0.007,
+    longitudeDelta: 0.015,
+  }), []);
+
+  return (
+    <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
+      <Annotation
+        latitude={46.20738751546706}
+        longitude={6.155891756231}
+        title="Tap and hold to move"
+        animates
+        appearanceAnimation="gelatine 0.5s infinite"
+      >
+        <CustomMarker />
+      </Annotation>
+    </Map>
+  );
+};
+
+AnimatedAnnotation.storyName = 'Animated Annotation';

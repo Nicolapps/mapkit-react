@@ -22,6 +22,7 @@ export default function Marker({
 
   selected = undefined,
   animates = undefined,
+  appearanceAnimation = '',
   draggable = undefined,
   enabled = undefined,
   onSelect = undefined,
@@ -70,6 +71,7 @@ export default function Marker({
     clusteringIdentifier,
     selected,
     animates,
+    appearanceAnimation,
     draggable,
     enabled,
   };

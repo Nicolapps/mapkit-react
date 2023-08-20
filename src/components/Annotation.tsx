@@ -21,6 +21,7 @@ export default function Annotation({
   onDeselect = undefined,
 
   animates = undefined,
+  appearanceAnimation = '',
   draggable = undefined,
   enabled = undefined,
 
@@ -54,6 +55,7 @@ export default function Annotation({
 
     selected,
     animates,
+    appearanceAnimation,
     draggable,
     enabled,
   };

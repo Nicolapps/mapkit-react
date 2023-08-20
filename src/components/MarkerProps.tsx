@@ -82,6 +82,12 @@ export default interface MarkerProps {
   animates?: boolean;
 
   /**
+   * A CSS animation that runs when the annotation appears on the map.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973818-appearanceanimation}
+   */
+  appearanceAnimation?: string;
+
+  /**
    * A Boolean value that determines whether the user can drag the annotation.
    */
   draggable?: boolean;

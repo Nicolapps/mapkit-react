@@ -77,6 +77,21 @@ export default interface MarkerProps {
   selected?: boolean;
 
   /**
+   * A Boolean value that determines whether the map animates the annotation.
+   */
+  animates?: boolean;
+
+  /**
+   * A Boolean value that determines whether the user can drag the annotation.
+   */
+  draggable?: boolean;
+
+  /**
+   * A Boolean value that determines whether the annotation responds to user interaction.
+   */
+  enabled?: boolean;
+
+  /**
    * Event fired when the marker is selected.
    */
   onSelect?: () => void;

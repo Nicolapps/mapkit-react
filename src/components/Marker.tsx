@@ -21,6 +21,9 @@ export default function Marker({
   selectedGlyphImage = undefined,
 
   selected = undefined,
+  animates = undefined,
+  draggable = undefined,
+  enabled = undefined,
   onSelect = undefined,
   onDeselect = undefined,
 }: MarkerProps) {
@@ -66,6 +69,9 @@ export default function Marker({
     selectedGlyphImage,
     clusteringIdentifier,
     selected,
+    animates,
+    draggable,
+    enabled,
   };
   Object.entries(properties).forEach(([propertyName, prop]) => {
     useEffect(() => {

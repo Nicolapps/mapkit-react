@@ -64,3 +64,28 @@ const Template: Story<MarkerProps> = (args) => {
 
 export const Default = Template.bind({});
 Default.args = { latitude: 46.52, longitude: 6.57 };
+
+export const MoveableAnnotation = () => {
+  const initialRegion: CoordinateRegion = useMemo(() => ({
+    centerLatitude: 46.20738751546706,
+    centerLongitude: 6.155891756231,
+    latitudeDelta: 0.007,
+    longitudeDelta: 0.015,
+  }), []);
+
+  return (
+    <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
+      <Annotation
+        latitude={46.20738751546706}
+        longitude={6.155891756231}
+        title="Tap and hold to move"
+        draggable
+        enabled
+      >
+        <CustomMarker />
+      </Annotation>
+    </Map>
+  );
+};
+
+MoveableAnnotation.storyName = 'Moveable Annotation';

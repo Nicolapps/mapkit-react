@@ -43,6 +43,21 @@ export default interface AnnotationProps {
   onDeselect?: () => void;
 
   /**
+   * A Boolean value that determines whether the map animates the annotation.
+   */
+  animates?: boolean;
+
+  /**
+   * A Boolean value that determines whether the user can drag the annotation.
+   */
+  draggable?: boolean;
+
+  /**
+   * A Boolean value that determines whether the annotation responds to user interaction.
+   */
+  enabled?: boolean;
+
+  /**
    * React children to render inside the annotation.
    */
   children?: React.ReactNode;

@@ -19,6 +19,11 @@ export default function Annotation({
   selected = undefined,
   onSelect = undefined,
   onDeselect = undefined,
+
+  animates = undefined,
+  draggable = undefined,
+  enabled = undefined,
+
   children,
 }: AnnotationProps) {
   const [annotation, setAnnotation] = useState<mapkit.Annotation | null>(null);
@@ -48,6 +53,9 @@ export default function Annotation({
     accessibilityLabel,
 
     selected,
+    animates,
+    draggable,
+    enabled,
   };
   Object.entries(properties).forEach(([propertyName, prop]) => {
     useEffect(() => {

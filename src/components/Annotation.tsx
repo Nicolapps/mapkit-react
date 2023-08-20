@@ -19,6 +19,8 @@ export default function Annotation({
   selected = undefined,
   onSelect = undefined,
   onDeselect = undefined,
+  onDragStart = undefined,
+  onDragEnd = undefined,
 
   animates = undefined,
   appearanceAnimation = '',
@@ -71,6 +73,8 @@ export default function Annotation({
   const events = [
     { name: 'select', handler: onSelect },
     { name: 'deselect', handler: onDeselect },
+    { name: 'drag-start', handler: onDragStart },
+    { name: 'drag-end', handler: onDragEnd },
   ] as const;
   events.forEach(({ name, handler }) => {
     useEffect(() => {

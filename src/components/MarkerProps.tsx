@@ -108,6 +108,16 @@ export default interface MarkerProps {
   onDeselect?: () => void;
 
   /**
+ * Event fired with the annotation is drag start.
+ */
+  onDragStart?: () => void;
+
+  /**
+   * Event fired with the annotation is drag end.
+   */
+  onDragEnd?: () => void;
+
+  /**
   * A shared identifier for all of the member annotations.
   * An annotation needs a clusteringIdentifier to be part of an annotation cluster.
   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotations/clustering_annotations}

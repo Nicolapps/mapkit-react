@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { ComponentMeta, Story } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 
 import Map from '../components/Map';
 import Annotation from '../components/Annotation';
@@ -81,6 +82,8 @@ export const MoveableAnnotation = () => {
         title="Tap and hold to move"
         draggable
         enabled
+        onDragStart={() => { action('drag-start')(); }}
+        onDragEnd={() => { action('drag-end')(); }}
       >
         <CustomMarker />
       </Annotation>

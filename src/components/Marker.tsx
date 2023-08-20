@@ -27,6 +27,8 @@ export default function Marker({
   enabled = undefined,
   onSelect = undefined,
   onDeselect = undefined,
+  onDragStart = undefined,
+  onDragEnd = undefined,
 }: MarkerProps) {
   const [marker, setMarker] = useState<mapkit.MarkerAnnotation | null>(null);
   const map = useContext(MapContext);
@@ -87,6 +89,8 @@ export default function Marker({
   const events = [
     { name: 'select', handler: onSelect },
     { name: 'deselect', handler: onDeselect },
+    { name: 'drag-start', handler: onDragStart },
+    { name: 'drag-end', handler: onDragEnd },
   ] as const;
   events.forEach(({ name, handler }) => {
     useEffect(() => {

@@ -273,10 +273,10 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 
 | Feature   | Supported |
 | --------- | --------- |
-| animates  | ❌        |
-| draggable | ❌        |
+| animates  | ✅        |
+| draggable | ✅        |
 | selected  | ✅        |
-| enabled   | ❌        |
+| enabled   | ✅        |
 
 #### Callouts
 
@@ -300,9 +300,9 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 | ---------- | --------- |
 | select     | ✅        |
 | deselect   | ✅        |
-| drag-start | ❌        |
+| drag-start | ✅        |
 | dragging   | ❌        |
-| drag-end   | ❌        |
+| drag-end   | ✅        |
 
 ## `mapkit.ImageAnnotation`
 
@@ -367,7 +367,13 @@ _❌ Not currently supported by mapkit-react._
 
 ### Events
 
-_❌ Not currently supported by mapkit-react._
+| Feature    | Supported |
+| ---------- | --------- |
+| select     | ✅        |
+| deselect   | ✅        |
+| drag-start | ✅        |
+| dragging   | ❌        |
+| drag-end   | ✅        |
 
 ## `mapkit.Geocoder`
 

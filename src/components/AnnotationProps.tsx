@@ -43,6 +43,16 @@ export default interface AnnotationProps {
   onDeselect?: () => void;
 
   /**
+   * Event fired with the annotation is drag start.
+   */
+  onDragStart?: () => void;
+
+  /**
+   * Event fired with the annotation is drag end.
+   */
+  onDragEnd?: () => void;
+
+  /**
    * A Boolean value that determines whether the map animates the annotation.
    */
   animates?: boolean;

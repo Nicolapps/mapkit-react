@@ -108,7 +108,7 @@ export default function Marker({
     useEffect(() => {
       if (!marker) return;
       // @ts-ignore
-      if (prop === undefined) { delete annotation[propertyName]; return; }
+      if (prop === undefined) { delete marker[propertyName]; return; }
       // @ts-ignore
       marker[propertyName] = prop;
     }, [marker, prop]);

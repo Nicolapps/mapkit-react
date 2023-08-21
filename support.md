@@ -230,7 +230,7 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 | AnnotationConstructorOptions.calloutEnabled       | ❌        |
 | AnnotationConstructorOptions.animates             | ✅        |
 | AnnotationConstructorOptions.appearanceAnimation  | ✅        |
-| AnnotationConstructorOptions.anchorOffset         | ❌        |
+| AnnotationConstructorOptions.anchorOffset         | ✅        |
 | AnnotationConstructorOptions.calloutOffset        | ❌        |
 | AnnotationConstructorOptions.callout              | ❌        |
 | AnnotationConstructorOptions.size                 | ✅        |
@@ -262,7 +262,7 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 | Feature             | Supported |
 | ------------------- | --------- |
 | coordinate          | ✅        |
-| anchorOffset        | ❌        |
+| anchorOffset        | ✅        |
 | appearanceAnimation | ✅        |
 | displayPriority     | ❌        |
 | padding             | ✅        |
@@ -332,7 +332,7 @@ _❌ Not currently supported by mapkit-react._
 | MarkerAnnotationConstructorOptions.calloutEnabled       | ❌        |
 | MarkerAnnotationConstructorOptions.animates             | ✅        |
 | MarkerAnnotationConstructorOptions.appearanceAnimation  | ✅        |
-| MarkerAnnotationConstructorOptions.anchorOffset         | ❌        |
+| MarkerAnnotationConstructorOptions.anchorOffset         | ✅        |
 | MarkerAnnotationConstructorOptions.calloutOffset        | ❌        |
 | MarkerAnnotationConstructorOptions.callout              | ❌        |
 | MarkerAnnotationConstructorOptions.size                 | ✅        |

@@ -26,6 +26,8 @@ export default function Marker({
   paddingRight = 0,
   paddingBottom = 0,
   paddingLeft = 0,
+  anchorOffsetX = 0,
+  anchorOffsetY = 0,
 
   selected = undefined,
   animates = undefined,
@@ -67,6 +69,18 @@ export default function Marker({
     marker.titleVisibility = toMapKitFeatureVisibility(titleVisibility);
   }, [marker, titleVisibility]);
 
+  // Padding
+  useEffect(() => {
+    if (!marker) return;
+    marker.padding = new mapkit.Padding(paddingTop, paddingRight, paddingBottom, paddingLeft);
+  }, [marker, paddingTop, paddingRight, paddingBottom, paddingLeft]);
+
+  // AnchorOffset
+  useEffect(() => {
+    if (!marker) return;
+    marker.anchorOffset = new DOMPoint(anchorOffsetX, anchorOffsetY);
+  }, [marker, anchorOffsetX, anchorOffsetY]);
+
   // Simple values properties
   const properties = {
     title,
@@ -81,11 +95,6 @@ export default function Marker({
     selectedGlyphImage,
 
     size,
-
-    paddingTop,
-    paddingRight,
-    paddingBottom,
-    paddingLeft,
 
     clusteringIdentifier,
     selected,

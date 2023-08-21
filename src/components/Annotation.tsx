@@ -22,6 +22,8 @@ export default function Annotation({
   paddingRight = 0,
   paddingBottom = 0,
   paddingLeft = 0,
+  anchorOffsetX = 0,
+  anchorOffsetY = 0,
 
   selected = undefined,
   onSelect = undefined,
@@ -65,6 +67,12 @@ export default function Annotation({
     annotation.padding = new mapkit.Padding(paddingTop, paddingRight, paddingBottom, paddingLeft);
   }, [annotation, paddingTop, paddingRight, paddingBottom, paddingLeft]);
 
+  // AnchorOffset
+  useEffect(() => {
+    if (!annotation) return;
+    annotation.anchorOffset = new DOMPoint(anchorOffsetX, anchorOffsetY);
+  }, [annotation, anchorOffsetX, anchorOffsetY]);
+
   // Simple values properties
   const properties = {
     title,
@@ -72,10 +80,6 @@ export default function Annotation({
     accessibilityLabel,
 
     size,
-    paddingTop,
-    paddingRight,
-    paddingBottom,
-    paddingLeft,
 
     selected,
     animates,

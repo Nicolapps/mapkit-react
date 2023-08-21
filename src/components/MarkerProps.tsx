@@ -103,6 +103,18 @@ export default interface MarkerProps {
   paddingLeft?: number;
 
   /**
+   * An X offset that changes the annotation’s default anchor point.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973816-anchoroffset}
+   */
+  anchorOffsetX?: number;
+
+  /**
+   * An Y offset that changes the annotation’s default anchor point.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973816-anchoroffset}
+   */
+  anchorOffsetY?: number;
+
+  /**
    * A Boolean value that determines whether the map displays the annotation in a selected state.
    */
   selected?: boolean;

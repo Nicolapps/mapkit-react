@@ -57,14 +57,42 @@ const Template: Story<MarkerProps> = (args) => {
   return (
     <Map token={token} initialRegion={initialRegion}>
       <Annotation {...args}>
-        <CustomMarker />
+        <div className="default-annotation-style">
+          Klick me
+        </div>
       </Annotation>
     </Map>
   );
 };
 
 export const Default = Template.bind({});
-Default.args = { latitude: 46.52, longitude: 6.57 };
+Default.args = {
+  latitude: 46.52,
+  longitude: 6.57,
+  size: { width: 100, height: 24 },
+  title: 'Hello World',
+};
+
+const CustomMarkerAnnotationTemplate: Story<MarkerProps> = (args) => {
+  const initialRegion: CoordinateRegion = useMemo(() => ({
+    centerLatitude: 48,
+    centerLongitude: 14,
+    latitudeDelta: 22,
+    longitudeDelta: 55,
+  }), []);
+  return (
+    <Map token={token} initialRegion={initialRegion}>
+      <Annotation {...args}>
+        <CustomMarker />
+      </Annotation>
+    </Map>
+  );
+};
+
+export const CustomMarkerAnnotation = CustomMarkerAnnotationTemplate.bind({});
+CustomMarkerAnnotation.args = { latitude: 46.52, longitude: 6.57 };
+
+CustomMarkerAnnotation.storyName = 'Custom Marker Annotation';
 
 export const MoveableAnnotation = () => {
   const initialRegion: CoordinateRegion = useMemo(() => ({

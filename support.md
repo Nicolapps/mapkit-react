@@ -224,7 +224,7 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 | AnnotationConstructorOptions.accessibilityLabel   | ✅        |
 | AnnotationConstructorOptions.data                 | ❌        |
 | AnnotationConstructorOptions.draggable            | ✅        |
-| AnnotationConstructorOptions.visible              | ❌        |
+| AnnotationConstructorOptions.visible              | ✅        |
 | AnnotationConstructorOptions.enabled              | ✅        |
 | AnnotationConstructorOptions.selected             | ✅        |
 | AnnotationConstructorOptions.calloutEnabled       | ❌        |
@@ -233,10 +233,10 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 | AnnotationConstructorOptions.anchorOffset         | ❌        |
 | AnnotationConstructorOptions.calloutOffset        | ❌        |
 | AnnotationConstructorOptions.callout              | ❌        |
-| AnnotationConstructorOptions.size                 | ❌        |
+| AnnotationConstructorOptions.size                 | ✅        |
 | AnnotationConstructorOptions.displayPriority      | ❌        |
 | AnnotationConstructorOptions.collisionMode        | ❌        |
-| AnnotationConstructorOptions.padding              | ❌        |
+| AnnotationConstructorOptions.padding              | ✅        |
 | AnnotationConstructorOptions.clusteringIdentifier | ✅        |
 
 ### Properties
@@ -263,11 +263,11 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 | ------------------- | --------- |
 | coordinate          | ✅        |
 | anchorOffset        | ❌        |
-| appearanceAnimation | ❌        |
+| appearanceAnimation | ✅        |
 | displayPriority     | ❌        |
-| padding             | ❌        |
-| size                | ❌        |
-| visible             | ❌        |
+| padding             | ✅        |
+| size                | ✅        |
+| visible             | ✅        |
 
 #### Interaction behavior
 
@@ -326,7 +326,7 @@ _❌ Not currently supported by mapkit-react._
 | MarkerAnnotationConstructorOptions.accessibilityLabel   | ✅        |
 | MarkerAnnotationConstructorOptions.data                 | ❌        |
 | MarkerAnnotationConstructorOptions.draggable            | ✅        |
-| MarkerAnnotationConstructorOptions.visible              | ❌        |
+| MarkerAnnotationConstructorOptions.visible              | ✅        |
 | MarkerAnnotationConstructorOptions.enabled              | ✅        |
 | MarkerAnnotationConstructorOptions.selected             | ✅        |
 | MarkerAnnotationConstructorOptions.calloutEnabled       | ❌        |
@@ -335,10 +335,10 @@ _❌ Not currently supported by mapkit-react._
 | MarkerAnnotationConstructorOptions.anchorOffset         | ❌        |
 | MarkerAnnotationConstructorOptions.calloutOffset        | ❌        |
 | MarkerAnnotationConstructorOptions.callout              | ❌        |
-| MarkerAnnotationConstructorOptions.size                 | ❌        |
+| MarkerAnnotationConstructorOptions.size                 | ✅        |
 | MarkerAnnotationConstructorOptions.displayPriority      | ❌        |
 | MarkerAnnotationConstructorOptions.collisionMode        | ❌        |
-| MarkerAnnotationConstructorOptions.padding              | ❌        |
+| MarkerAnnotationConstructorOptions.padding              | ✅        |
 | MarkerAnnotationConstructorOptions.clusteringIdentifier | ✅        |
 
 ### Properties

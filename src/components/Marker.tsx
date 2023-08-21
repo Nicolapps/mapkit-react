@@ -20,11 +20,20 @@ export default function Marker({
   glyphImage = null,
   selectedGlyphImage = undefined,
 
+  size = undefined,
+
+  paddingTop = 0,
+  paddingRight = 0,
+  paddingBottom = 0,
+  paddingLeft = 0,
+
   selected = undefined,
   animates = undefined,
   appearanceAnimation = '',
   draggable = undefined,
   enabled = undefined,
+  visible = undefined,
+
   onSelect = undefined,
   onDeselect = undefined,
   onDragStart = undefined,
@@ -70,16 +79,27 @@ export default function Marker({
     glyphText,
     glyphImage,
     selectedGlyphImage,
+
+    size,
+
+    paddingTop,
+    paddingRight,
+    paddingBottom,
+    paddingLeft,
+
     clusteringIdentifier,
     selected,
     animates,
     appearanceAnimation,
     draggable,
     enabled,
+    visible,
   };
   Object.entries(properties).forEach(([propertyName, prop]) => {
     useEffect(() => {
       if (!marker) return;
+      // @ts-ignore
+      if (prop === undefined) { delete annotation[propertyName]; return; }
       // @ts-ignore
       marker[propertyName] = prop;
     }, [marker, prop]);

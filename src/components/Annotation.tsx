@@ -16,6 +16,13 @@ export default function Annotation({
   subtitle = '',
   accessibilityLabel = null,
 
+  size = undefined,
+
+  paddingTop = 0,
+  paddingRight = 0,
+  paddingBottom = 0,
+  paddingLeft = 0,
+
   selected = undefined,
   onSelect = undefined,
   onDeselect = undefined,
@@ -26,6 +33,9 @@ export default function Annotation({
   appearanceAnimation = '',
   draggable = undefined,
   enabled = undefined,
+  visible = undefined,
+
+  clusteringIdentifier = null,
 
   children,
 }: AnnotationProps) {
@@ -49,21 +59,37 @@ export default function Annotation({
     };
   }, [map, latitude, longitude]);
 
+  // Padding
+  useEffect(() => {
+    if (!annotation) return;
+    annotation.padding = new mapkit.Padding(paddingTop, paddingRight, paddingBottom, paddingLeft);
+  }, [annotation, paddingTop, paddingRight, paddingBottom, paddingLeft]);
+
   // Simple values properties
   const properties = {
     title,
     subtitle,
     accessibilityLabel,
 
+    size,
+    paddingTop,
+    paddingRight,
+    paddingBottom,
+    paddingLeft,
+
     selected,
     animates,
     appearanceAnimation,
     draggable,
     enabled,
+    visible,
+    clusteringIdentifier,
   };
   Object.entries(properties).forEach(([propertyName, prop]) => {
     useEffect(() => {
       if (!annotation) return;
+      // @ts-ignore
+      if (prop === undefined) { delete annotation[propertyName]; return; }
       // @ts-ignore
       annotation[propertyName] = prop;
     }, [annotation, prop]);

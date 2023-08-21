@@ -38,6 +38,14 @@ export default function Annotation({
   visible = undefined,
 
   clusteringIdentifier = null,
+  displayPriority = undefined,
+  collisionMode = undefined,
+
+  data = {},
+  callout = undefined,
+  calloutEnabled = undefined,
+  calloutOffsetX = 0,
+  calloutOffsetY = 0,
 
   children,
 }: AnnotationProps) {
@@ -73,6 +81,12 @@ export default function Annotation({
     annotation.anchorOffset = new DOMPoint(anchorOffsetX, anchorOffsetY);
   }, [annotation, anchorOffsetX, anchorOffsetY]);
 
+  // CalloutOffset
+  useEffect(() => {
+    if (!annotation) return;
+    annotation.calloutOffset = new DOMPoint(calloutOffsetX, calloutOffsetY);
+  }, [annotation, calloutOffsetX, calloutOffsetY]);
+
   // Simple values properties
   const properties = {
     title,
@@ -87,7 +101,14 @@ export default function Annotation({
     draggable,
     enabled,
     visible,
+
     clusteringIdentifier,
+    displayPriority,
+    collisionMode,
+
+    data,
+    callout,
+    calloutEnabled,
   };
   Object.entries(properties).forEach(([propertyName, prop]) => {
     useEffect(() => {

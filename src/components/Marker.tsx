@@ -12,10 +12,13 @@ export default function Marker({
   accessibilityLabel = null,
   subtitleVisibility = FeatureVisibility.Adaptive,
   titleVisibility = FeatureVisibility.Adaptive,
+
   clusteringIdentifier = null,
+  displayPriority = undefined,
+  collisionMode = undefined,
+
   color = '#ff5b40',
   glyphColor = 'white',
-
   glyphText = '',
   glyphImage = null,
   selectedGlyphImage = undefined,
@@ -28,6 +31,12 @@ export default function Marker({
   paddingLeft = 0,
   anchorOffsetX = 0,
   anchorOffsetY = 0,
+
+  data = {},
+  callout = undefined,
+  calloutEnabled = undefined,
+  calloutOffsetX = 0,
+  calloutOffsetY = 0,
 
   selected = undefined,
   animates = undefined,
@@ -81,6 +90,12 @@ export default function Marker({
     marker.anchorOffset = new DOMPoint(anchorOffsetX, anchorOffsetY);
   }, [marker, anchorOffsetX, anchorOffsetY]);
 
+  // CalloutOffset
+  useEffect(() => {
+    if (!marker) return;
+    marker.calloutOffset = new DOMPoint(calloutOffsetX, calloutOffsetY);
+  }, [marker, calloutOffsetX, calloutOffsetY]);
+
   // Simple values properties
   const properties = {
     title,
@@ -97,18 +112,25 @@ export default function Marker({
     size,
 
     clusteringIdentifier,
+    displayPriority,
+    collisionMode,
+
     selected,
     animates,
     appearanceAnimation,
     draggable,
     enabled,
     visible,
+
+    data,
+    callout,
+    calloutEnabled,
   };
   Object.entries(properties).forEach(([propertyName, prop]) => {
     useEffect(() => {
       if (!marker) return;
       // @ts-ignore
-      if (prop === undefined) { delete annotation[propertyName]; return; }
+      if (prop === undefined) { delete marker[propertyName]; return; }
       // @ts-ignore
       marker[propertyName] = prop;
     }, [marker, prop]);

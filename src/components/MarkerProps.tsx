@@ -170,5 +170,50 @@ export default interface MarkerProps {
   * An annotation needs a clusteringIdentifier to be part of an annotation cluster.
   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotations/clustering_annotations}
   */
-  clusteringIdentifier?: string | null
+  clusteringIdentifier?: string | null;
+
+  /**
+   * A mode that determines the shape of the collision frame.
+   * Rectangle | Circle | None
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973822-collisionmode}
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/collisionmode}
+   */
+  collisionMode?: string | null;
+
+  /**
+   * A numeric hint that the map uses to prioritize how it displays annotations.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973825-displaypriority}
+   */
+  displayPriority?: number;
+
+  /**
+     * Data that you define that’s specific to an annotation.
+     * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973824-data}
+     */
+  data?: object;
+
+  /**
+   * An X offset that changes the annotation callout’s default placement.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973821-calloutoffset}
+   */
+  calloutOffsetX?: number;
+
+  /**
+   * An Y offset that changes the annotation callout’s default placement.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973821-calloutoffset}
+   */
+  calloutOffsetY?: number;
+
+  /**
+   * A Boolean value that determines whether the map shows an annotation’s callout.
+   * If the title is empty, the framework can’t show the standard callout even if property is true.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973820-calloutenabled}
+   */
+  calloutEnabled?: boolean;
+
+  /**
+   * A delegate that enables you to customize the annotation’s callout.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973819-callout}
+   */
+  callout?: object;
 }

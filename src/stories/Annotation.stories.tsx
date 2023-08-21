@@ -134,7 +134,6 @@ export const AnimatedAnnotation = () => {
       <Annotation
         latitude={46.20738751546706}
         longitude={6.155891756231}
-        title="Tap and hold to move"
         animates
         appearanceAnimation="gelatine 0.5s infinite"
       >

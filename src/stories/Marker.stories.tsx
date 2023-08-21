@@ -1,4 +1,6 @@
-import React, { useId, useMemo, useState } from 'react';
+import React, {
+  useId, useMemo, useRef, useState,
+} from 'react';
 import { ComponentMeta, Story } from '@storybook/react';
 
 import Map from '../components/Map';
@@ -117,6 +119,8 @@ export const MarkerClustering = () => {
               onSelect={() => setSelected(index + 1)}
               onDeselect={() => setSelected(null)}
               clusteringIdentifier={clusteringIdentifier}
+              collisionMode="Circle"
+              displayPriority={750}
             />
           ))
         }
@@ -132,3 +136,36 @@ export const MarkerClustering = () => {
 };
 
 MarkerClustering.storyName = 'Clustering three markers into one';
+
+export const CustomMarkerCallout = () => {
+  const initialRegion: CoordinateRegion = useMemo(() => ({
+    centerLatitude: 46.20738751546706,
+    centerLongitude: 6.155891756231,
+    latitudeDelta: 0.007,
+    longitudeDelta: 0.015,
+  }), []);
+
+  const calloutRef = useRef(null);
+
+  const callOut = <div className="default-annotation-style" ref={calloutRef}>Hallo Welt</div>;
+
+  return (
+    <>
+      <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
+        <Marker
+          latitude={46.20738751546706}
+          longitude={6.155891756231}
+          title="Jet d’eau"
+          subtitle="Iconic landmark of Geneva"
+          data={{ test: 'data' }}
+          callout={calloutRef}
+          calloutEnabled
+          calloutOffsetX={10}
+          calloutOffsetY={10}
+        />
+      </Map>
+      {callOut}
+    </>
+  );
+};
+CustomMarkerCallout.storyName = 'Marker with custom Callout';

@@ -1,6 +1,7 @@
 import React, {
   useId, useMemo, useRef, useState,
 } from 'react';
+import ReactDOMServer from 'react-dom/server';
 import { ComponentMeta, Story } from '@storybook/react';
 
 import Map from '../components/Map';
@@ -145,27 +146,45 @@ export const CustomMarkerCallout = () => {
     longitudeDelta: 0.015,
   }), []);
 
-  const calloutRef = useRef(null);
-
-  const callOut = <div className="default-annotation-style" ref={calloutRef}>Hallo Welt</div>;
-
   return (
-    <>
-      <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
-        <Marker
-          latitude={46.20738751546706}
-          longitude={6.155891756231}
-          title="Jet d’eau"
-          subtitle="Iconic landmark of Geneva"
-          data={{ test: 'data' }}
-          callout={calloutRef}
-          calloutEnabled
-          calloutOffsetX={10}
-          calloutOffsetY={10}
-        />
-      </Map>
-      {callOut}
-    </>
+    <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
+      <Marker
+        latitude={46.20738751546706}
+        longitude={6.155891756231}
+        title="Jet d’eau"
+        subtitle="Iconic landmark of Geneva"
+        data={{ test: 'data' }}
+        callout={{
+          calloutLeftAccessoryForAnnotation: (params: object) => {
+            const DOMelement = document.createElement('div');
+            DOMelement.className = 'default-annotation-style';
+            DOMelement.textContent = params._impl._title;
+            return DOMelement;
+          },
+          calloutRightAccessoryForAnnotation: (params: object) => {
+            const DOMelement = document.createElement('div');
+            DOMelement.className = 'default-annotation-style';
+            DOMelement.textContent = params._impl._subtitle;
+            return DOMelement;
+          },
+          calloutContentForAnnotation: (params: object) => {
+            const DOMelement = document.createElement('div');
+            DOMelement.className = 'default-annotation-style';
+            DOMelement.textContent = params._impl.data.test;
+            return DOMelement;
+          },
+          /* calloutElementForAnnotation: (params: object) => {
+            const DOMelement = document.createElement('div');
+            DOMelement.className = 'default-annotation-style';
+            DOMelement.textContent = 'Element';
+            return DOMelement;
+          }, */
+        }}
+        calloutEnabled
+        calloutOffsetX={10}
+        calloutOffsetY={10}
+      />
+    </Map>
   );
 };
 CustomMarkerCallout.storyName = 'Marker with custom Callout';

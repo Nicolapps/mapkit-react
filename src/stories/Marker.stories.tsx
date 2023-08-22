@@ -1,10 +1,10 @@
 import React, {
-  useId, useMemo, useRef, useState,
+  useId, useMemo, useState,
 } from 'react';
-import ReactDOMServer from 'react-dom/server';
+import { render as createPortal } from 'react-dom';
 import { ComponentMeta, Story } from '@storybook/react';
 
-import Map from '../components/Map';
+import MapKitMap from '../components/Map';
 import Marker from '../components/Marker';
 import { CoordinateRegion, FeatureVisibility } from '../util/parameters';
 
@@ -37,9 +37,9 @@ const Template: Story<MarkerProps> = (args) => {
     longitudeDelta: 55,
   }), []);
   return (
-    <Map token={token} initialRegion={initialRegion}>
+    <MapKitMap token={token} initialRegion={initialRegion}>
       <Marker {...args} />
-    </Map>
+    </MapKitMap>
   );
 };
 
@@ -60,7 +60,7 @@ export const TwoWayBindingSelected = () => {
 
   return (
     <>
-      <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
+      <MapKitMap token={token} initialRegion={initialRegion} paddingBottom={44}>
         <Marker
           latitude={46.20738751546706}
           longitude={6.155891756231}
@@ -70,7 +70,7 @@ export const TwoWayBindingSelected = () => {
           onSelect={() => setSelected(true)}
           onDeselect={() => setSelected(false)}
         />
-      </Map>
+      </MapKitMap>
 
       <div className="map-overlay">
         <div className="map-overlay-box">
@@ -109,7 +109,7 @@ export const MarkerClustering = () => {
 
   return (
     <>
-      <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
+      <MapKitMap token={token} initialRegion={initialRegion} paddingBottom={44}>
         {
           coordinates.map(({ latitude, longitude }, index) => (
             <Marker
@@ -125,7 +125,7 @@ export const MarkerClustering = () => {
             />
           ))
         }
-      </Map>
+      </MapKitMap>
 
       <div className="map-overlay">
         <div className="map-overlay-box">
@@ -138,6 +138,13 @@ export const MarkerClustering = () => {
 
 MarkerClustering.storyName = 'Clustering three markers into one';
 
+function CustomCalloutElement(props) {
+  console.log(props);
+  return (
+    <div className="default-annotation-style">React Element</div>
+  );
+}
+
 export const CustomMarkerCallout = () => {
   const initialRegion: CoordinateRegion = useMemo(() => ({
     centerLatitude: 46.20738751546706,
@@ -147,7 +154,7 @@ export const CustomMarkerCallout = () => {
   }), []);
 
   return (
-    <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
+    <MapKitMap token={token} initialRegion={initialRegion} paddingBottom={44}>
       <Marker
         latitude={46.20738751546706}
         longitude={6.155891756231}
@@ -155,36 +162,42 @@ export const CustomMarkerCallout = () => {
         subtitle="Iconic landmark of Geneva"
         data={{ test: 'data' }}
         callout={{
-          calloutLeftAccessoryForAnnotation: (params: object) => {
+          calloutLeftAccessoryForAnnotation: (marker: MarkerProps) => {
             const DOMelement = document.createElement('div');
             DOMelement.className = 'default-annotation-style';
-            DOMelement.textContent = params._impl._title;
+            DOMelement.textContent = marker.title ?? '';
             return DOMelement;
           },
-          calloutRightAccessoryForAnnotation: (params: object) => {
+          calloutRightAccessoryForAnnotation: (marker: MarkerProps) => {
             const DOMelement = document.createElement('div');
             DOMelement.className = 'default-annotation-style';
-            DOMelement.textContent = params._impl._subtitle;
+            DOMelement.textContent = marker.subtitle ?? '';
             return DOMelement;
           },
-          calloutContentForAnnotation: (params: object) => {
+          calloutContentForAnnotation: (marker: MarkerProps) => {
             const DOMelement = document.createElement('div');
             DOMelement.className = 'default-annotation-style';
-            DOMelement.textContent = params._impl.data.test;
+            DOMelement.textContent = marker.data?.test ?? '';
             return DOMelement;
           },
-          /* calloutElementForAnnotation: (params: object) => {
-            const DOMelement = document.createElement('div');
-            DOMelement.className = 'default-annotation-style';
-            DOMelement.textContent = 'Element';
-            return DOMelement;
-          }, */
+          /* Comment out below if only modify the different parts of the Annotation */
+          calloutElementForAnnotation: (marker: MarkerProps) => {
+            const div = document.createElement('div');
+            const customCallout = (
+              <div className="default-annotation-style">
+                <h2>{marker.title}</h2>
+                <p>{marker.subtitle}</p>
+              </div>
+            );
+            createPortal(customCallout, div);
+            return div;
+          },
         }}
         calloutEnabled
         calloutOffsetX={10}
         calloutOffsetY={10}
       />
-    </Map>
+    </MapKitMap>
   );
 };
 CustomMarkerCallout.storyName = 'Marker with custom Callout';

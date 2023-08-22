@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 
 import Map from '../components/Map';
 import Annotation from '../components/Annotation';
 import { CoordinateRegion, FeatureVisibility } from '../util/parameters';
 
-const token = process.env.STORYBOOK_MAPKIT_JS_TOKEN!;
+// @ts-ignore
+const token = import.meta.env.STORYBOOK_MAPKIT_JS_TOKEN!;
 
 // SVG from https://webkul.github.io/vivid
 function CustomMarker() {
@@ -42,11 +43,11 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof Annotation>;
+} as Meta<typeof Annotation>;
 
 type MarkerProps = React.ComponentProps<typeof Annotation>;
 
-const Template: Story<MarkerProps> = (args) => {
+const Template: StoryFn<MarkerProps> = (args) => {
   const initialRegion: CoordinateRegion = useMemo(() => ({
     centerLatitude: 48,
     centerLongitude: 14,

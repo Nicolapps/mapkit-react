@@ -78,6 +78,7 @@ export default interface MarkerProps {
 
   /**
    * A Boolean value that determines whether the map animates the annotation.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973817-animates}
    */
   animates?: boolean;
 
@@ -89,11 +90,13 @@ export default interface MarkerProps {
 
   /**
    * A Boolean value that determines whether the user can drag the annotation.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973817-animates}
    */
   draggable?: boolean;
 
   /**
    * A Boolean value that determines whether the annotation responds to user interaction.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973828-enabled}
    */
   enabled?: boolean;
 
@@ -108,12 +111,12 @@ export default interface MarkerProps {
   onDeselect?: () => void;
 
   /**
- * Event fired with the annotation is drag start.
- */
+   * Event fired with the user initiates a drag for the annotation.
+   */
   onDragStart?: () => void;
 
   /**
-   * Event fired with the annotation is drag end.
+   * Event fired with the user ends a drag for the annotation.
    */
   onDragEnd?: () => void;
 

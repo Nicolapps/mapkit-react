@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef } from 'react';
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import './stories.css';
 
 import Map from '../components/Map';
@@ -7,7 +7,8 @@ import {
   ColorScheme, MapType, Distances, LoadPriority, CoordinateRegion,
 } from '../util/parameters';
 
-const token = process.env.STORYBOOK_MAPKIT_JS_TOKEN!;
+// @ts-ignore
+const token = import.meta.env.STORYBOOK_MAPKIT_JS_TOKEN!;
 
 const enumArgType = (e: object) => ({
   options: Object.values(e).filter((val) => typeof val === 'number'),
@@ -34,11 +35,11 @@ export default {
       },
     },
   },
-} as ComponentMeta<typeof Map>;
+} as Meta<typeof Map>;
 
 type MapProps = React.ComponentProps<typeof Map>;
 
-export const MapReference: Story<MapProps> = (args) => {
+export const MapReference: StoryFn<MapProps> = (args) => {
   const mapRef = useRef<mapkit.Map>(null);
 
   // Animate a rotation when the button is pressed

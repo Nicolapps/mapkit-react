@@ -1,11 +1,12 @@
 import React, { useId, useMemo, useState } from 'react';
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 
 import Map from '../components/Map';
 import Marker from '../components/Marker';
 import { CoordinateRegion, FeatureVisibility } from '../util/parameters';
 
-const token = process.env.STORYBOOK_MAPKIT_JS_TOKEN!;
+// @ts-ignore
+const token = import.meta.env.STORYBOOK_MAPKIT_JS_TOKEN!;
 
 const enumArgType = (e: object) => ({
   options: Object.values(e).filter((x) => typeof x === 'string'),
@@ -22,11 +23,11 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof Marker>;
+} as Meta<typeof Marker>;
 
 type MarkerProps = React.ComponentProps<typeof Marker>;
 
-const Template: Story<MarkerProps> = (args) => {
+const Template: StoryFn<MarkerProps> = (args) => {
   const initialRegion: CoordinateRegion = useMemo(() => ({
     centerLatitude: 48,
     centerLongitude: 14,

@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 
 import Map from '../components/Map';
 import Polygon from '../components/Polygon';
 import { CoordinateRegion } from '..';
 
-const token = process.env.STORYBOOK_MAPKIT_JS_TOKEN!;
+// @ts-ignore
+const token = import.meta.env.STORYBOOK_MAPKIT_JS_TOKEN!;
 
 export default {
   title: 'Components/Polygon',
@@ -13,11 +14,11 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof Polygon>;
+} as Meta<typeof Polygon>;
 
 type PolygonProps = React.ComponentProps<typeof Polygon>;
 
-const Template: Story<PolygonProps> = (args) => {
+const Template: StoryFn<PolygonProps> = (args) => {
   const initialRegion: CoordinateRegion = useMemo(() => ({
     centerLatitude: 46.5185,
     centerLongitude: 6.568,

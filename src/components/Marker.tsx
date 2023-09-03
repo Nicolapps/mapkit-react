@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import MapContext from '../context/MapContext';
 import { FeatureVisibility, toMapKitFeatureVisibility } from '../util/parameters';
 import MarkerProps from './MarkerProps';
+import { forwardMapkitEvent } from './Map';
 
 export default function Marker({
   latitude,
@@ -92,15 +93,23 @@ export default function Marker({
     { name: 'drag-start', handler: onDragStart },
     { name: 'drag-end', handler: onDragEnd },
   ] as const;
+
+  type DOMEventTarget = {
+    coordinate: mapkit.Coordinate,
+    data: Object
+  };
+
+  type MapKitMapInteractionEvent = {
+    target: DOMEventTarget
+  };
+
+  const interactionEvent = ({ target }: MapKitMapInteractionEvent) => ({
+    coordinate: target.coordinate,
+    data: target.data,
+  });
+
   events.forEach(({ name, handler }) => {
-    useEffect(() => {
-      if (!marker || !handler) return undefined;
-
-      const handlerWithoutParameters = () => handler();
-
-      marker.addEventListener(name, handlerWithoutParameters);
-      return () => marker.removeEventListener(name, handlerWithoutParameters);
-    }, [marker, handler]);
+    forwardMapkitEvent(marker, name, handler, interactionEvent);
   });
 
   return null;

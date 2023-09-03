@@ -66,6 +66,8 @@ export default interface AnnotationProps {
 
   /**
    * A Boolean value that determines whether the user can drag the annotation.
+   *
+   * (Annotation needs to be enabled in order to be draggable.)
    * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973826-draggable}
    */
   draggable?: boolean;

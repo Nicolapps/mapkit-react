@@ -74,7 +74,6 @@ export default function Annotation({
     { name: 'select', handler: onSelect },
     { name: 'deselect', handler: onDeselect },
     { name: 'drag-start', handler: onDragStart },
-    { name: 'drag-end', handler: onDragEnd },
   ] as const;
   events.forEach(({ name, handler }) => {
     useEffect(() => {
@@ -86,6 +85,17 @@ export default function Annotation({
       return () => annotation.removeEventListener(name, handlerWithoutParameters);
     }, [annotation, handler]);
   });
+  useEffect(() => {
+    if (!annotation || !onDragEnd) return undefined;
+
+    const parametrizedHandler = () => onDragEnd({
+      latitude: annotation.coordinate.latitude,
+      longitude: annotation.coordinate.longitude,
+    });
+
+    annotation.addEventListener('drag-end', parametrizedHandler);
+    return () => annotation.removeEventListener('drag-end', parametrizedHandler);
+  }, [annotation, onDragEnd]);
 
   return createPortal(children, contentEl);
 }

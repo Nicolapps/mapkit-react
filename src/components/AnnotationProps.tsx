@@ -1,3 +1,5 @@
+import { Coordinate } from '../util/parameters';
+
 export default interface AnnotationProps {
   /**
    * The latitude in degrees.
@@ -50,7 +52,7 @@ export default interface AnnotationProps {
   /**
    * Event fired when the user ends a drag for the annotation.
    */
-  onDragEnd?: () => void;
+  onDragEnd?: (newPosition: Coordinate) => void;
 
   /**
    * A Boolean value that determines whether the map animates the annotation.

@@ -1,4 +1,4 @@
-import { FeatureVisibility } from '../util/parameters';
+import { Coordinate, FeatureVisibility } from '../util/parameters';
 
 export default interface MarkerProps {
   /**
@@ -120,7 +120,7 @@ export default interface MarkerProps {
   /**
    * Event fired with the user ends a drag for the annotation.
    */
-  onDragEnd?: () => void;
+  onDragEnd?: (newPosition: Coordinate) => void;
 
   /**
   * A shared identifier for all of the member annotations.

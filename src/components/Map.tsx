@@ -14,21 +14,21 @@ import MapProps from './MapProps';
 
 /**
  * Forwards a given MapKit JS event to a mapkit-react event.
- * @param map The current map instance or annotation / marker element
+ * @param map The current map instance
  * @param name The name of the MapKit JS event.
  * @param handler The event handler of the mapkit-react Map component
  * @param eventMap A function that transforms the parameter of the
  *                 MapKit JS event handler to a parameter for the
  *                 mapkit-react event handler.
  */
-export function forwardMapkitEvent<E>(
-  element: mapkit.Map | mapkit.Annotation | null,
+function forwardMapkitEvent<E>(
+  map: mapkit.Map | null,
   name: String,
   handler: ((mapkitReactEvent: E) => void) | undefined,
   eventMap: (mapkitEvent: any) => E,
 ) {
   useEffect(() => {
-    if (!element || !handler) return undefined;
+    if (!map || !handler) return undefined;
 
     // @ts-ignore
     const mapkitHandler = (e) => {
@@ -36,10 +36,10 @@ export function forwardMapkitEvent<E>(
     };
 
     // @ts-ignore
-    element.addEventListener(name, mapkitHandler);
+    map.addEventListener(name, mapkitHandler);
     // @ts-ignore
-    return () => element.removeEventListener(name, mapkitHandler);
-  }, [element, handler]);
+    return () => map.removeEventListener(name, mapkitHandler);
+  }, [map, handler]);
 }
 
 const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps>>(({

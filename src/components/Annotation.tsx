@@ -7,7 +7,6 @@ import {
 import { createPortal } from 'react-dom';
 import MapContext from '../context/MapContext';
 import AnnotationProps from './AnnotationProps';
-import { forwardMapkitEvent } from './Map';
 
 export default function Annotation({
   latitude,
@@ -77,23 +76,15 @@ export default function Annotation({
     { name: 'drag-start', handler: onDragStart },
     { name: 'drag-end', handler: onDragEnd },
   ] as const;
-
-  type DOMEventTarget = {
-    coordinate: mapkit.Coordinate,
-    data: Object
-  };
-
-  type MapKitMapInteractionEvent = {
-    target: DOMEventTarget
-  };
-
-  const interactionEvent = ({ target }: MapKitMapInteractionEvent) => ({
-    coordinate: target.coordinate,
-    data: target.data,
-  });
-
   events.forEach(({ name, handler }) => {
-    forwardMapkitEvent(annotation, name, handler, interactionEvent);
+    useEffect(() => {
+      if (!annotation || !handler) return undefined;
+
+      const handlerWithoutParameters = () => handler();
+
+      annotation.addEventListener(name, handlerWithoutParameters);
+      return () => annotation.removeEventListener(name, handlerWithoutParameters);
+    }, [annotation, handler]);
   });
 
   return createPortal(children, contentEl);

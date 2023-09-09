@@ -72,26 +72,24 @@ export default interface MarkerProps {
   selectedGlyphImage?: object | undefined;
 
   /**
-   * A Boolean value that determines whether the map displays the marker in a selected state.
+   * A Boolean value that determines whether the map displays the annotation in a selected state.
    */
   selected?: boolean;
 
   /**
-   * A Boolean value that determines whether the map animates the marker.
+   * A Boolean value that determines whether the map animates the annotation.
    * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973817-animates}
    */
   animates?: boolean;
 
   /**
-   * A CSS animation that runs when the marker appears on the map.
+   * A CSS animation that runs when the annotation appears on the map.
    * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973818-appearanceanimation}
    */
   appearanceAnimation?: string;
 
   /**
-   * A Boolean value that determines whether the user can drag the marker.
-   *
-   * (Marker needs to be enabled in order to be draggable.)
+   * A Boolean value that determines whether the user can drag the annotation.
    * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973817-animates}
    */
   draggable?: boolean;

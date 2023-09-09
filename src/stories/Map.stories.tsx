@@ -220,6 +220,7 @@ function ReadOnlyInput({ label, value }: { label: string, value: string }) {
     >
       {label}
       <input
+        id={id}
         type="text"
         className="input"
         value={value}

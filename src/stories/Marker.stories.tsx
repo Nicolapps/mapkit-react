@@ -3,7 +3,7 @@ import { Meta, StoryFn } from '@storybook/react';
 
 import Map from '../components/Map';
 import Marker from '../components/Marker';
-import { Coordinate, CoordinateRegion, FeatureVisibility } from '../util/parameters';
+import { CoordinateRegion, FeatureVisibility } from '../util/parameters';
 
 // @ts-ignore
 const token = import.meta.env.STORYBOOK_MAPKIT_JS_TOKEN!;

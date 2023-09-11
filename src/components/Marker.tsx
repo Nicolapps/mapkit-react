@@ -78,6 +78,7 @@ export default function Marker({
     draggable,
     enabled,
   };
+
   Object.entries(properties).forEach(([propertyName, prop]) => {
     useEffect(() => {
       if (!marker) return;
@@ -103,10 +104,7 @@ export default function Marker({
     target: DOMEventTarget
   };
 
-  const interactionEvent = ({ target }: MapKitMapInteractionEvent) => ({
-    coordinate: target.coordinate,
-    data: target.data,
-  });
+  const interactionEvent = ({ target }: MapKitMapInteractionEvent) => (target.coordinate);
 
   events.forEach(({ name, handler }) => {
     forwardMapkitEvent(marker, name, handler, interactionEvent);

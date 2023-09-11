@@ -1,3 +1,5 @@
+import { Coordinate } from '../util/parameters';
+
 export default interface AnnotationProps {
   /**
    * The latitude in degrees.
@@ -35,22 +37,22 @@ export default interface AnnotationProps {
   /**
    * Event fired when the annotation is selected.
    */
-  onSelect?: () => void;
+  onSelect?: (position: Coordinate) => void;
 
   /**
    * Event fired when the annotation is deselected.
    */
-  onDeselect?: () => void;
+  onDeselect?: (position: Coordinate) => void;
 
   /**
    * Event fired when the user starts a drag for the annotation.
    */
-  onDragStart?: () => void;
+  onDragStart?: (position: Coordinate) => void;
 
   /**
    * Event fired when the user ends a drag for the annotation.
    */
-  onDragEnd?: () => void;
+  onDragEnd?: (position: Coordinate) => void;
 
   /**
    * A Boolean value that determines whether the map animates the annotation.

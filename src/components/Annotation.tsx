@@ -7,6 +7,7 @@ import {
 import { createPortal } from 'react-dom';
 import MapContext from '../context/MapContext';
 import AnnotationProps from './AnnotationProps';
+import { forwardMapkitEvent } from './Map';
 
 export default function Annotation({
   latitude,

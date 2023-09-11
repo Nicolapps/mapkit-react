@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from 'react';
 import MapContext from '../context/MapContext';
 import { FeatureVisibility, toMapKitFeatureVisibility } from '../util/parameters';
 import MarkerProps from './MarkerProps';
-import { forwardMapkitEvent } from './Map';
 
 export default function Marker({
   latitude,
@@ -107,7 +106,19 @@ export default function Marker({
   const interactionEvent = ({ target }: MapKitMapInteractionEvent) => (target.coordinate);
 
   events.forEach(({ name, handler }) => {
-    forwardMapkitEvent(marker, name, handler, interactionEvent);
+    useEffect(() => {
+      if (!marker || !handler) return undefined;
+
+      // @ts-ignore
+      const mapkitHandler = (e) => {
+        handler(interactionEvent(e));
+      };
+
+      // @ts-ignore
+      marker.addEventListener(name, mapkitHandler);
+      // @ts-ignore
+      return () => marker.removeEventListener(name, mapkitHandler);
+    }, [marker, handler]);
   });
 
   return null;

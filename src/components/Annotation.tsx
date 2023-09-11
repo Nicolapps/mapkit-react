@@ -7,7 +7,6 @@ import {
 import { createPortal } from 'react-dom';
 import MapContext from '../context/MapContext';
 import AnnotationProps from './AnnotationProps';
-import { forwardMapkitEvent } from './Map';
 
 export default function Annotation({
   latitude,
@@ -90,7 +89,19 @@ export default function Annotation({
   const interactionEvent = ({ target }: MapKitMapInteractionEvent) => (target.coordinate);
 
   events.forEach(({ name, handler }) => {
-    forwardMapkitEvent(annotation, name, handler, interactionEvent);
+    useEffect(() => {
+      if (!annotation || !handler) return undefined;
+
+      // @ts-ignore
+      const mapkitHandler = (e) => {
+        handler(interactionEvent(e));
+      };
+
+      // @ts-ignore
+      annotation.addEventListener(name, mapkitHandler);
+      // @ts-ignore
+      return () => annotation.removeEventListener(name, mapkitHandler);
+    }, [annotation, handler]);
   });
 
   return createPortal(children, contentEl);

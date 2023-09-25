@@ -21,8 +21,14 @@ export default function Marker({
   selectedGlyphImage = undefined,
 
   selected = undefined,
+  animates = undefined,
+  appearanceAnimation = '',
+  draggable = undefined,
+  enabled = undefined,
   onSelect = undefined,
   onDeselect = undefined,
+  onDragStart = undefined,
+  onDragEnd = undefined,
 }: MarkerProps) {
   const [marker, setMarker] = useState<mapkit.MarkerAnnotation | null>(null);
   const map = useContext(MapContext);
@@ -66,6 +72,10 @@ export default function Marker({
     selectedGlyphImage,
     clusteringIdentifier,
     selected,
+    animates,
+    appearanceAnimation,
+    draggable,
+    enabled,
   };
   Object.entries(properties).forEach(([propertyName, prop]) => {
     useEffect(() => {
@@ -79,6 +89,7 @@ export default function Marker({
   const events = [
     { name: 'select', handler: onSelect },
     { name: 'deselect', handler: onDeselect },
+    { name: 'drag-start', handler: onDragStart },
   ] as const;
   events.forEach(({ name, handler }) => {
     useEffect(() => {
@@ -90,6 +101,17 @@ export default function Marker({
       return () => marker.removeEventListener(name, handlerWithoutParameters);
     }, [marker, handler]);
   });
+  useEffect(() => {
+    if (!marker || !onDragEnd) return undefined;
+
+    const parametrizedHandler = () => onDragEnd({
+      latitude: marker.coordinate.latitude,
+      longitude: marker.coordinate.longitude,
+    });
+
+    marker.addEventListener('drag-end', parametrizedHandler);
+    return () => marker.removeEventListener('drag-end', parametrizedHandler);
+  }, [marker, onDragEnd]);
 
   return null;
 }

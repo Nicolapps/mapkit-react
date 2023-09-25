@@ -223,13 +223,13 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 | AnnotationConstructorOptions.subtitle             | ✅        |
 | AnnotationConstructorOptions.accessibilityLabel   | ✅        |
 | AnnotationConstructorOptions.data                 | ❌        |
-| AnnotationConstructorOptions.draggable            | ❌        |
+| AnnotationConstructorOptions.draggable            | ✅        |
 | AnnotationConstructorOptions.visible              | ❌        |
-| AnnotationConstructorOptions.enabled              | ❌        |
+| AnnotationConstructorOptions.enabled              | ✅        |
 | AnnotationConstructorOptions.selected             | ✅        |
 | AnnotationConstructorOptions.calloutEnabled       | ❌        |
-| AnnotationConstructorOptions.animates             | ❌        |
-| AnnotationConstructorOptions.appearanceAnimation  | ❌        |
+| AnnotationConstructorOptions.animates             | ✅        |
+| AnnotationConstructorOptions.appearanceAnimation  | ✅        |
 | AnnotationConstructorOptions.anchorOffset         | ❌        |
 | AnnotationConstructorOptions.calloutOffset        | ❌        |
 | AnnotationConstructorOptions.callout              | ❌        |
@@ -273,10 +273,10 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 
 | Feature   | Supported |
 | --------- | --------- |
-| animates  | ❌        |
-| draggable | ❌        |
+| animates  | ✅        |
+| draggable | ✅        |
 | selected  | ✅        |
-| enabled   | ❌        |
+| enabled   | ✅        |
 
 #### Callouts
 
@@ -300,9 +300,9 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 | ---------- | --------- |
 | select     | ✅        |
 | deselect   | ✅        |
-| drag-start | ❌        |
+| drag-start | ✅        |
 | dragging   | ❌        |
-| drag-end   | ❌        |
+| drag-end   | ✅        |
 
 ## `mapkit.ImageAnnotation`
 
@@ -312,15 +312,34 @@ _❌ Not currently supported by mapkit-react._
 
 ### Constructor parameters
 
-| Feature                                               | Supported |
-| ----------------------------------------------------- | --------- |
-| MarkerAnnotationConstructorOptions.titleVisibility    | ✅        |
-| MarkerAnnotationConstructorOptions.subtitleVisibility | ✅        |
-| MarkerAnnotationConstructorOptions.color              | ✅        |
-| MarkerAnnotationConstructorOptions.glyphColor         | ✅        |
-| MarkerAnnotationConstructorOptions.glyphText          | ✅        |
-| MarkerAnnotationConstructorOptions.glyphImage         | ✅        |
-| MarkerAnnotationConstructorOptions.selectedGlyphImage | ✅        |
+| Feature                                                 | Supported |
+| ------------------------------------------------------- | --------- |
+| MarkerAnnotationConstructorOptions.titleVisibility      | ✅        |
+| MarkerAnnotationConstructorOptions.subtitleVisibility   | ✅        |
+| MarkerAnnotationConstructorOptions.color                | ✅        |
+| MarkerAnnotationConstructorOptions.glyphColor           | ✅        |
+| MarkerAnnotationConstructorOptions.glyphText            | ✅        |
+| MarkerAnnotationConstructorOptions.glyphImage           | ✅        |
+| MarkerAnnotationConstructorOptions.selectedGlyphImage   | ✅        |
+| MarkerAnnotationConstructorOptions.title                | ✅        |
+| MarkerAnnotationConstructorOptions.subtitle             | ✅        |
+| MarkerAnnotationConstructorOptions.accessibilityLabel   | ✅        |
+| MarkerAnnotationConstructorOptions.data                 | ❌        |
+| MarkerAnnotationConstructorOptions.draggable            | ✅        |
+| MarkerAnnotationConstructorOptions.visible              | ❌        |
+| MarkerAnnotationConstructorOptions.enabled              | ✅        |
+| MarkerAnnotationConstructorOptions.selected             | ✅        |
+| MarkerAnnotationConstructorOptions.calloutEnabled       | ❌        |
+| MarkerAnnotationConstructorOptions.animates             | ✅        |
+| MarkerAnnotationConstructorOptions.appearanceAnimation  | ✅        |
+| MarkerAnnotationConstructorOptions.anchorOffset         | ❌        |
+| MarkerAnnotationConstructorOptions.calloutOffset        | ❌        |
+| MarkerAnnotationConstructorOptions.callout              | ❌        |
+| MarkerAnnotationConstructorOptions.size                 | ❌        |
+| MarkerAnnotationConstructorOptions.displayPriority      | ❌        |
+| MarkerAnnotationConstructorOptions.collisionMode        | ❌        |
+| MarkerAnnotationConstructorOptions.padding              | ❌        |
+| MarkerAnnotationConstructorOptions.clusteringIdentifier | ✅        |
 
 ### Properties
 
@@ -348,7 +367,13 @@ _❌ Not currently supported by mapkit-react._
 
 ### Events
 
-_❌ Not currently supported by mapkit-react._
+| Feature    | Supported |
+| ---------- | --------- |
+| select     | ✅        |
+| deselect   | ✅        |
+| drag-start | ✅        |
+| dragging   | ❌        |
+| drag-end   | ✅        |
 
 ## `mapkit.Geocoder`
 

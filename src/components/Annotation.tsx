@@ -19,6 +19,14 @@ export default function Annotation({
   selected = undefined,
   onSelect = undefined,
   onDeselect = undefined,
+  onDragStart = undefined,
+  onDragEnd = undefined,
+
+  animates = undefined,
+  appearanceAnimation = '',
+  draggable = undefined,
+  enabled = undefined,
+
   children,
 }: AnnotationProps) {
   const [annotation, setAnnotation] = useState<mapkit.Annotation | null>(null);
@@ -48,6 +56,10 @@ export default function Annotation({
     accessibilityLabel,
 
     selected,
+    animates,
+    appearanceAnimation,
+    draggable,
+    enabled,
   };
   Object.entries(properties).forEach(([propertyName, prop]) => {
     useEffect(() => {
@@ -61,6 +73,7 @@ export default function Annotation({
   const events = [
     { name: 'select', handler: onSelect },
     { name: 'deselect', handler: onDeselect },
+    { name: 'drag-start', handler: onDragStart },
   ] as const;
   events.forEach(({ name, handler }) => {
     useEffect(() => {
@@ -72,6 +85,17 @@ export default function Annotation({
       return () => annotation.removeEventListener(name, handlerWithoutParameters);
     }, [annotation, handler]);
   });
+  useEffect(() => {
+    if (!annotation || !onDragEnd) return undefined;
+
+    const parametrizedHandler = () => onDragEnd({
+      latitude: annotation.coordinate.latitude,
+      longitude: annotation.coordinate.longitude,
+    });
+
+    annotation.addEventListener('drag-end', parametrizedHandler);
+    return () => annotation.removeEventListener('drag-end', parametrizedHandler);
+  }, [annotation, onDragEnd]);
 
   return createPortal(children, contentEl);
 }

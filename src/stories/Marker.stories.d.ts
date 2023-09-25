@@ -6,6 +6,10 @@ export declare const TwoWayBindingSelected: {
     storyName: string;
     parameters: any;
 };
+export declare const MoveableMarker: {
+    (): JSX.Element;
+    parameters: any;
+};
 export declare const MarkerClustering: {
     (): JSX.Element;
     storyName: string;

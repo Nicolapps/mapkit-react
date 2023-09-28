@@ -94,27 +94,13 @@ CustomMarkerAnnotation.args = { latitude: 46.52, longitude: 6.57 };
 
 CustomMarkerAnnotation.storyName = 'Custom Marker Annotation';
 
-export const MoveableAnnotation = () => {
-  const initialRegion: CoordinateRegion = useMemo(() => ({
-    centerLatitude: 46.20738751546706,
-    centerLongitude: 6.155891756231,
-    latitudeDelta: 0.007,
-    longitudeDelta: 0.015,
-  }), []);
-
-  return (
-    <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
-      <Annotation
-        latitude={46.20738751546706}
-        longitude={6.155891756231}
-        title="Tap and hold to move"
-        draggable
-        enabled
-      >
-        <CustomMarker />
-      </Annotation>
-    </Map>
-  );
+export const MoveableAnnotation = Template.bind({});
+MoveableAnnotation.args = {
+  latitude: 46.52,
+  longitude: 6.57,
+  title: 'Tap and hold to move',
+  draggable: true,
+  enabled: true,
 };
 
 MoveableAnnotation.storyName = 'Moveable Annotation';
@@ -132,6 +118,7 @@ export const AnimatedAnnotation = () => {
       <Annotation
         latitude={46.20738751546706}
         longitude={6.155891756231}
+        title="Tap and hold to move"
         animates
         appearanceAnimation="gelatine 0.5s infinite"
       >

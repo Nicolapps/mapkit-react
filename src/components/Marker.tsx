@@ -119,7 +119,6 @@ export default function Marker({
     { name: 'select', handler: onSelect },
     { name: 'deselect', handler: onDeselect },
     { name: 'drag-start', handler: onDragStart },
-    { name: 'drag-end', handler: onDragEnd },
   ] as const;
   events.forEach(({ name, handler }) => {
     useEffect(() => {
@@ -131,6 +130,17 @@ export default function Marker({
       return () => marker.removeEventListener(name, handlerWithoutParameters);
     }, [marker, handler]);
   });
+  useEffect(() => {
+    if (!marker || !onDragEnd) return undefined;
+
+    const parametrizedHandler = () => onDragEnd({
+      latitude: marker.coordinate.latitude,
+      longitude: marker.coordinate.longitude,
+    });
+
+    marker.addEventListener('drag-end', parametrizedHandler);
+    return () => marker.removeEventListener('drag-end', parametrizedHandler);
+  }, [marker, onDragEnd]);
 
   return null;
 }

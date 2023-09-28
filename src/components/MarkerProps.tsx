@@ -1,4 +1,4 @@
-import { FeatureVisibility } from '../util/parameters';
+import { Coordinate, FeatureVisibility } from '../util/parameters';
 
 export default interface MarkerProps {
   /**
@@ -115,28 +115,33 @@ export default interface MarkerProps {
   anchorOffsetY?: number;
 
   /**
-   * A Boolean value that determines whether the map displays the annotation in a selected state.
+   * A Boolean value that determines whether the map displays the marker in a selected state.
    */
   selected?: boolean;
 
   /**
-   * A Boolean value that determines whether the map animates the annotation.
+   * A Boolean value that determines whether the map animates the marker.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973817-animates}
    */
   animates?: boolean;
 
   /**
-   * A CSS animation that runs when the annotation appears on the map.
+   * A CSS animation that runs when the marker appears on the map.
    * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973818-appearanceanimation}
    */
   appearanceAnimation?: string;
 
   /**
-   * A Boolean value that determines whether the user can drag the annotation.
+   * A Boolean value that determines whether the user can drag the marker.
+   *
+   * (Marker needs to be enabled in order to be draggable.)
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973817-animates}
    */
   draggable?: boolean;
 
   /**
    * A Boolean value that determines whether the annotation responds to user interaction.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973828-enabled}
    */
   enabled?: boolean;
 
@@ -156,14 +161,14 @@ export default interface MarkerProps {
   onDeselect?: () => void;
 
   /**
- * Event fired with the annotation is drag start.
- */
+   * Event fired with the user initiates a drag for the annotation.
+   */
   onDragStart?: () => void;
 
   /**
-   * Event fired with the annotation is drag end.
+   * Event fired with the user ends a drag for the annotation.
    */
-  onDragEnd?: () => void;
+  onDragEnd?: (newPosition: Coordinate) => void;
 
   /**
   * A shared identifier for all of the member annotations.

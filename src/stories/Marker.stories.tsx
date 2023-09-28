@@ -88,6 +88,70 @@ export const TwoWayBindingSelected = () => {
 };
 TwoWayBindingSelected.storyName = 'Two-Way Binding for `selected`';
 
+export const MoveableMarker = () => {
+  const [latitude, setLatitude] = useState(46.20738751546706);
+  const [longitude, setLongitude] = useState(6.155891756231);
+
+  const idLatitude = useId();
+  const idLongitude = useId();
+
+  const initialRegion: CoordinateRegion = useMemo(() => ({
+    centerLatitude: 46.20738751546706,
+    centerLongitude: 6.155891756231,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  }), []);
+
+  return (
+    <>
+      <Map token={token} initialRegion={initialRegion}>
+        <Marker
+          latitude={latitude}
+          longitude={longitude}
+          title="Tap and hold to move"
+          draggable
+          enabled
+          onDragEnd={(coordinate) => {
+            setLatitude(coordinate.latitude);
+            setLongitude(coordinate.longitude);
+          }}
+        />
+      </Map>
+
+      <div className="map-overlay map-overlay-top">
+        <div className="map-overlay-box map-overlay-inputs">
+          <label
+            className="form-group"
+            htmlFor={idLatitude}
+          >
+            Latitude
+            <input
+              id={idLatitude}
+              type="text"
+              className="input"
+              value={latitude}
+              onChange={(e) => setLatitude(Number(e.target.value))}
+            />
+          </label>
+          <label
+            className="form-group"
+            htmlFor={idLongitude}
+          >
+            Longitude
+            <input
+              id={idLatitude}
+              type="text"
+              className="input"
+              value={longitude}
+              onChange={(e) => setLongitude(Number(e.target.value))}
+            />
+          </label>
+        </div>
+      </div>
+    </>
+  );
+};
+
 export const MarkerClustering = () => {
   const clusteringIdentifier = 'id';
   const [selected, setSelected] = useState<number | null>(null);

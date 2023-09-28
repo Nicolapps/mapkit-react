@@ -1,3 +1,5 @@
+import { Coordinate } from '../util/parameters';
+
 export default interface AnnotationProps {
   /**
    * The latitude in degrees.
@@ -86,17 +88,18 @@ export default interface AnnotationProps {
   onDeselect?: () => void;
 
   /**
-   * Event fired with the annotation is drag start.
+   * Event fired when the user starts a drag for the annotation.
    */
   onDragStart?: () => void;
 
   /**
-   * Event fired with the annotation is drag end.
+   * Event fired when the user ends a drag for the annotation.
    */
-  onDragEnd?: () => void;
+  onDragEnd?: (newPosition: Coordinate) => void;
 
   /**
    * A Boolean value that determines whether the map animates the annotation.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973817-animates}
    */
   animates?: boolean;
 
@@ -108,11 +111,13 @@ export default interface AnnotationProps {
 
   /**
    * A Boolean value that determines whether the user can drag the annotation.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973826-draggable}
    */
   draggable?: boolean;
 
   /**
    * A Boolean value that determines whether the annotation responds to user interaction.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973828-enabled}
    */
   enabled?: boolean;
 

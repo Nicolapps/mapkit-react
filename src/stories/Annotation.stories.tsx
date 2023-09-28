@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
-import { ComponentMeta, Story } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
+import { Meta, StoryFn } from '@storybook/react';
 
 import Map from '../components/Map';
 import Annotation from '../components/Annotation';
 import { CoordinateRegion, FeatureVisibility } from '../util/parameters';
 
-const token = process.env.STORYBOOK_MAPKIT_JS_TOKEN!;
+// @ts-ignore
+const token = import.meta.env.STORYBOOK_MAPKIT_JS_TOKEN!;
 
 // SVG from https://webkul.github.io/vivid
 function CustomMarker() {
@@ -43,11 +43,11 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof Annotation>;
+} as Meta<typeof Annotation>;
 
 type MarkerProps = React.ComponentProps<typeof Annotation>;
 
-const Template: Story<MarkerProps> = (args) => {
+const Template: StoryFn<MarkerProps> = (args) => {
   const initialRegion: CoordinateRegion = useMemo(() => ({
     centerLatitude: 48,
     centerLongitude: 14,
@@ -73,7 +73,7 @@ Default.args = {
   title: 'Hello World',
 };
 
-const CustomMarkerAnnotationTemplate: Story<MarkerProps> = (args) => {
+const CustomMarkerAnnotationTemplate: StoryFn<MarkerProps> = (args) => {
   const initialRegion: CoordinateRegion = useMemo(() => ({
     centerLatitude: 48,
     centerLongitude: 14,
@@ -110,8 +110,6 @@ export const MoveableAnnotation = () => {
         title="Tap and hold to move"
         draggable
         enabled
-        onDragStart={() => { action('drag-start')(); }}
-        onDragEnd={() => { action('drag-end')(); }}
       >
         <CustomMarker />
       </Annotation>

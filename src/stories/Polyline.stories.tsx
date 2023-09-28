@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 
 import Map from '../components/Map';
 import Polyline from '../components/Polyline';
 import { ColorScheme, CoordinateRegion } from '..';
 
-const token = process.env.STORYBOOK_MAPKIT_JS_TOKEN!;
+// @ts-ignore
+const token = import.meta.env.STORYBOOK_MAPKIT_JS_TOKEN!;
 
 export default {
   title: 'Components/Polyline',
@@ -13,11 +14,11 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof Polyline>;
+} as Meta<typeof Polyline>;
 
 type PolylineProps = React.ComponentProps<typeof Polyline>;
 
-const Template: Story<PolylineProps> = (args) => {
+const Template: StoryFn<PolylineProps> = (args) => {
   const initialRegion: CoordinateRegion = useMemo(() => ({
     centerLatitude: 46.52,
     centerLongitude: 6.57,

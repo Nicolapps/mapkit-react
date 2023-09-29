@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import MapContext from '../context/MapContext';
 import { FeatureVisibility, toMapKitFeatureVisibility } from '../util/parameters';
 import MarkerProps from './MarkerProps';
+import forwardMapkitEvent from '../util/forwardMapkitEvent';
 
 export default function Marker({
   latitude,
@@ -29,6 +30,7 @@ export default function Marker({
   onDeselect = undefined,
   onDragStart = undefined,
   onDragEnd = undefined,
+  onDragging = undefined,
 }: MarkerProps) {
   const [marker, setMarker] = useState<mapkit.MarkerAnnotation | null>(null);
   const map = useContext(MapContext);
@@ -85,6 +87,20 @@ export default function Marker({
     }, [marker, prop]);
   });
 
+  const handlerWithoutParameters = () => { };
+
+  const mapDragEndParameters = () => ({
+    // @ts-ignore
+    latitude: marker.coordinate.latitude,
+    // @ts-ignore
+    longitude: marker.coordinate.longitude,
+  });
+
+  const mapDraggingParameters = (e: any) => ({
+    latitude: e.coordinate.latitude,
+    longitude: e.coordinate.longitude,
+  });
+
   // Events
   const events = [
     { name: 'select', handler: onSelect },
@@ -92,26 +108,11 @@ export default function Marker({
     { name: 'drag-start', handler: onDragStart },
   ] as const;
   events.forEach(({ name, handler }) => {
-    useEffect(() => {
-      if (!marker || !handler) return undefined;
-
-      const handlerWithoutParameters = () => handler();
-
-      marker.addEventListener(name, handlerWithoutParameters);
-      return () => marker.removeEventListener(name, handlerWithoutParameters);
-    }, [marker, handler]);
+    forwardMapkitEvent(marker, name, handler, handlerWithoutParameters);
   });
-  useEffect(() => {
-    if (!marker || !onDragEnd) return undefined;
 
-    const parametrizedHandler = () => onDragEnd({
-      latitude: marker.coordinate.latitude,
-      longitude: marker.coordinate.longitude,
-    });
-
-    marker.addEventListener('drag-end', parametrizedHandler);
-    return () => marker.removeEventListener('drag-end', parametrizedHandler);
-  }, [marker, onDragEnd]);
+  forwardMapkitEvent(marker, 'drag-end', onDragEnd, mapDragEndParameters);
+  forwardMapkitEvent(marker, 'dragging', onDragging, mapDraggingParameters);
 
   return null;
 }

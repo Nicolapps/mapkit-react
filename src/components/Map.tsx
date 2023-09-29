@@ -11,36 +11,7 @@ import {
   toMapKitFeatureVisibility, fromMapKitRegion,
 } from '../util/parameters';
 import MapProps from './MapProps';
-
-/**
- * Forwards a given MapKit JS event to a mapkit-react event.
- * @param map The current map instance
- * @param name The name of the MapKit JS event.
- * @param handler The event handler of the mapkit-react Map component
- * @param eventMap A function that transforms the parameter of the
- *                 MapKit JS event handler to a parameter for the
- *                 mapkit-react event handler.
- */
-function forwardMapkitEvent<E>(
-  map: mapkit.Map | null,
-  name: String,
-  handler: ((mapkitReactEvent: E) => void) | undefined,
-  eventMap: (mapkitEvent: any) => E,
-) {
-  useEffect(() => {
-    if (!map || !handler) return undefined;
-
-    // @ts-ignore
-    const mapkitHandler = (e) => {
-      handler(eventMap(e));
-    };
-
-    // @ts-ignore
-    map.addEventListener(name, mapkitHandler);
-    // @ts-ignore
-    return () => map.removeEventListener(name, mapkitHandler);
-  }, [map, handler]);
-}
+import forwardMapkitEvent from '../util/forwardMapkitEvent';
 
 const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps>>(({
   children = undefined,

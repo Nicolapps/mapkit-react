@@ -7,6 +7,7 @@ import {
 import { createPortal } from 'react-dom';
 import MapContext from '../context/MapContext';
 import AnnotationProps from './AnnotationProps';
+import forwardMapkitEvent from '../util/forwardMapkitEvent';
 
 export default function Annotation({
   latitude,
@@ -21,6 +22,7 @@ export default function Annotation({
   onDeselect = undefined,
   onDragStart = undefined,
   onDragEnd = undefined,
+  onDragging = undefined,
 
   animates = undefined,
   appearanceAnimation = '',
@@ -69,6 +71,20 @@ export default function Annotation({
     }, [annotation, prop]);
   });
 
+  const handlerWithoutParameters = () => { };
+
+  const mapDragEndParameters = () => ({
+    // @ts-ignore
+    latitude: annotation.coordinate.latitude,
+    // @ts-ignore
+    longitude: annotation.coordinate.longitude,
+  });
+
+  const mapDraggingParameters = (e: any) => ({
+    latitude: e.coordinate.latitude,
+    longitude: e.coordinate.longitude,
+  });
+
   // Events
   const events = [
     { name: 'select', handler: onSelect },
@@ -76,26 +92,11 @@ export default function Annotation({
     { name: 'drag-start', handler: onDragStart },
   ] as const;
   events.forEach(({ name, handler }) => {
-    useEffect(() => {
-      if (!annotation || !handler) return undefined;
-
-      const handlerWithoutParameters = () => handler();
-
-      annotation.addEventListener(name, handlerWithoutParameters);
-      return () => annotation.removeEventListener(name, handlerWithoutParameters);
-    }, [annotation, handler]);
+    forwardMapkitEvent(annotation, name, handler, handlerWithoutParameters);
   });
-  useEffect(() => {
-    if (!annotation || !onDragEnd) return undefined;
 
-    const parametrizedHandler = () => onDragEnd({
-      latitude: annotation.coordinate.latitude,
-      longitude: annotation.coordinate.longitude,
-    });
-
-    annotation.addEventListener('drag-end', parametrizedHandler);
-    return () => annotation.removeEventListener('drag-end', parametrizedHandler);
-  }, [annotation, onDragEnd]);
+  forwardMapkitEvent(annotation, 'drag-end', onDragEnd, mapDragEndParameters);
+  forwardMapkitEvent(annotation, 'dragging', onDragging, mapDraggingParameters);
 
   return createPortal(children, contentEl);
 }

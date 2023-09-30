@@ -22,10 +22,10 @@ export default function Annotation({
   onDragStart = undefined,
   onDragEnd = undefined,
 
-  animates = undefined,
+  animates = true,
   appearanceAnimation = '',
-  draggable = undefined,
-  enabled = undefined,
+  draggable = false,
+  enabled = true,
 
   children,
 }: AnnotationProps) {

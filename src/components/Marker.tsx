@@ -21,10 +21,10 @@ export default function Marker({
   selectedGlyphImage = undefined,
 
   selected = undefined,
-  animates = undefined,
+  animates = true,
   appearanceAnimation = '',
-  draggable = undefined,
-  enabled = undefined,
+  draggable = false,
+  enabled = true,
   onSelect = undefined,
   onDeselect = undefined,
   onDragStart = undefined,

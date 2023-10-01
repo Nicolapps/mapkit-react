@@ -123,6 +123,11 @@ export default interface MarkerProps {
   onDragEnd?: (newPosition: Coordinate) => void;
 
   /**
+   * Event fired when the user a drags the annotation.
+   */
+  onDragging?: (newPosition: Coordinate) => void;
+
+  /**
   * A shared identifier for all of the member annotations.
   * An annotation needs a clusteringIdentifier to be part of an annotation cluster.
   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotations/clustering_annotations}

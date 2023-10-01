@@ -48,6 +48,8 @@ If you have a question or an idea, you can create an issue. Pull requests are we
 
 If you want to expand the provided API or make breaking changes, please open an issue first to discuss it.
 
+The project uses [ESLint](https://eslint.org/) and [EditorConfig](https://editorconfig.org/) to ensure code quality and consistency. Checks are run automatically when a commit is pushed to the repository, but it is convenient to install the relevant plugins in your editor to see the errors and warnings in real time.
+
 ## Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):

@@ -10,6 +10,8 @@ jobs:
       - name: Check TypeScript
         run: npx tsc
         shell: bash
+      - name: Run EditorConfig
+        uses: zbeekman/EditorConfig-Action@v1.1.1
       - name: Run ESLint
         run: npm run lint
         shell: bash

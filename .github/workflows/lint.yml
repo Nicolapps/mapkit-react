@@ -7,7 +7,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: bahmutov/npm-install@v1
-      - uses: editorconfig-checker/action-editorconfig-checker@main
+      - name: Check EditorConfig
+        run: npx editorconfig-checker
+        shell: bash
       - name: Check TypeScript
         run: npx tsc
         shell: bash

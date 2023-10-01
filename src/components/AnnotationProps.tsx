@@ -123,6 +123,7 @@ export default interface AnnotationProps {
 
   /**
    * A Boolean value that determines whether the annotation is visible or hidden.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/annotationconstructoroptions/2991172-visible}
    */
   visible?: boolean;
 

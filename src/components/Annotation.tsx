@@ -26,7 +26,8 @@ export default function Annotation({
   anchorOffsetX = 0,
   anchorOffsetY = 0,
 
-  selected = undefined,
+  selected = false,
+
   onSelect = undefined,
   onDeselect = undefined,
   onDragStart = undefined,

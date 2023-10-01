@@ -69,7 +69,43 @@ export default interface MarkerProps {
    * The image to display in the balloon when the user selects the marker.
    * @see {@link https://developer.apple.com/documentation/mapkitjs/markerannotation/2973991-selectedglyphimage}
    */
-  selectedGlyphImage?: object | undefined;
+  selectedGlyphImage?: object | null;
+
+  /**
+   * The amount of padding, in CSS pixels, to inset the map from the top edge.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/padding}
+   */
+  paddingTop?: number;
+
+  /**
+   * The amount of padding, in CSS pixels, to inset the map from the right edge.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/padding}
+   */
+  paddingRight?: number;
+
+  /**
+   * The amount of padding, in CSS pixels, to inset the map from the bottom edge.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/padding}
+   */
+  paddingBottom?: number;
+
+  /**
+   * The amount of padding, in CSS pixels, to inset the map from the left edge.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/padding}
+   */
+  paddingLeft?: number;
+
+  /**
+   * An X offset that changes the annotation’s default anchor point.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973816-anchoroffset}
+   */
+  anchorOffsetX?: number;
+
+  /**
+   * An Y offset that changes the annotation’s default anchor point.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973816-anchoroffset}
+   */
+  anchorOffsetY?: number;
 
   /**
    * The desired dimensions of the annotation, in CSS pixels.

@@ -22,9 +22,7 @@ export default function Marker({
   glyphColor = 'white',
   glyphText = '',
   glyphImage = null,
-  selectedGlyphImage = undefined,
-
-  size = undefined,
+  selectedGlyphImage = null,
 
   paddingTop = 0,
   paddingRight = 0,
@@ -39,13 +37,14 @@ export default function Marker({
   calloutOffsetX = 0,
   calloutOffsetY = 0,
 
-  selected = undefined,
+  selected = false,
   animates = true,
   appearanceAnimation = '',
   visible = true,
 
   draggable = false,
   enabled = true,
+
   onSelect = undefined,
   onDeselect = undefined,
   onDragStart = undefined,
@@ -110,8 +109,6 @@ export default function Marker({
     glyphText,
     glyphImage,
     selectedGlyphImage,
-
-    size,
 
     clusteringIdentifier,
     displayPriority,

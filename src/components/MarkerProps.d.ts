@@ -59,6 +59,36 @@ export default interface MarkerProps {
      */
     selectedGlyphImage?: object | undefined;
     /**
+     * The amount of padding, in CSS pixels, to inset the map from the top edge.
+     * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/padding}
+     */
+    paddingTop?: number;
+    /**
+     * The amount of padding, in CSS pixels, to inset the map from the right edge.
+     * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/padding}
+     */
+    paddingRight?: number;
+    /**
+     * The amount of padding, in CSS pixels, to inset the map from the bottom edge.
+     * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/padding}
+     */
+    paddingBottom?: number;
+    /**
+     * The amount of padding, in CSS pixels, to inset the map from the left edge.
+     * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/padding}
+     */
+    paddingLeft?: number;
+    /**
+     * An X offset that changes the annotation’s default anchor point.
+     * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973816-anchoroffset}
+     */
+    anchorOffsetX?: number;
+    /**
+     * An Y offset that changes the annotation’s default anchor point.
+     * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973816-anchoroffset}
+     */
+    anchorOffsetY?: number;
+    /**
      * A Boolean value that determines whether the map displays the marker in a selected state.
      */
     selected?: boolean;
@@ -84,6 +114,10 @@ export default interface MarkerProps {
      * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973828-enabled}
      */
     enabled?: boolean;
+    /**
+     * A Boolean value that determines whether the annotation is visible or hidden.
+     */
+    visible?: boolean;
     /**
      * Event fired when the marker is selected.
      */

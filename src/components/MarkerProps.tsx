@@ -69,7 +69,7 @@ export default interface MarkerProps {
    * The image to display in the balloon when the user selects the marker.
    * @see {@link https://developer.apple.com/documentation/mapkitjs/markerannotation/2973991-selectedglyphimage}
    */
-  selectedGlyphImage?: object | undefined;
+  selectedGlyphImage?: object | null;
 
   /**
    * The amount of padding, in CSS pixels, to inset the map from the top edge.

@@ -71,21 +71,8 @@ export default function Annotation({
     }, [annotation, prop]);
   });
 
-  const handlerWithoutParameters = () => { };
-
-  const mapDragEndParameters = () => ({
-    // @ts-ignore
-    latitude: annotation.coordinate.latitude,
-    // @ts-ignore
-    longitude: annotation.coordinate.longitude,
-  });
-
-  const mapDraggingParameters = (e: any) => ({
-    latitude: e.coordinate.latitude,
-    longitude: e.coordinate.longitude,
-  });
-
   // Events
+  const handlerWithoutParameters = () => { };
   const events = [
     { name: 'select', handler: onSelect },
     { name: 'deselect', handler: onDeselect },
@@ -95,8 +82,16 @@ export default function Annotation({
     forwardMapkitEvent(annotation, name, handler, handlerWithoutParameters);
   });
 
-  forwardMapkitEvent(annotation, 'drag-end', onDragEnd, mapDragEndParameters);
-  forwardMapkitEvent(annotation, 'dragging', onDragging, mapDraggingParameters);
+  const dragEndParameters = () => ({
+    latitude: annotation!.coordinate.latitude,
+    longitude: annotation!.coordinate.longitude,
+  });
+  const draggingParameters = (e: { coordinate: mapkit.Coordinate }) => ({
+    latitude: e.coordinate.latitude,
+    longitude: e.coordinate.longitude,
+  });
+  forwardMapkitEvent(annotation, 'drag-end', onDragEnd, dragEndParameters);
+  forwardMapkitEvent(annotation, 'dragging', onDragging, draggingParameters);
 
   return createPortal(children, contentEl);
 }

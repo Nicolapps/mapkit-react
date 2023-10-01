@@ -87,21 +87,8 @@ export default function Marker({
     }, [marker, prop]);
   });
 
-  const handlerWithoutParameters = () => { };
-
-  const mapDragEndParameters = () => ({
-    // @ts-ignore
-    latitude: marker.coordinate.latitude,
-    // @ts-ignore
-    longitude: marker.coordinate.longitude,
-  });
-
-  const mapDraggingParameters = (e: any) => ({
-    latitude: e.coordinate.latitude,
-    longitude: e.coordinate.longitude,
-  });
-
   // Events
+  const handlerWithoutParameters = () => { };
   const events = [
     { name: 'select', handler: onSelect },
     { name: 'deselect', handler: onDeselect },
@@ -111,8 +98,16 @@ export default function Marker({
     forwardMapkitEvent(marker, name, handler, handlerWithoutParameters);
   });
 
-  forwardMapkitEvent(marker, 'drag-end', onDragEnd, mapDragEndParameters);
-  forwardMapkitEvent(marker, 'dragging', onDragging, mapDraggingParameters);
+  const dragEndParameters = () => ({
+    latitude: marker!.coordinate.latitude,
+    longitude: marker!.coordinate.longitude,
+  });
+  const draggingParameters = (e: { coordinate: mapkit.Coordinate }) => ({
+    latitude: e.coordinate.latitude,
+    longitude: e.coordinate.longitude,
+  });
+  forwardMapkitEvent(marker, 'drag-end', onDragEnd, dragEndParameters);
+  forwardMapkitEvent(marker, 'dragging', onDragging, draggingParameters);
 
   return null;
 }

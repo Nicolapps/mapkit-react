@@ -40,9 +40,10 @@ export default function Marker({
   calloutOffsetY = 0,
 
   selected = undefined,
-  visible = undefined,
   animates = true,
   appearanceAnimation = '',
+  visible = true,
+
   draggable = false,
   enabled = true,
   onSelect = undefined,

@@ -33,7 +33,9 @@ export default function Annotation({
   onDragEnd = undefined,
   onDragging = undefined,
 
-  visible = undefined,
+  animates = true,
+  appearanceAnimation = '',
+  visible = true,
 
   clusteringIdentifier = null,
   displayPriority = undefined,
@@ -45,8 +47,6 @@ export default function Annotation({
   calloutOffsetX = 0,
   calloutOffsetY = 0,
 
-  animates = true,
-  appearanceAnimation = '',
   draggable = false,
   enabled = true,
 

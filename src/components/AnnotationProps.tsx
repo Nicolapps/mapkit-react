@@ -34,7 +34,7 @@ export default interface AnnotationProps {
    * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973833-size}
    * @example `{width: 100, height: 100}`
    */
-  size?: object;
+  size?: { width: number; height: number };
 
   /**
    * The amount of padding, in CSS pixels, to inset the map from the top edge.

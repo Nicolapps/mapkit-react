@@ -2,7 +2,7 @@ import React, { useId, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Meta, StoryFn } from '@storybook/react';
 
-import MapKitMap from '../components/Map';
+import Map from '../components/Map';
 import Marker from '../components/Marker';
 import { CoordinateRegion, FeatureVisibility } from '../util/parameters';
 
@@ -36,9 +36,9 @@ const Template: StoryFn<MarkerProps> = (args) => {
     longitudeDelta: 55,
   }), []);
   return (
-    <MapKitMap token={token} initialRegion={initialRegion}>
+    <Map token={token} initialRegion={initialRegion}>
       <Marker {...args} />
-    </MapKitMap>
+    </Map>
   );
 };
 
@@ -59,7 +59,7 @@ export const TwoWayBindingSelected = () => {
 
   return (
     <>
-      <MapKitMap token={token} initialRegion={initialRegion} paddingBottom={44}>
+      <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
         <Marker
           latitude={46.20738751546706}
           longitude={6.155891756231}
@@ -69,7 +69,7 @@ export const TwoWayBindingSelected = () => {
           onSelect={() => setSelected(true)}
           onDeselect={() => setSelected(false)}
         />
-      </MapKitMap>
+      </Map>
 
       <div className="map-overlay">
         <div className="map-overlay-box">
@@ -105,7 +105,7 @@ export const MoveableMarker = () => {
 
   return (
     <>
-      <MapKitMap token={token} initialRegion={initialRegion}>
+      <Map token={token} initialRegion={initialRegion}>
         <Marker
           latitude={latitude}
           longitude={longitude}
@@ -117,7 +117,7 @@ export const MoveableMarker = () => {
             setLongitude(coordinate.longitude);
           }}
         />
-      </MapKitMap>
+      </Map>
 
       <div className="map-overlay map-overlay-top">
         <div className="map-overlay-box map-overlay-inputs">
@@ -172,7 +172,7 @@ export const MarkerClustering = () => {
 
   return (
     <>
-      <MapKitMap token={token} initialRegion={initialRegion} paddingBottom={44}>
+      <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
         {
           coordinates.map(({ latitude, longitude }, index) => (
             <Marker
@@ -188,7 +188,7 @@ export const MarkerClustering = () => {
             />
           ))
         }
-      </MapKitMap>
+      </Map>
 
       <div className="map-overlay">
         <div className="map-overlay-box">
@@ -217,7 +217,7 @@ export const CustomMarkerCallout = () => {
   }), []);
 
   return (
-    <MapKitMap token={token} initialRegion={initialRegion} paddingBottom={44}>
+    <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
       <Marker
         latitude={46.20738751546706}
         longitude={6.155891756231}
@@ -250,6 +250,7 @@ export const CustomMarkerCallout = () => {
               <div className="default-annotation-style">
                 <h2>{marker.title}</h2>
                 <p>{marker.subtitle}</p>
+                <CustomCalloutElement />
               </div>
             );
             createPortal(customCallout, div);
@@ -260,7 +261,7 @@ export const CustomMarkerCallout = () => {
         calloutOffsetX={10}
         calloutOffsetY={10}
       />
-    </MapKitMap>
+    </Map>
   );
 };
 CustomMarkerCallout.storyName = 'Marker with custom Callout';

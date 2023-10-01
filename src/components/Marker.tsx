@@ -19,7 +19,7 @@ export default function Marker({
 
   glyphText = '',
   glyphImage = null,
-  selectedGlyphImage = undefined,
+  selectedGlyphImage = null,
 
   paddingTop = 0,
   paddingRight = 0,
@@ -28,7 +28,7 @@ export default function Marker({
   anchorOffsetX = 0,
   anchorOffsetY = 0,
 
-  selected = undefined,
+  selected = false,
   animates = true,
   appearanceAnimation = '',
   visible = true,

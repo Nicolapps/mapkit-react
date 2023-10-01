@@ -1,7 +1,7 @@
 import React, {
   useId, useMemo, useState,
 } from 'react';
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import './stories.css';
 
 import Map from '../components/Map';
@@ -12,7 +12,8 @@ import {
 import Marker from '../components/Marker';
 import { MapInteractionEvent } from '..';
 
-const token = process.env.STORYBOOK_MAPKIT_JS_TOKEN!;
+// @ts-ignore
+const token = import.meta.env.STORYBOOK_MAPKIT_JS_TOKEN!;
 
 const enumArgType = (e: object) => ({
   options: Object.values(e).filter((val) => typeof val === 'number'),
@@ -21,6 +22,7 @@ const enumArgType = (e: object) => ({
     labels: Object.values(e).filter((val) => typeof val === 'string'),
   },
 });
+
 export default {
   title: 'Components/Map',
   component: Map,
@@ -34,15 +36,15 @@ export default {
     showsScale: enumArgType(FeatureVisibility),
   },
   parameters: { layout: 'fullscreen' },
-} as ComponentMeta<typeof Map>;
+} as Meta<typeof Map>;
 
 type MapProps = React.ComponentProps<typeof Map>;
 
-const Template: Story<MapProps> = (args) => <Map {...args} />;
+const Template: StoryFn<MapProps> = (args) => <Map {...args} />;
 
 export const Empty = Template.bind({});
 
-export const FixedSize: Story<MapProps> = (args) => (
+export const FixedSize: StoryFn<MapProps> = (args) => (
   <div style={{ width: '300px', height: '200px' }}>
     <Map {...args} />
   </div>
@@ -218,6 +220,7 @@ function ReadOnlyInput({ label, value }: { label: string, value: string }) {
     >
       {label}
       <input
+        id={id}
         type="text"
         className="input"
         value={value}

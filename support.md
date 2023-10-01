@@ -301,7 +301,7 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 | select     | ✅        |
 | deselect   | ✅        |
 | drag-start | ✅        |
-| dragging   | ❌        |
+| dragging   | ✅        |
 | drag-end   | ✅        |
 
 ## `mapkit.ImageAnnotation`
@@ -372,7 +372,7 @@ _❌ Not currently supported by mapkit-react._
 | select     | ✅        |
 | deselect   | ✅        |
 | drag-start | ✅        |
-| dragging   | ❌        |
+| dragging   | ✅        |
 | drag-end   | ✅        |
 
 ## `mapkit.Geocoder`

@@ -7,6 +7,7 @@ import {
 import { createPortal } from 'react-dom';
 import MapContext from '../context/MapContext';
 import AnnotationProps from './AnnotationProps';
+import forwardMapkitEvent from '../util/forwardMapkitEvent';
 
 export default function Annotation({
   latitude,
@@ -30,11 +31,8 @@ export default function Annotation({
   onDeselect = undefined,
   onDragStart = undefined,
   onDragEnd = undefined,
+  onDragging = undefined,
 
-  animates = undefined,
-  appearanceAnimation = '',
-  draggable = undefined,
-  enabled = undefined,
   visible = undefined,
 
   clusteringIdentifier = null,
@@ -46,6 +44,11 @@ export default function Annotation({
   calloutEnabled = undefined,
   calloutOffsetX = 0,
   calloutOffsetY = 0,
+
+  animates = true,
+  appearanceAnimation = '',
+  draggable = false,
+  enabled = true,
 
   children,
 }: AnnotationProps) {
@@ -121,22 +124,26 @@ export default function Annotation({
   });
 
   // Events
+  const handlerWithoutParameters = () => { };
   const events = [
     { name: 'select', handler: onSelect },
     { name: 'deselect', handler: onDeselect },
     { name: 'drag-start', handler: onDragStart },
-    { name: 'drag-end', handler: onDragEnd },
   ] as const;
   events.forEach(({ name, handler }) => {
-    useEffect(() => {
-      if (!annotation || !handler) return undefined;
-
-      const handlerWithoutParameters = () => handler();
-
-      annotation.addEventListener(name, handlerWithoutParameters);
-      return () => annotation.removeEventListener(name, handlerWithoutParameters);
-    }, [annotation, handler]);
+    forwardMapkitEvent(annotation, name, handler, handlerWithoutParameters);
   });
+
+  const dragEndParameters = () => ({
+    latitude: annotation!.coordinate.latitude,
+    longitude: annotation!.coordinate.longitude,
+  });
+  const draggingParameters = (e: { coordinate: mapkit.Coordinate }) => ({
+    latitude: e.coordinate.latitude,
+    longitude: e.coordinate.longitude,
+  });
+  forwardMapkitEvent(annotation, 'drag-end', onDragEnd, dragEndParameters);
+  forwardMapkitEvent(annotation, 'dragging', onDragging, draggingParameters);
 
   return createPortal(children, contentEl);
 }

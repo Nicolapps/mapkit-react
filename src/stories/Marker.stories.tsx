@@ -1,14 +1,13 @@
-import React, {
-  useId, useMemo, useState,
-} from 'react';
-import { render as createPortal } from 'react-dom';
-import { ComponentMeta, Story } from '@storybook/react';
+import React, { useId, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { Meta, StoryFn } from '@storybook/react';
 
 import MapKitMap from '../components/Map';
 import Marker from '../components/Marker';
 import { CoordinateRegion, FeatureVisibility } from '../util/parameters';
 
-const token = process.env.STORYBOOK_MAPKIT_JS_TOKEN!;
+// @ts-ignore
+const token = import.meta.env.STORYBOOK_MAPKIT_JS_TOKEN!;
 
 const enumArgType = (e: object) => ({
   options: Object.values(e).filter((x) => typeof x === 'string'),
@@ -25,11 +24,11 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof Marker>;
+} as Meta<typeof Marker>;
 
 type MarkerProps = React.ComponentProps<typeof Marker>;
 
-const Template: Story<MarkerProps> = (args) => {
+const Template: StoryFn<MarkerProps> = (args) => {
   const initialRegion: CoordinateRegion = useMemo(() => ({
     centerLatitude: 48,
     centerLongitude: 14,
@@ -89,6 +88,70 @@ export const TwoWayBindingSelected = () => {
   );
 };
 TwoWayBindingSelected.storyName = 'Two-Way Binding for `selected`';
+
+export const MoveableMarker = () => {
+  const [latitude, setLatitude] = useState(46.20738751546706);
+  const [longitude, setLongitude] = useState(6.155891756231);
+
+  const idLatitude = useId();
+  const idLongitude = useId();
+
+  const initialRegion: CoordinateRegion = useMemo(() => ({
+    centerLatitude: 46.20738751546706,
+    centerLongitude: 6.155891756231,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  }), []);
+
+  return (
+    <>
+      <MapKitMap token={token} initialRegion={initialRegion}>
+        <Marker
+          latitude={latitude}
+          longitude={longitude}
+          title="Tap and hold to move"
+          draggable
+          enabled
+          onDragEnd={(coordinate) => {
+            setLatitude(coordinate.latitude);
+            setLongitude(coordinate.longitude);
+          }}
+        />
+      </MapKitMap>
+
+      <div className="map-overlay map-overlay-top">
+        <div className="map-overlay-box map-overlay-inputs">
+          <label
+            className="form-group"
+            htmlFor={idLatitude}
+          >
+            Latitude
+            <input
+              id={idLatitude}
+              type="text"
+              className="input"
+              value={latitude}
+              onChange={(e) => setLatitude(Number(e.target.value))}
+            />
+          </label>
+          <label
+            className="form-group"
+            htmlFor={idLongitude}
+          >
+            Longitude
+            <input
+              id={idLatitude}
+              type="text"
+              className="input"
+              value={longitude}
+              onChange={(e) => setLongitude(Number(e.target.value))}
+            />
+          </label>
+        </div>
+      </div>
+    </>
+  );
+};
 
 export const MarkerClustering = () => {
   const clusteringIdentifier = 'id';

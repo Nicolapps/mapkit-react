@@ -37,6 +37,7 @@ export default function Marker({
 
   draggable = false,
   enabled = true,
+
   onSelect = undefined,
   onDeselect = undefined,
   onDragStart = undefined,

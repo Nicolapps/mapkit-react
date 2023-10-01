@@ -44,6 +44,10 @@ export default interface AnnotationProps {
      */
     onDragEnd?: (newPosition: Coordinate) => void;
     /**
+     * Event fired when the user a drags the annotation.
+     */
+    onDragging?: (newPosition: Coordinate) => void;
+    /**
      * A Boolean value that determines whether the map animates the annotation.
      * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973817-animates}
      */

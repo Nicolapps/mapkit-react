@@ -1,8 +1,10 @@
 # mapkit-react
 Use Apple Maps in your React apps!
 
+This library wraps [MapKit JS](https://developer.apple.com/documentation/mapkitjs) in React components. Its declarative, straightforward, and React-idiomatic API allows you to quickly add maps to your project, from prototype to production.
+
 ## Demo
-You can see the library in action on [**the Storybook examples**](https://nicolapps.github.io/mapkit-react/).
+Check out [**the Storybook examples**](https://nicolapps.github.io/mapkit-react/) to see the available components, experiment with their parameters, and read some code samples.
 
 You can run the examples locally by cloning the project and running the following command:
 
@@ -11,6 +13,8 @@ STORYBOOK_MAPKIT_JS_TOKEN="…" npm run storybook
 ```
 
 Replace `…` by your MapKit JS token (you can learn how to generate one on the [MapKit JS documentation](https://developer.apple.com/documentation/mapkitjs/creating_and_using_tokens_with_mapkit_js)).
+
+You can also see the library used in production on [CMUEats](https://cmueats.com/map) and [CMU Map](https://cmumap.com).
 
 ## Usage
 First, add the library to your project like this:
@@ -42,6 +46,7 @@ A complete list of MapKit JS features supported by this library is available on 
 ## Contributing
 If you have a question or an idea, you can create an issue. Pull requests are welcome! If you want to contribute, don’t hesitate to look into the unassigned issues.
 
+If you want to expand the provided API or make breaking changes, please open an issue first to discuss it.
 
 ## Contributors
 

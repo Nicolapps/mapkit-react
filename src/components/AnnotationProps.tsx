@@ -30,6 +30,49 @@ export default interface AnnotationProps {
   accessibilityLabel?: string | null;
 
   /**
+   * The desired dimensions of the annotation, in CSS pixels.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973833-size}
+   * @example `{width: 100, height: 100}`
+   */
+  size?: { width: number; height: number };
+
+  /**
+   * The amount of padding, in CSS pixels, to inset the map from the top edge.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/padding}
+   */
+  paddingTop?: number;
+
+  /**
+   * The amount of padding, in CSS pixels, to inset the map from the right edge.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/padding}
+   */
+  paddingRight?: number;
+
+  /**
+   * The amount of padding, in CSS pixels, to inset the map from the bottom edge.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/padding}
+   */
+  paddingBottom?: number;
+
+  /**
+   * The amount of padding, in CSS pixels, to inset the map from the left edge.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/padding}
+   */
+  paddingLeft?: number;
+
+  /**
+   * An X offset that changes the annotation’s default anchor point.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973816-anchoroffset}
+   */
+  anchorOffsetX?: number;
+
+  /**
+   * An Y offset that changes the annotation’s default anchor point.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973816-anchoroffset}
+   */
+  anchorOffsetY?: number;
+
+  /**
    * A Boolean value that determines whether the map displays the annotation in a selected state.
    */
   selected?: boolean;
@@ -84,7 +127,20 @@ export default interface AnnotationProps {
   enabled?: boolean;
 
   /**
+   * A Boolean value that determines whether the annotation is visible or hidden.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/annotationconstructoroptions/2991172-visible}
+   */
+  visible?: boolean;
+
+  /**
    * React children to render inside the annotation.
    */
   children?: React.ReactNode;
+
+  /**
+   * A shared identifier for all of the member annotations.
+   * An annotation needs a clusteringIdentifier to be part of an annotation cluster.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotations/clustering_annotations}
+   */
+  clusteringIdentifier?: string | null
 }

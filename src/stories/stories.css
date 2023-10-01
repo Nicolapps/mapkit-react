@@ -94,6 +94,17 @@ body {
   min-width: 150px;
 }
 
+.default-annotation-style {
+  width: 100%;
+  height: 24px;
+  background-color: #3b5f82;
+  border: 1px solid #213549;
+  color: white;
+  border-radius: 4px;
+  text-align: center;
+  vertical-align: middle;
+}
+
 /* Animation FROM https: //codepen.io/nelledejones/pen/gOOPWrK */
 @keyframes gelatine {
 

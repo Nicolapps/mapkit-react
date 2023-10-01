@@ -21,11 +21,21 @@ export default function Marker({
   glyphImage = null,
   selectedGlyphImage = undefined,
 
+  paddingTop = 0,
+  paddingRight = 0,
+  paddingBottom = 0,
+  paddingLeft = 0,
+  anchorOffsetX = 0,
+  anchorOffsetY = 0,
+
   selected = undefined,
   animates = true,
   appearanceAnimation = '',
+  visible = true,
+
   draggable = false,
   enabled = true,
+
   onSelect = undefined,
   onDeselect = undefined,
   onDragStart = undefined,
@@ -60,6 +70,18 @@ export default function Marker({
     marker.titleVisibility = toMapKitFeatureVisibility(titleVisibility);
   }, [marker, titleVisibility]);
 
+  // Padding
+  useEffect(() => {
+    if (!marker) return;
+    marker.padding = new mapkit.Padding(paddingTop, paddingRight, paddingBottom, paddingLeft);
+  }, [marker, paddingTop, paddingRight, paddingBottom, paddingLeft]);
+
+  // AnchorOffset
+  useEffect(() => {
+    if (!marker) return;
+    marker.anchorOffset = new DOMPoint(anchorOffsetX, anchorOffsetY);
+  }, [marker, anchorOffsetX, anchorOffsetY]);
+
   // Simple values properties
   const properties = {
     title,
@@ -72,16 +94,20 @@ export default function Marker({
     glyphText,
     glyphImage,
     selectedGlyphImage,
+
     clusteringIdentifier,
     selected,
     animates,
     appearanceAnimation,
     draggable,
     enabled,
+    visible,
   };
   Object.entries(properties).forEach(([propertyName, prop]) => {
     useEffect(() => {
       if (!marker) return;
+      // @ts-ignore
+      if (prop === undefined) { delete marker[propertyName]; return; }
       // @ts-ignore
       marker[propertyName] = prop;
     }, [marker, prop]);

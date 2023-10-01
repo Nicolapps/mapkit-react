@@ -335,7 +335,6 @@ _❌ Not currently supported by mapkit-react._
 | MarkerAnnotationConstructorOptions.anchorOffset         | ✅        |
 | MarkerAnnotationConstructorOptions.calloutOffset        | ❌        |
 | MarkerAnnotationConstructorOptions.callout              | ❌        |
-| MarkerAnnotationConstructorOptions.size                 | ✅        |
 | MarkerAnnotationConstructorOptions.displayPriority      | ❌        |
 | MarkerAnnotationConstructorOptions.collisionMode        | ❌        |
 | MarkerAnnotationConstructorOptions.padding              | ✅        |

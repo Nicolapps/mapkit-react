@@ -21,8 +21,6 @@ export default function Marker({
   glyphImage = null,
   selectedGlyphImage = undefined,
 
-  size = undefined,
-
   paddingTop = 0,
   paddingRight = 0,
   paddingBottom = 0,
@@ -96,8 +94,6 @@ export default function Marker({
     glyphText,
     glyphImage,
     selectedGlyphImage,
-
-    size,
 
     clusteringIdentifier,
     selected,

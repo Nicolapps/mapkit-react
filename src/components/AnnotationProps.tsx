@@ -55,8 +55,8 @@ export default interface AnnotationProps {
   onDragEnd?: (newPosition: Coordinate) => void;
 
   /**
-    * Event fired when the user a drags the annotation.
-    */
+   * Event fired when the user a drags the annotation.
+   */
   onDragging?: (newPosition: Coordinate) => void;
 
   /**

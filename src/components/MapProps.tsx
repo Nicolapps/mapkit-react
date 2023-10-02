@@ -18,6 +18,8 @@ export default interface MapProps {
 
   /**
    * The map’s color scheme when displaying standard or muted standard map types.
+   * Offers the Options ColorScheme.Dark, ColorScheme.Light and ColorScheme.Auto
+   * Auto Color Theme does decide on the colorscheme for mapkit based on the browser preference
    * @see {@link https://developer.apple.com/documentation/mapkitjs/map/3122649-colorscheme}
    */
   colorScheme?: ColorScheme;

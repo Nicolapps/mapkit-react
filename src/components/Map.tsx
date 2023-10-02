@@ -1,6 +1,7 @@
 import React, {
   useState, useEffect, useRef, useImperativeHandle,
 } from 'react';
+import { useMediaQuery } from 'usehooks-ts';
 import MapContext from '../context/MapContext';
 import load from '../util/loader';
 import {
@@ -102,11 +103,12 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   // Expose the map using a forward ref
   useImperativeHandle(mapRef, () => map!, [map]);
 
+  const isDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   // Enum properties
   useEffect(() => {
     if (!map) return;
-    map.colorScheme = toMapKitColorScheme(colorScheme);
-  }, [map, colorScheme]);
+    map.colorScheme = toMapKitColorScheme(colorScheme, isDarkMode);
+  }, [map, colorScheme, isDarkMode]);
   useEffect(() => {
     if (!map) return;
     map.mapType = toMapKitMapType(mapType);

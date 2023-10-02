@@ -86,6 +86,7 @@ export const LiveStateUpdate = () => {
   const options: { name: string, value: ColorScheme, id: string }[] = [
     { name: 'Light', value: ColorScheme.Light, id: useId() },
     { name: 'Dark', value: ColorScheme.Dark, id: useId() },
+    { name: 'Auto', value: ColorScheme.Auto, id: useId() },
   ];
 
   return (

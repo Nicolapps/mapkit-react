@@ -2,7 +2,7 @@
  * Color schemes of the map.
  * @see {@link https://developer.apple.com/documentation/mapkitjs/map/colorschemes}
  */
-export enum ColorScheme { Light, Dark }
+export enum ColorScheme { Light, Dark, Auto }
 
 /**
  * Converts a mapkit-react color scheme value to a MapKit JS color scheme value.
@@ -10,12 +10,16 @@ export enum ColorScheme { Light, Dark }
  * @param colorScheme The mapkit-react color scheme value
  * @returns The MapKit JS color scheme value
  */
-export function toMapKitColorScheme(colorScheme: ColorScheme): string {
+export function toMapKitColorScheme(colorScheme: ColorScheme, isDarkMode: boolean): string {
   switch (colorScheme) {
     case ColorScheme.Dark:
       return mapkit.Map.ColorSchemes.Dark;
     case ColorScheme.Light:
       return mapkit.Map.ColorSchemes.Light;
+    case ColorScheme.Auto:
+      return isDarkMode
+        ? mapkit.Map.ColorSchemes.Dark
+        : mapkit.Map.ColorSchemes.Light;
     default:
       throw new RangeError('Invalid color scheme');
   }

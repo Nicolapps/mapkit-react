@@ -47,8 +47,15 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
 
   initialRegion = undefined,
   cameraBoundary = undefined,
+  cameraDistance = undefined,
   minCameraDistance = 0,
   maxCameraDistance = Infinity,
+
+  center = undefined,
+  region = undefined,
+  rotation = undefined,
+  visibleMapRect = undefined,
+  regionUpdateAnimates = true,
 
   onLoad = undefined,
 
@@ -77,9 +84,35 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
     const loadMap = typeof customLoad === 'function' ? customLoad : load;
     loadMap(token).then(() => {
       if (exists.current) return;
-      const options = initialRegion
-        ? { region: toMapKitCoordinateRegion(initialRegion) }
-        : {};
+      const options = {};
+      if (initialRegion) { // FIXME: legacy fallback
+        // @ts-ignore
+        options.region = toMapKitCoordinateRegion(initialRegion);
+      } else if (region) {
+        // @ts-ignore
+        options.region = toMapKitCoordinateRegion(region);
+      }
+      if (visibleMapRect) {
+        if (!visibleMapRect.x || !visibleMapRect.y || !visibleMapRect.width
+          || !visibleMapRect.height) {
+          throw new Error('Visible map rects has to include x, y, width and height');
+        }
+        // @ts-ignore
+        options.visibleMapRect = new mapkit.MapRect(
+          visibleMapRect.x,
+          visibleMapRect.y,
+          visibleMapRect.width,
+          visibleMapRect.height,
+        );
+      }
+      if (center) {
+        // @ts-ignore
+        options.center = center;
+      }
+      if (rotation) {
+        // @ts-ignore
+        options.rotation = rotation;
+      }
       setMap(new mapkit.Map(element.current!, options));
       exists.current = true;
     });
@@ -180,9 +213,59 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   // Camera zoom range
   useEffect(() => {
     if (!map) return;
-    // @ts-ignore
+
     map.cameraZoomRange = new mapkit.CameraZoomRange(minCameraDistance, maxCameraDistance);
   }, [map, minCameraDistance, maxCameraDistance]);
+
+  // Camera Distance
+  useEffect(() => {
+    if (!map) return;
+    if (!cameraDistance) return;
+
+    map.setCameraDistanceAnimated(cameraDistance, regionUpdateAnimates);
+  }, [cameraDistance]);
+
+  // Map Rotation
+  useEffect(() => {
+    if (!map) return;
+    if (!rotation) return;
+
+    map.setRotationAnimated(rotation, regionUpdateAnimates);
+  }, [rotation]);
+
+  // Center Coordinates
+  useEffect(() => {
+    if (!map) return;
+    if (!center) return;
+
+    map.setCenterAnimated(
+      new mapkit.Coordinate(center.latitude, center.longitude),
+      regionUpdateAnimates,
+    );
+  }, [center]);
+
+  // Region Coordinates
+  useEffect(() => {
+    if (!map) return;
+    if (!region) return;
+
+    map.setRegionAnimated(toMapKitCoordinateRegion(region), regionUpdateAnimates);
+  }, [region]);
+
+  // Region Coordinates
+  useEffect(() => {
+    if (!map) return;
+    if (!visibleMapRect) return;
+    if (!visibleMapRect.x || !visibleMapRect.y || !visibleMapRect.width || !visibleMapRect.height) {
+      throw new Error('Visible map rects has to include x, y, width and height');
+    }
+    map.setVisibleMapRectAnimated(new mapkit.MapRect(
+      visibleMapRect.x,
+      visibleMapRect.y,
+      visibleMapRect.width,
+      visibleMapRect.height,
+    ), regionUpdateAnimates);
+  }, [visibleMapRect]);
 
   // Point of interest filter
   useEffect(() => {

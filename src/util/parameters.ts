@@ -9,7 +9,7 @@ export enum ColorScheme { Light, Dark, Auto }
  * Must be called after MapKit JS is loaded.
  * @param colorScheme The mapkit-react color scheme value (ColorScheme.Dark / ColorScheme.Light)
  * or ColorScheme.Auto for dynamic color based on the color preference of the user
- * @param isDarkMode Provide result of Media color preference Dark for Auto color scheme
+ * @param isDarkMode The user’s color preference (used for ColorScheme.Auto)
  * @returns The MapKit JS color scheme value
  */
 export function toMapKitColorScheme(colorScheme: ColorScheme, isDarkMode: boolean): string {

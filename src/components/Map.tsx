@@ -202,7 +202,7 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
       );
     } else {
       // @ts-ignore
-      map.pointOfInterestFilter = null;
+      delete map.pointOfInterestFilter;
     }
   }, [map, includedPOICategories, excludedPOICategories]);
 

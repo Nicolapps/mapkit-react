@@ -222,7 +222,7 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 | AnnotationConstructorOptions.title                | ✅        |
 | AnnotationConstructorOptions.subtitle             | ✅        |
 | AnnotationConstructorOptions.accessibilityLabel   | ✅        |
-| AnnotationConstructorOptions.data                 | ✅        |
+| AnnotationConstructorOptions.data                 | ❌        |
 | AnnotationConstructorOptions.draggable            | ✅        |
 | AnnotationConstructorOptions.visible              | ✅        |
 | AnnotationConstructorOptions.enabled              | ✅        |
@@ -324,7 +324,7 @@ _❌ Not currently supported by mapkit-react._
 | MarkerAnnotationConstructorOptions.title                | ✅        |
 | MarkerAnnotationConstructorOptions.subtitle             | ✅        |
 | MarkerAnnotationConstructorOptions.accessibilityLabel   | ✅        |
-| MarkerAnnotationConstructorOptions.data                 | ✅        |
+| MarkerAnnotationConstructorOptions.data                 | ❌        |
 | MarkerAnnotationConstructorOptions.draggable            | ✅        |
 | MarkerAnnotationConstructorOptions.visible              | ✅        |
 | MarkerAnnotationConstructorOptions.enabled              | ✅        |

@@ -1,8 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
+import React, {
+  useContext, useEffect, useRef, useState,
+} from 'react';
+import { createPortal } from 'react-dom';
 import MapContext from '../context/MapContext';
 import { FeatureVisibility, toMapKitFeatureVisibility } from '../util/parameters';
 import MarkerProps from './MarkerProps';
 import forwardMapkitEvent from '../util/forwardMapkitEvent';
+import CalloutContainer from './CalloutContainer';
 
 export default function Marker({
   latitude,
@@ -31,8 +35,11 @@ export default function Marker({
   anchorOffsetX = 0,
   anchorOffsetY = 0,
 
-  data = {},
-  callout = undefined,
+  calloutElementForAnnotation = undefined,
+  calloutContentForAnnotation = undefined,
+  calloutLeftAccessoryForAnnotation = undefined,
+  calloutRightAccessoryForAnnotation = undefined,
+
   calloutEnabled = undefined,
   calloutOffsetX = 0,
   calloutOffsetY = 0,
@@ -51,6 +58,11 @@ export default function Marker({
   onDragEnd = undefined,
   onDragging = undefined,
 }: MarkerProps) {
+  const calloutLeftAccessoryForAnnotationRef = useRef();
+  const calloutRightAccessoryForAnnotationRef = useRef();
+  const calloutContentForAnnotationRef = useRef();
+  const calloutElementForAnnotationRef = useRef();
+
   const [marker, setMarker] = useState<mapkit.MarkerAnnotation | null>(null);
   const map = useContext(MapContext);
 
@@ -97,6 +109,44 @@ export default function Marker({
     marker.calloutOffset = new DOMPoint(calloutOffsetX, calloutOffsetY);
   }, [marker, calloutOffsetX, calloutOffsetY]);
 
+  // Callout
+  useEffect(() => {
+    if (!marker) return;
+
+    const callOutObj: Record<string, any> = {};
+    if (calloutElementForAnnotation && calloutElementForAnnotationRef.current !== undefined) {
+      callOutObj.calloutElementForAnnotation = () => calloutElementForAnnotationRef.current;
+    }
+    if (
+      calloutLeftAccessoryForAnnotation
+      && calloutLeftAccessoryForAnnotationRef.current !== undefined
+    ) {
+      callOutObj.calloutLeftAccessoryForAnnotation = () => calloutLeftAccessoryForAnnotationRef
+        .current;
+    }
+    if (
+      calloutRightAccessoryForAnnotation
+      && calloutRightAccessoryForAnnotationRef.current !== undefined
+    ) {
+      callOutObj.calloutRightAccessoryForAnnotation = () => calloutRightAccessoryForAnnotationRef
+        .current;
+    }
+    if (calloutContentForAnnotation && calloutContentForAnnotationRef.current !== undefined) {
+      callOutObj.calloutContentForAnnotation = () => calloutContentForAnnotationRef.current;
+    }
+    if (Object.keys(callOutObj).length > 0) {
+      marker.callout = { ...callOutObj };
+    } else {
+      // @ts-ignore
+      delete marker.callout;
+    }
+  }, [
+    marker, calloutElementForAnnotation, calloutLeftAccessoryForAnnotation,
+    calloutRightAccessoryForAnnotation, calloutContentForAnnotation,
+    calloutElementForAnnotationRef.current, calloutLeftAccessoryForAnnotationRef.current,
+    calloutRightAccessoryForAnnotationRef.current, calloutContentForAnnotationRef.current,
+  ]);
+
   // Simple values properties
   const properties = {
     title,
@@ -121,8 +171,6 @@ export default function Marker({
     enabled,
     visible,
 
-    data,
-    callout,
     calloutEnabled,
   };
   Object.entries(properties).forEach(([propertyName, prop]) => {
@@ -157,5 +205,43 @@ export default function Marker({
   forwardMapkitEvent(marker, 'drag-end', onDragEnd, dragEndParameters);
   forwardMapkitEvent(marker, 'dragging', onDragging, draggingParameters);
 
+  if (calloutEnabled) {
+    return (
+      <>
+        {calloutContentForAnnotation !== undefined && createPortal(
+          <CalloutContainer
+            ref={calloutContentForAnnotationRef}
+          >
+            {calloutContentForAnnotation}
+          </CalloutContainer>,
+          document.body,
+        )}
+        {calloutLeftAccessoryForAnnotation !== undefined && createPortal(
+          <CalloutContainer
+            ref={calloutLeftAccessoryForAnnotationRef}
+          >
+            {calloutLeftAccessoryForAnnotation}
+          </CalloutContainer>,
+          document.body,
+        )}
+        {calloutRightAccessoryForAnnotation !== undefined && createPortal(
+          <CalloutContainer
+            ref={calloutRightAccessoryForAnnotationRef}
+          >
+            {calloutRightAccessoryForAnnotation}
+          </CalloutContainer>,
+          document.body,
+        )}
+        {calloutElementForAnnotation !== undefined && createPortal(
+          <CalloutContainer
+            ref={calloutElementForAnnotationRef}
+          >
+            {calloutElementForAnnotation}
+          </CalloutContainer>,
+          document.body,
+        )}
+      </>
+    );
+  }
   return null;
 }

@@ -1,5 +1,4 @@
 import React, { useId, useMemo, useState } from 'react';
-import { createPortal } from 'react-dom';
 import { Meta, StoryFn } from '@storybook/react';
 
 import Map from '../components/Map';
@@ -201,10 +200,13 @@ export const MarkerClustering = () => {
 
 MarkerClustering.storyName = 'Clustering three markers into one';
 
-function CustomCalloutElement(props) {
-  console.log(props);
+function CustomCalloutElement({ title, subtitle }: { title: string, subtitle: string }) {
   return (
-    <div className="default-annotation-style">React Element</div>
+    <div className="default-annotation-style">
+      React Element
+      {title ?? ''}
+      {subtitle ?? ''}
+    </div>
   );
 }
 
@@ -223,45 +225,63 @@ export const CustomMarkerCallout = () => {
         longitude={6.155891756231}
         title="Jet d’eau"
         subtitle="Iconic landmark of Geneva"
-        data={{ test: 'data' }}
-        callout={{
-          calloutLeftAccessoryForAnnotation: (marker: MarkerProps) => {
-            const DOMelement = document.createElement('div');
-            DOMelement.className = 'default-annotation-style';
-            DOMelement.textContent = marker.title ?? '';
-            return DOMelement;
-          },
-          calloutRightAccessoryForAnnotation: (marker: MarkerProps) => {
-            const DOMelement = document.createElement('div');
-            DOMelement.className = 'default-annotation-style';
-            DOMelement.textContent = marker.subtitle ?? '';
-            return DOMelement;
-          },
-          calloutContentForAnnotation: (marker: MarkerProps) => {
-            const DOMelement = document.createElement('div');
-            DOMelement.className = 'default-annotation-style';
-            DOMelement.textContent = marker.data?.test ?? '';
-            return DOMelement;
-          },
-          /* Comment out below if only modify the different parts of the Annotation */
-          calloutElementForAnnotation: (marker: MarkerProps) => {
-            const div = document.createElement('div');
-            const customCallout = (
-              <div className="default-annotation-style">
-                <h2>{marker.title}</h2>
-                <p>{marker.subtitle}</p>
-                <CustomCalloutElement />
-              </div>
-            );
-            createPortal(customCallout, div);
-            return div;
-          },
-        }}
+        calloutElementForAnnotation={<CustomCalloutElement title="Jet d’eau" subtitle="Iconic landmark of Geneva" />}
         calloutEnabled
-        calloutOffsetX={10}
+        calloutOffsetX={0}
         calloutOffsetY={10}
       />
     </Map>
   );
 };
 CustomMarkerCallout.storyName = 'Marker with custom Callout';
+
+function CustomCalloutContent({ title, subtitle }: { title: string, subtitle: string }) {
+  return (
+    <div className="default-annotation-style">
+      CONTENT
+      {title ?? ''}
+      {subtitle ?? ''}
+    </div>
+  );
+}
+
+function CustomCalloutLeftAccessory() {
+  return (
+    <div className="default-annotation-style">
+      LEFT
+    </div>
+  );
+}
+
+function CustomCalloutRightAccessory() {
+  return (
+    <div className="default-annotation-style">
+      RIGHT
+    </div>
+  );
+}
+
+export const CustomMarkerCalloutContent = () => {
+  const initialRegion: CoordinateRegion = useMemo(() => ({
+    centerLatitude: 46.20738751546706,
+    centerLongitude: 6.155891756231,
+    latitudeDelta: 0.007,
+    longitudeDelta: 0.015,
+  }), []);
+
+  return (
+    <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
+      <Marker
+        latitude={46.20738751546706}
+        longitude={6.155891756231}
+        title="Jet d’eau"
+        subtitle="Iconic landmark of Geneva"
+        calloutContentForAnnotation={<CustomCalloutContent title="Jet d’eau" subtitle="Iconic landmark of Geneva" />}
+        calloutLeftAccessoryForAnnotation={<CustomCalloutLeftAccessory />}
+        calloutRightAccessoryForAnnotation={<CustomCalloutRightAccessory />}
+        calloutEnabled
+      />
+    </Map>
+  );
+};
+CustomMarkerCalloutContent.storyName = 'Marker with custom Callout Content';

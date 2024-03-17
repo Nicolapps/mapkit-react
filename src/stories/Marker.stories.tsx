@@ -1,6 +1,6 @@
 import React, { useId, useMemo, useState } from 'react';
 import { Meta, StoryFn } from '@storybook/react';
-
+import './stories.css';
 import Map from '../components/Map';
 import Marker from '../components/Marker';
 import { CoordinateRegion, FeatureVisibility } from '../util/parameters';
@@ -200,12 +200,16 @@ export const MarkerClustering = () => {
 
 MarkerClustering.storyName = 'Clustering three markers into one';
 
-function CustomCalloutElement({ title, subtitle }: { title: string, subtitle: string }) {
+function CustomCalloutElement(
+  { title, subtitle, url }: { title: string, subtitle: string, url: string },
+) {
   return (
-    <div className="default-annotation-style">
-      React Element
-      {title ?? ''}
-      {subtitle ?? ''}
+    <div className="landmark">
+      <h1>{title ?? ''}</h1>
+      <section>
+        <p>{subtitle ?? ''}</p>
+        <p><a href={url} target="_blank" rel="noreferrer">Website</a></p>
+      </section>
     </div>
   );
 }
@@ -225,10 +229,10 @@ export const CustomMarkerCallout = () => {
         longitude={6.155891756231}
         title="Jet d’eau"
         subtitle="Iconic landmark of Geneva"
-        calloutElementForAnnotation={<CustomCalloutElement title="Jet d’eau" subtitle="Iconic landmark of Geneva" />}
+        calloutElementForAnnotation={<CustomCalloutElement title="Jet d’eau" subtitle="Iconic landmark of Geneva" url="https://en.wikipedia.org/wiki/Jet_d%27Eau" />}
         calloutEnabled
-        calloutOffsetX={0}
-        calloutOffsetY={10}
+        calloutOffsetX={-148}
+        calloutOffsetY={-78}
       />
     </Map>
   );
@@ -237,26 +241,31 @@ CustomMarkerCallout.storyName = 'Marker with custom Callout';
 
 function CustomCalloutContent({ title, subtitle }: { title: string, subtitle: string }) {
   return (
-    <div className="default-annotation-style">
-      CONTENT
-      {title ?? ''}
-      {subtitle ?? ''}
+    <div className="custom-annotation-content">
+      <h2>{title ?? ''}</h2>
+      <p>{subtitle ?? ''}</p>
     </div>
   );
 }
 
-function CustomCalloutLeftAccessory() {
+function CustomCalloutLeftAccessory({ src }: { src: string }) {
   return (
-    <div className="default-annotation-style">
-      LEFT
+    <div className="custom-annotation-image">
+      <img src={src} alt="" />
     </div>
   );
 }
 
-function CustomCalloutRightAccessory() {
+function CustomCalloutRightAccessory({ url }: { url: string }) {
   return (
-    <div className="default-annotation-style">
-      RIGHT
+    <div className="custom-annotation-info">
+      <a href={url} target="_blank" rel="noreferrer">
+        <svg width="20px" height="20px" viewBox="0 0 20 20" stroke="#333" strokeWidth="2" fill="none" fillRule="evenodd" strokeLinecap="round" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="10" cy="10" r="9" />
+          <line x1="10" y1="9" x2="10" y2="15" />
+          <circle cx="10" cy="5" r="0.1" />
+        </svg>
+      </a>
     </div>
   );
 }
@@ -277,8 +286,8 @@ export const CustomMarkerCalloutContent = () => {
         title="Jet d’eau"
         subtitle="Iconic landmark of Geneva"
         calloutContentForAnnotation={<CustomCalloutContent title="Jet d’eau" subtitle="Iconic landmark of Geneva" />}
-        calloutLeftAccessoryForAnnotation={<CustomCalloutLeftAccessory />}
-        calloutRightAccessoryForAnnotation={<CustomCalloutRightAccessory />}
+        calloutLeftAccessoryForAnnotation={<CustomCalloutLeftAccessory src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Le_jet_d-eau_de_Genève.jpg/480px-Le_jet_d-eau_de_Genève.jpg" />}
+        calloutRightAccessoryForAnnotation={<CustomCalloutRightAccessory url="https://en.wikipedia.org/wiki/Jet_d%27Eau" />}
         calloutEnabled
       />
     </Map>

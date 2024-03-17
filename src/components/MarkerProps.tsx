@@ -108,13 +108,6 @@ export default interface MarkerProps {
   anchorOffsetY?: number;
 
   /**
-   * The desired dimensions of the annotation, in CSS pixels.
-   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973833-size}
-   * @example `{width: 100, height: 100}`
-   */
-  size?: { width: number; height: number };
-
-  /**
    * A Boolean value that determines whether the map displays the annotation in a selected state.
    */
   selected?: boolean;
@@ -188,7 +181,7 @@ export default interface MarkerProps {
    * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973822-collisionmode}
    * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/collisionmode}
    */
-  collisionMode?: string | null;
+  collisionMode?: 'Rectangle' | 'Circle' | null;
 
   /**
    * A numeric hint that the map uses to prioritize how it displays annotations.

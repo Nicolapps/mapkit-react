@@ -1,10 +1,10 @@
 import React, { ReactNode } from 'react';
 
 const CalloutContainer = React.forwardRef((
-  { children }: { children: ReactNode },
+  { children, type = 'container' }: { children: ReactNode, type?: string },
   ref,
 ) => (
-  <div className="mk-callout-container" ref={ref}>
+  <div className={`mk-callout-${type}`} ref={ref}>
     {children}
   </div>
 ));

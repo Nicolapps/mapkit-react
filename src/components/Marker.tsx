@@ -147,6 +147,20 @@ export default function Marker({
     calloutRightAccessoryForAnnotationRef.current, calloutContentForAnnotationRef.current,
   ]);
 
+  // Collision Mode
+  useEffect(() => {
+    if (!marker) return;
+
+    if (collisionMode === 'Circle') {
+      marker.collisionMode = mapkit.MarkerAnnotation.CollisionMode.Circle;
+    } else if (collisionMode === 'Rectangle') {
+      marker.collisionMode = mapkit.MarkerAnnotation.CollisionMode.Rectangle;
+    } else {
+      // @ts-ignore
+      delete marker.collisionMode;
+    }
+  }, [marker, collisionMode]);
+
   // Simple values properties
   const properties = {
     title,
@@ -162,7 +176,6 @@ export default function Marker({
 
     clusteringIdentifier,
     displayPriority,
-    collisionMode,
 
     selected,
     animates,
@@ -211,6 +224,7 @@ export default function Marker({
         {calloutContentForAnnotation !== undefined && createPortal(
           <CalloutContainer
             ref={calloutContentForAnnotationRef}
+            type="content"
           >
             {calloutContentForAnnotation}
           </CalloutContainer>,
@@ -219,6 +233,7 @@ export default function Marker({
         {calloutLeftAccessoryForAnnotation !== undefined && createPortal(
           <CalloutContainer
             ref={calloutLeftAccessoryForAnnotationRef}
+            type="left"
           >
             {calloutLeftAccessoryForAnnotation}
           </CalloutContainer>,
@@ -227,6 +242,7 @@ export default function Marker({
         {calloutRightAccessoryForAnnotation !== undefined && createPortal(
           <CalloutContainer
             ref={calloutRightAccessoryForAnnotationRef}
+            type="right"
           >
             {calloutRightAccessoryForAnnotation}
           </CalloutContainer>,
@@ -235,6 +251,7 @@ export default function Marker({
         {calloutElementForAnnotation !== undefined && createPortal(
           <CalloutContainer
             ref={calloutElementForAnnotationRef}
+            type="container"
           >
             {calloutElementForAnnotation}
           </CalloutContainer>,

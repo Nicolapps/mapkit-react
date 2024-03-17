@@ -1,13 +1,15 @@
-import {
+import React, {
   useContext,
   useEffect,
   useState,
   useMemo,
+  useRef,
 } from 'react';
 import { createPortal } from 'react-dom';
 import MapContext from '../context/MapContext';
 import AnnotationProps from './AnnotationProps';
 import forwardMapkitEvent from '../util/forwardMapkitEvent';
+import CalloutContainer from './CalloutContainer';
 
 export default function Annotation({
   latitude,
@@ -42,8 +44,11 @@ export default function Annotation({
   displayPriority = undefined,
   collisionMode = undefined,
 
-  data = {},
-  callout = undefined,
+  calloutElementForAnnotation = undefined,
+  calloutContentForAnnotation = undefined,
+  calloutLeftAccessoryForAnnotation = undefined,
+  calloutRightAccessoryForAnnotation = undefined,
+
   calloutEnabled = undefined,
   calloutOffsetX = 0,
   calloutOffsetY = 0,
@@ -53,6 +58,11 @@ export default function Annotation({
 
   children,
 }: AnnotationProps) {
+  const calloutLeftAccessoryForAnnotationRef = useRef();
+  const calloutRightAccessoryForAnnotationRef = useRef();
+  const calloutContentForAnnotationRef = useRef();
+  const calloutElementForAnnotationRef = useRef();
+
   const [annotation, setAnnotation] = useState<mapkit.Annotation | null>(null);
   const contentEl = useMemo<HTMLDivElement>(() => document.createElement('div'), []);
   const map = useContext(MapContext);
@@ -91,6 +101,58 @@ export default function Annotation({
     annotation.calloutOffset = new DOMPoint(calloutOffsetX, calloutOffsetY);
   }, [annotation, calloutOffsetX, calloutOffsetY]);
 
+  // Callout
+  useEffect(() => {
+    if (!annotation) return;
+
+    const callOutObj: Record<string, any> = {};
+    if (calloutElementForAnnotation && calloutElementForAnnotationRef.current !== undefined) {
+      callOutObj.calloutElementForAnnotation = () => calloutElementForAnnotationRef.current;
+    }
+    if (
+      calloutLeftAccessoryForAnnotation
+      && calloutLeftAccessoryForAnnotationRef.current !== undefined
+    ) {
+      callOutObj.calloutLeftAccessoryForAnnotation = () => calloutLeftAccessoryForAnnotationRef
+        .current;
+    }
+    if (
+      calloutRightAccessoryForAnnotation
+      && calloutRightAccessoryForAnnotationRef.current !== undefined
+    ) {
+      callOutObj.calloutRightAccessoryForAnnotation = () => calloutRightAccessoryForAnnotationRef
+        .current;
+    }
+    if (calloutContentForAnnotation && calloutContentForAnnotationRef.current !== undefined) {
+      callOutObj.calloutContentForAnnotation = () => calloutContentForAnnotationRef.current;
+    }
+    if (Object.keys(callOutObj).length > 0) {
+      annotation.callout = { ...callOutObj };
+    } else {
+      // @ts-ignore
+      delete annotation.callout;
+    }
+  }, [
+    annotation, calloutElementForAnnotation, calloutLeftAccessoryForAnnotation,
+    calloutRightAccessoryForAnnotation, calloutContentForAnnotation,
+    calloutElementForAnnotationRef.current, calloutLeftAccessoryForAnnotationRef.current,
+    calloutRightAccessoryForAnnotationRef.current, calloutContentForAnnotationRef.current,
+  ]);
+
+  // Collision Mode
+  useEffect(() => {
+    if (!annotation) return;
+
+    if (collisionMode === 'Circle') {
+      annotation.collisionMode = mapkit.Annotation.CollisionMode.Circle;
+    } else if (collisionMode === 'Rectangle') {
+      annotation.collisionMode = mapkit.Annotation.CollisionMode.Rectangle;
+    } else {
+      // @ts-ignore
+      delete annotation.collisionMode;
+    }
+  }, [annotation, collisionMode]);
+
   // Simple values properties
   const properties = {
     title,
@@ -108,10 +170,7 @@ export default function Annotation({
 
     clusteringIdentifier,
     displayPriority,
-    collisionMode,
 
-    data,
-    callout,
     calloutEnabled,
   };
   Object.entries(properties).forEach(([propertyName, prop]) => {
@@ -146,5 +205,48 @@ export default function Annotation({
   forwardMapkitEvent(annotation, 'drag-end', onDragEnd, dragEndParameters);
   forwardMapkitEvent(annotation, 'dragging', onDragging, draggingParameters);
 
+  if (calloutEnabled) {
+    return (
+      <>
+        {calloutContentForAnnotation !== undefined && createPortal(
+          <CalloutContainer
+            ref={calloutContentForAnnotationRef}
+            type="content"
+          >
+            {calloutContentForAnnotation}
+          </CalloutContainer>,
+          document.body,
+        )}
+        {calloutLeftAccessoryForAnnotation !== undefined && createPortal(
+          <CalloutContainer
+            ref={calloutLeftAccessoryForAnnotationRef}
+            type="left"
+          >
+            {calloutLeftAccessoryForAnnotation}
+          </CalloutContainer>,
+          document.body,
+        )}
+        {calloutRightAccessoryForAnnotation !== undefined && createPortal(
+          <CalloutContainer
+            ref={calloutRightAccessoryForAnnotationRef}
+            type="right"
+          >
+            {calloutRightAccessoryForAnnotation}
+          </CalloutContainer>,
+          document.body,
+        )}
+        {calloutElementForAnnotation !== undefined && createPortal(
+          <CalloutContainer
+            ref={calloutElementForAnnotationRef}
+            type="container"
+          >
+            {calloutElementForAnnotation}
+          </CalloutContainer>,
+          document.body,
+        )}
+        {createPortal(children, contentEl)}
+      </>
+    );
+  }
   return createPortal(children, contentEl);
 }

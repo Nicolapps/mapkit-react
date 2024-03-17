@@ -1,6 +1,6 @@
 {
   "name": "mapkit-react",
-  "version": "1.13.0",
+  "version": "1.14.1",
   "description": "A React wrapper for MapKit JS",
   "author": "Nicolas Ettlin",
   "license": "MIT",
@@ -36,7 +36,8 @@
   "dependencies": {
     "@types/react-dom": "^18.0.10",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "usehooks-ts": "^2.9.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.5",

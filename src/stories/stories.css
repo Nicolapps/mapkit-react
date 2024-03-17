@@ -105,6 +105,79 @@ body {
   vertical-align: middle;
 }
 
+.landmark {
+  width: 250px;
+  padding: 7px 0 0 0;
+  background: rgba(247, 247, 247, 0.75);
+  border-radius: 5px;
+  box-shadow: 10px 10px 50px rgba(0, 0, 0, 0.29);
+  font-family: Helvetica, Arial, sans-serif;
+  transform-origin: 0 10px;
+}
+
+.landmark h1 {
+  margin-top: 0;
+  padding: 5px 15px;
+  background: #2aaef5;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.landmark section {
+  padding: 0 15px 5px;
+  font-size: 14px;
+}
+
+.landmark section p {
+  margin: 5px 0;
+}
+
+.landmark:after {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: -13px;
+  width: 0;
+  height: 0;
+  margin-bottom: -13px;
+  border-right: 13px solid #2aaef5;
+  border-top: 13px solid rgba(0, 0, 0, 0);
+  border-bottom: 13px solid rgba(0, 0, 0, 0);
+}
+
+.custom-annotation-image {
+  width: 40px;
+  height: 40px;
+}
+
+.custom-annotation-image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.custom-annotation-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.custom-annotation-content h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.custom-annotation-content p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.custom-annotation-info {
+  padding: 10px;
+}
+
 /* Animation FROM https: //codepen.io/nelledejones/pen/gOOPWrK */
 @keyframes gelatine {
 

@@ -227,15 +227,15 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 | AnnotationConstructorOptions.visible              | ✅        |
 | AnnotationConstructorOptions.enabled              | ✅        |
 | AnnotationConstructorOptions.selected             | ✅        |
-| AnnotationConstructorOptions.calloutEnabled       | ❌        |
+| AnnotationConstructorOptions.calloutEnabled       | ✅        |
 | AnnotationConstructorOptions.animates             | ✅        |
 | AnnotationConstructorOptions.appearanceAnimation  | ✅        |
 | AnnotationConstructorOptions.anchorOffset         | ✅        |
-| AnnotationConstructorOptions.calloutOffset        | ❌        |
-| AnnotationConstructorOptions.callout              | ❌        |
+| AnnotationConstructorOptions.calloutOffset        | ✅        |
+| AnnotationConstructorOptions.callout              | ✅        |
 | AnnotationConstructorOptions.size                 | ✅        |
-| AnnotationConstructorOptions.displayPriority      | ❌        |
-| AnnotationConstructorOptions.collisionMode        | ❌        |
+| AnnotationConstructorOptions.displayPriority      | ✅        |
+| AnnotationConstructorOptions.collisionMode        | ✅        |
 | AnnotationConstructorOptions.padding              | ✅        |
 | AnnotationConstructorOptions.clusteringIdentifier | ✅        |
 
@@ -252,7 +252,7 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 
 | Feature            | Supported |
 | ------------------ | --------- |
-| data               | ❌        |
+| data               | ✅        |
 | title              | ✅        |
 | subtitle           | ✅        |
 | accessibilityLabel | ✅        |
@@ -264,7 +264,7 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 | coordinate          | ✅        |
 | anchorOffset        | ✅        |
 | appearanceAnimation | ✅        |
-| displayPriority     | ❌        |
+| displayPriority     | ✅        |
 | padding             | ✅        |
 | size                | ✅        |
 | visible             | ✅        |
@@ -282,9 +282,9 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 
 | Feature        | Supported |
 | -------------- | --------- |
-| callout        | ❌        |
-| calloutEnabled | ❌        |
-| calloutOffset  | ❌        |
+| callout        | ✅        |
+| calloutEnabled | ✅        |
+| calloutOffset  | ✅        |
 
 #### Clustering
 
@@ -292,7 +292,7 @@ To call methods on the `mapkit.Map` object, you can use the reference exposed by
 | -------------------- | --------- |
 | memberAnnotations    | ❌        |
 | clusteringIdentifier | ✅        |
-| collisionMode        | ❌        |
+| collisionMode        | ✅        |
 
 ### Events
 
@@ -329,14 +329,15 @@ _❌ Not currently supported by mapkit-react._
 | MarkerAnnotationConstructorOptions.visible              | ✅        |
 | MarkerAnnotationConstructorOptions.enabled              | ✅        |
 | MarkerAnnotationConstructorOptions.selected             | ✅        |
-| MarkerAnnotationConstructorOptions.calloutEnabled       | ❌        |
+| MarkerAnnotationConstructorOptions.calloutEnabled       | ✅        |
 | MarkerAnnotationConstructorOptions.animates             | ✅        |
 | MarkerAnnotationConstructorOptions.appearanceAnimation  | ✅        |
 | MarkerAnnotationConstructorOptions.anchorOffset         | ✅        |
-| MarkerAnnotationConstructorOptions.calloutOffset        | ❌        |
-| MarkerAnnotationConstructorOptions.callout              | ❌        |
-| MarkerAnnotationConstructorOptions.displayPriority      | ❌        |
-| MarkerAnnotationConstructorOptions.collisionMode        | ❌        |
+| MarkerAnnotationConstructorOptions.calloutOffset        | ✅        |
+| MarkerAnnotationConstructorOptions.callout              | ✅        |
+| MarkerAnnotationConstructorOptions.size                 | ❌        |
+| MarkerAnnotationConstructorOptions.displayPriority      | ✅        |
+| MarkerAnnotationConstructorOptions.collisionMode        | ✅        |
 | MarkerAnnotationConstructorOptions.padding              | ✅        |
 | MarkerAnnotationConstructorOptions.clusteringIdentifier | ✅        |
 

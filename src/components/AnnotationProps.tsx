@@ -142,5 +142,82 @@ export default interface AnnotationProps {
    * An annotation needs a clusteringIdentifier to be part of an annotation cluster.
    * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotations/clustering_annotations}
    */
-  clusteringIdentifier?: string | null
+  clusteringIdentifier?: string | null;
+
+  /**
+   * A mode that determines the shape of the collision frame.
+   * Rectangle | Circle | None
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973822-collisionmode}
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/collisionmode}
+   */
+  collisionMode?: 'Rectangle' | 'Circle' | null;
+
+  /**
+   * A numeric hint that the map uses to prioritize how it displays annotations.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973825-displaypriority}
+   */
+  displayPriority?: number;
+
+  /**
+   * An X offset that changes the annotation callout’s default placement.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973821-calloutoffset}
+   */
+  calloutOffsetX?: number;
+
+  /**
+   * An Y offset that changes the annotation callout’s default placement.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973821-calloutoffset}
+   */
+  calloutOffsetY?: number;
+
+  /**
+   * A Boolean value that determines whether the map shows an annotation’s callout.
+   * If the title is empty, the framework can’t show the standard callout even if property is true.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973820-calloutenabled}
+   */
+  calloutEnabled?: boolean;
+
+  /**
+   * Returns an element to use as a custom accessory on the left side of the callout content area.
+   *
+   * When MapKit JS creates a callout for a selected annotation and the annotation’s callout
+   * delegate has no calloutElementForAnnotation method, the framework calls
+   * calloutContentForAnnotation method instead — if it’s defined — on the delegate with the
+   * annotation as a parameter.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/annotationcalloutdelegate/2991150-calloutleftaccessoryforannotatio}
+   */
+  calloutLeftAccessoryForAnnotation?: JSX.Element;
+
+  /**
+   * Returns an element to use as a custom accessory on the right side of the callout content area.
+   *
+   * When MapKit JS creates a callout for a selected annotation and the annotation’s callout
+   * delegate has no calloutElementForAnnotation method, the framework calls
+   * calloutContentForAnnotation method instead — if it’s defined — on the delegate with the
+   * annotation as a parameter.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/annotationcalloutdelegate/2991151-calloutrightaccessoryforannotati}
+   */
+  calloutRightAccessoryForAnnotation?: JSX.Element;
+
+  /**
+   * Returns custom content for the callout bubble.
+   *
+   * When MapKit JS creates a callout for a selected annotation and the annotation’s callout
+   * delegate has no calloutElementForAnnotation method, the framework calls
+   * calloutContentForAnnotation method instead — if it’s defined — on the delegate with the
+   * annotation as a parameter.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/annotationcalloutdelegate/2991148-calloutcontentforannotation}
+   */
+  calloutContentForAnnotation?: JSX.Element;
+
+  /**
+   * Returns an element representing a custom callout.
+   *
+   * When MapKit JS creates a callout for a selected annotation and the annotation’s callout
+   * delegate has no calloutElementForAnnotation method, the framework calls
+   * calloutContentForAnnotation method instead — if it’s defined — on the delegate with the
+   * annotation as a parameter.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/annotationcalloutdelegate/2991148-calloutcontentforannotation}
+   */
+  calloutElementForAnnotation?: JSX.Element;
 }

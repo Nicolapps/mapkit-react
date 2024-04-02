@@ -22,3 +22,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           folder: storybook-static
+          clean: true
+          clean-exclude: |
+            .nojekyll

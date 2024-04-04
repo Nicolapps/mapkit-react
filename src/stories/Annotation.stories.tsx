@@ -58,7 +58,7 @@ const Template: StoryFn<MarkerProps> = (args) => {
     <Map token={token} initialRegion={initialRegion}>
       <Annotation {...args}>
         <div className="default-annotation-style">
-          Klick me
+          Click me
         </div>
       </Annotation>
     </Map>

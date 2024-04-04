@@ -44,10 +44,10 @@ export default function Annotation({
   displayPriority = undefined,
   collisionMode = undefined,
 
-  calloutElementForAnnotation = undefined,
-  calloutContentForAnnotation = undefined,
-  calloutLeftAccessoryForAnnotation = undefined,
-  calloutRightAccessoryForAnnotation = undefined,
+  calloutElement = undefined,
+  calloutContent = undefined,
+  calloutLeftAccessory = undefined,
+  calloutRightAccessory = undefined,
 
   calloutEnabled = undefined,
   calloutOffsetX = 0,
@@ -58,10 +58,10 @@ export default function Annotation({
 
   children,
 }: AnnotationProps) {
-  const calloutLeftAccessoryForAnnotationRef = useRef();
-  const calloutRightAccessoryForAnnotationRef = useRef();
-  const calloutContentForAnnotationRef = useRef();
-  const calloutElementForAnnotationRef = useRef();
+  const calloutLeftAccessoryRef = useRef();
+  const calloutRightAccessoryRef = useRef();
+  const calloutContentRef = useRef();
+  const calloutElementRef = useRef();
 
   const [annotation, setAnnotation] = useState<mapkit.Annotation | null>(null);
   const contentEl = useMemo<HTMLDivElement>(() => document.createElement('div'), []);
@@ -106,37 +106,37 @@ export default function Annotation({
     if (!annotation) return;
 
     const callOutObj: mapkit.AnnotationCalloutDelegate = {};
-    if (calloutElementForAnnotation && calloutElementForAnnotationRef.current !== undefined) {
-      callOutObj.calloutElementForAnnotation = () => calloutElementForAnnotationRef.current;
+    if (calloutElement && calloutElementRef.current !== undefined) {
+      callOutObj.calloutElementForAnnotation = () => calloutElementRef.current;
     }
     if (
-      calloutLeftAccessoryForAnnotation
-      && calloutLeftAccessoryForAnnotationRef.current !== undefined
+      calloutLeftAccessory
+      && calloutLeftAccessoryRef.current !== undefined
     ) {
-      callOutObj.calloutLeftAccessoryForAnnotation = () => calloutLeftAccessoryForAnnotationRef
+      callOutObj.calloutLeftAccessoryForAnnotation = () => calloutLeftAccessoryRef
         .current;
     }
     if (
-      calloutRightAccessoryForAnnotation
-      && calloutRightAccessoryForAnnotationRef.current !== undefined
+      calloutRightAccessory
+      && calloutRightAccessoryRef.current !== undefined
     ) {
-      callOutObj.calloutRightAccessoryForAnnotation = () => calloutRightAccessoryForAnnotationRef
+      callOutObj.calloutRightAccessoryForAnnotation = () => calloutRightAccessoryRef
         .current;
     }
-    if (calloutContentForAnnotation && calloutContentForAnnotationRef.current !== undefined) {
-      callOutObj.calloutContentForAnnotation = () => calloutContentForAnnotationRef.current;
+    if (calloutContent && calloutContentRef.current !== undefined) {
+      callOutObj.calloutContentForAnnotation = () => calloutContentRef.current;
     }
     if (Object.keys(callOutObj).length > 0) {
       annotation.callout = callOutObj;
     } else {
-      // @ts-ignore
+      // @ts-expect-error
       delete annotation.callout;
     }
   }, [
-    annotation, calloutElementForAnnotation, calloutLeftAccessoryForAnnotation,
-    calloutRightAccessoryForAnnotation, calloutContentForAnnotation,
-    calloutElementForAnnotationRef.current, calloutLeftAccessoryForAnnotationRef.current,
-    calloutRightAccessoryForAnnotationRef.current, calloutContentForAnnotationRef.current,
+    annotation, calloutElement, calloutLeftAccessory,
+    calloutRightAccessory, calloutContent,
+    calloutElementRef.current, calloutLeftAccessoryRef.current,
+    calloutRightAccessoryRef.current, calloutContentRef.current,
   ]);
 
   // Collision Mode
@@ -208,39 +208,39 @@ export default function Annotation({
   if (calloutEnabled) {
     return (
       <>
-        {calloutContentForAnnotation !== undefined && createPortal(
+        {calloutContent !== undefined && createPortal(
           <CalloutContainer
-            ref={calloutContentForAnnotationRef}
+            ref={calloutContentRef}
             type="content"
           >
-            {calloutContentForAnnotation}
+            {calloutContent}
           </CalloutContainer>,
           document.body,
         )}
-        {calloutLeftAccessoryForAnnotation !== undefined && createPortal(
+        {calloutLeftAccessory !== undefined && createPortal(
           <CalloutContainer
-            ref={calloutLeftAccessoryForAnnotationRef}
+            ref={calloutLeftAccessoryRef}
             type="left"
           >
-            {calloutLeftAccessoryForAnnotation}
+            {calloutLeftAccessory}
           </CalloutContainer>,
           document.body,
         )}
-        {calloutRightAccessoryForAnnotation !== undefined && createPortal(
+        {calloutRightAccessory !== undefined && createPortal(
           <CalloutContainer
-            ref={calloutRightAccessoryForAnnotationRef}
+            ref={calloutRightAccessoryRef}
             type="right"
           >
-            {calloutRightAccessoryForAnnotation}
+            {calloutRightAccessory}
           </CalloutContainer>,
           document.body,
         )}
-        {calloutElementForAnnotation !== undefined && createPortal(
+        {calloutElement !== undefined && createPortal(
           <CalloutContainer
-            ref={calloutElementForAnnotationRef}
+            ref={calloutElementRef}
             type="container"
           >
-            {calloutElementForAnnotation}
+            {calloutElement}
           </CalloutContainer>,
           document.body,
         )}

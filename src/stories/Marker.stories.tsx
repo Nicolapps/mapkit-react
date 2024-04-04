@@ -229,7 +229,7 @@ export const CustomMarkerCallout = () => {
         longitude={6.155891756231}
         title="Jet d’eau"
         subtitle="Iconic landmark of Geneva"
-        calloutElementForAnnotation={<CustomCalloutElement title="Jet d’eau" subtitle="Iconic landmark of Geneva" url="https://en.wikipedia.org/wiki/Jet_d%27Eau" />}
+        calloutElement={<CustomCalloutElement title="Jet d’eau" subtitle="Iconic landmark of Geneva" url="https://en.wikipedia.org/wiki/Jet_d%27Eau" />}
         calloutEnabled
         calloutOffsetX={-148}
         calloutOffsetY={-78}
@@ -285,9 +285,9 @@ export const CustomMarkerCalloutContent = () => {
         longitude={6.155891756231}
         title="Jet d’eau"
         subtitle="Iconic landmark of Geneva"
-        calloutContentForAnnotation={<CustomCalloutContent title="Jet d’eau" subtitle="Iconic landmark of Geneva" />}
-        calloutLeftAccessoryForAnnotation={<CustomCalloutLeftAccessory src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Le_jet_d-eau_de_Genève.jpg/480px-Le_jet_d-eau_de_Genève.jpg" />}
-        calloutRightAccessoryForAnnotation={<CustomCalloutRightAccessory url="https://en.wikipedia.org/wiki/Jet_d%27Eau" />}
+        calloutContent={<CustomCalloutContent title="Jet d’eau" subtitle="Iconic landmark of Geneva" />}
+        calloutLeftAccessory={<CustomCalloutLeftAccessory src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Le_jet_d-eau_de_Genève.jpg/480px-Le_jet_d-eau_de_Genève.jpg" />}
+        calloutRightAccessory={<CustomCalloutRightAccessory url="https://en.wikipedia.org/wiki/Jet_d%27Eau" />}
         calloutEnabled
       />
     </Map>

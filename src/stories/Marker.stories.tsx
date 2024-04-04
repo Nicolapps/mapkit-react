@@ -223,7 +223,7 @@ export const CustomMarkerCallout = () => {
   }), []);
 
   return (
-    <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
+    <Map token={token} initialRegion={initialRegion}>
       <Marker
         latitude={46.20738751546706}
         longitude={6.155891756231}
@@ -237,7 +237,7 @@ export const CustomMarkerCallout = () => {
     </Map>
   );
 };
-CustomMarkerCallout.storyName = 'Marker with custom Callout';
+CustomMarkerCallout.storyName = 'Marker with custom callout element';
 
 function CustomCalloutContent({ title, subtitle }: { title: string, subtitle: string }) {
   return (
@@ -279,7 +279,7 @@ export const CustomMarkerCalloutContent = () => {
   }), []);
 
   return (
-    <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
+    <Map token={token} initialRegion={initialRegion}>
       <Marker
         latitude={46.20738751546706}
         longitude={6.155891756231}
@@ -293,4 +293,4 @@ export const CustomMarkerCalloutContent = () => {
     </Map>
   );
 };
-CustomMarkerCalloutContent.storyName = 'Marker with custom Callout Content';
+CustomMarkerCalloutContent.storyName = 'Marker with custom callout content';

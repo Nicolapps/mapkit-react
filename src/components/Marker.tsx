@@ -141,10 +141,15 @@ export default function Marker({
       delete marker.callout;
     }
   }, [
-    marker, calloutElementForAnnotation, calloutLeftAccessoryForAnnotation,
-    calloutRightAccessoryForAnnotation, calloutContentForAnnotation,
-    calloutElementForAnnotationRef.current, calloutLeftAccessoryForAnnotationRef.current,
-    calloutRightAccessoryForAnnotationRef.current, calloutContentForAnnotationRef.current,
+    marker,
+    calloutElementForAnnotation,
+    calloutLeftAccessoryForAnnotation,
+    calloutRightAccessoryForAnnotation,
+    calloutContentForAnnotation,
+    calloutElementForAnnotationRef.current,
+    calloutLeftAccessoryForAnnotationRef.current,
+    calloutRightAccessoryForAnnotationRef.current,
+    calloutContentForAnnotationRef.current,
   ]);
 
   // Collision Mode

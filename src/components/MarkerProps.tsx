@@ -108,7 +108,7 @@ export default interface MarkerProps {
   anchorOffsetY?: number;
 
   /**
-   * A Boolean value that determines whether the map displays the annotation in a selected state.
+   * A Boolean value that determines whether the map displays the marker in a selected state.
    */
   selected?: boolean;
 
@@ -185,9 +185,12 @@ export default interface MarkerProps {
 
   /**
    * A numeric hint that the map uses to prioritize how it displays annotations.
+   *
+   * Is either any number from `0` to `1000`, or a preset value: `"low"` (250), `"low"` (750), or `"required"` (1000).
+   *
    * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973825-displaypriority}
    */
-  displayPriority?: number;
+  displayPriority?: number | 'low' | 'high' | 'required';
 
   /**
    * An X offset that changes the annotation callout’s default placement.

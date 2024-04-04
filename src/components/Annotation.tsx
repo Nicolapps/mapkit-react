@@ -105,7 +105,7 @@ export default function Annotation({
   useEffect(() => {
     if (!annotation) return;
 
-    const callOutObj: Record<string, any> = {};
+    const callOutObj: mapkit.AnnotationCalloutDelegate = {};
     if (calloutElementForAnnotation && calloutElementForAnnotationRef.current !== undefined) {
       callOutObj.calloutElementForAnnotation = () => calloutElementForAnnotationRef.current;
     }
@@ -127,7 +127,7 @@ export default function Annotation({
       callOutObj.calloutContentForAnnotation = () => calloutContentForAnnotationRef.current;
     }
     if (Object.keys(callOutObj).length > 0) {
-      annotation.callout = { ...callOutObj };
+      annotation.callout = callOutObj;
     } else {
       // @ts-ignore
       delete annotation.callout;

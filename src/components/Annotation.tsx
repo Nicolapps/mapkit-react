@@ -58,11 +58,6 @@ export default function Annotation({
 
   children,
 }: AnnotationProps) {
-  const calloutLeftAccessoryRef = useRef();
-  const calloutRightAccessoryRef = useRef();
-  const calloutContentRef = useRef();
-  const calloutElementRef = useRef();
-
   const [annotation, setAnnotation] = useState<mapkit.Annotation | null>(null);
   const contentEl = useMemo<HTMLDivElement>(() => document.createElement('div'), []);
   const map = useContext(MapContext);
@@ -101,29 +96,34 @@ export default function Annotation({
     annotation.calloutOffset = new DOMPoint(calloutOffsetX, calloutOffsetY);
   }, [annotation, calloutOffsetX, calloutOffsetY]);
 
+  const calloutLeftAccessoryRef = useRef<HTMLDivElement>(null);
+  const calloutRightAccessoryRef = useRef<HTMLDivElement>(null);
+  const calloutContentRef = useRef<HTMLDivElement>(null);
+  const calloutElementRef = useRef<HTMLDivElement>(null);
+
   // Callout
   useEffect(() => {
     if (!annotation) return;
 
     const callOutObj: mapkit.AnnotationCalloutDelegate = {};
-    if (calloutElement && calloutElementRef.current !== undefined) {
+    if (calloutElement && calloutElementRef.current !== null) {
       callOutObj.calloutElementForAnnotation = () => calloutElementRef.current;
     }
     if (
       calloutLeftAccessory
-      && calloutLeftAccessoryRef.current !== undefined
+      && calloutLeftAccessoryRef.current !== null
     ) {
       callOutObj.calloutLeftAccessoryForAnnotation = () => calloutLeftAccessoryRef
         .current;
     }
     if (
       calloutRightAccessory
-      && calloutRightAccessoryRef.current !== undefined
+      && calloutRightAccessoryRef.current !== null
     ) {
       callOutObj.calloutRightAccessoryForAnnotation = () => calloutRightAccessoryRef
         .current;
     }
-    if (calloutContent && calloutContentRef.current !== undefined) {
+    if (calloutContent && calloutContentRef.current !== null) {
       callOutObj.calloutContentForAnnotation = () => calloutContentRef.current;
     }
     if (Object.keys(callOutObj).length > 0) {
@@ -133,10 +133,15 @@ export default function Annotation({
       delete annotation.callout;
     }
   }, [
-    annotation, calloutElement, calloutLeftAccessory,
-    calloutRightAccessory, calloutContent,
-    calloutElementRef.current, calloutLeftAccessoryRef.current,
-    calloutRightAccessoryRef.current, calloutContentRef.current,
+    annotation,
+    calloutElement,
+    calloutLeftAccessory,
+    calloutRightAccessory,
+    calloutContent,
+    calloutElementRef.current,
+    calloutLeftAccessoryRef.current,
+    calloutRightAccessoryRef.current,
+    calloutContentRef.current,
   ]);
 
   // Collision Mode

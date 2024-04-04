@@ -58,11 +58,6 @@ export default function Marker({
   onDragEnd = undefined,
   onDragging = undefined,
 }: MarkerProps) {
-  const calloutLeftAccessoryRef = useRef();
-  const calloutRightAccessoryRef = useRef();
-  const calloutContentRef = useRef();
-  const calloutElementRef = useRef();
-
   const [marker, setMarker] = useState<mapkit.MarkerAnnotation | null>(null);
   const map = useContext(MapContext);
 
@@ -109,33 +104,38 @@ export default function Marker({
     marker.calloutOffset = new DOMPoint(calloutOffsetX, calloutOffsetY);
   }, [marker, calloutOffsetX, calloutOffsetY]);
 
+  const calloutLeftAccessoryRef = useRef<HTMLDivElement>(null);
+  const calloutRightAccessoryRef = useRef<HTMLDivElement>(null);
+  const calloutContentRef = useRef<HTMLDivElement>(null);
+  const calloutElementRef = useRef<HTMLDivElement>(null);
+
   // Callout
   useEffect(() => {
     if (!marker) return;
 
     const callOutObj: mapkit.AnnotationCalloutDelegate = {};
-    if (calloutElement && calloutElementRef.current !== undefined) {
+    if (calloutElement && calloutElementRef.current !== null) {
       callOutObj.calloutElementForAnnotation = () => calloutElementRef.current;
     }
     if (
       calloutLeftAccessory
-      && calloutLeftAccessoryRef.current !== undefined
+      && calloutLeftAccessoryRef.current !== null
     ) {
       callOutObj.calloutLeftAccessoryForAnnotation = () => calloutLeftAccessoryRef
         .current;
     }
     if (
       calloutRightAccessory
-      && calloutRightAccessoryRef.current !== undefined
+      && calloutRightAccessoryRef.current !== null
     ) {
       callOutObj.calloutRightAccessoryForAnnotation = () => calloutRightAccessoryRef
         .current;
     }
-    if (calloutContent && calloutContentRef.current !== undefined) {
+    if (calloutContent && calloutContentRef.current !== null) {
       callOutObj.calloutContentForAnnotation = () => calloutContentRef.current;
     }
     if (Object.keys(callOutObj).length > 0) {
-      marker.callout = { ...callOutObj };
+      marker.callout = callOutObj;
     } else {
       // @ts-expect-error
       delete marker.callout;

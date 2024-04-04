@@ -155,9 +155,12 @@ export default interface AnnotationProps {
 
   /**
    * A numeric hint that the map uses to prioritize how it displays annotations.
+   *
+   * Is either any number from `0` to `1000`, or a preset value: `"low"` (250), `"low"` (750), or `"required"` (1000).
+   *
    * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973825-displaypriority}
    */
-  displayPriority?: number;
+  displayPriority?: number | 'low' | 'high' | 'required';
 
   /**
    * An X offset that changes the annotation callout’s default placement.

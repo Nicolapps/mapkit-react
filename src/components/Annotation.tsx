@@ -10,6 +10,7 @@ import MapContext from '../context/MapContext';
 import AnnotationProps from './AnnotationProps';
 import forwardMapkitEvent from '../util/forwardMapkitEvent';
 import CalloutContainer from './CalloutContainer';
+import { toMapKitDisplayPriority } from '../util/parameters';
 
 export default function Annotation({
   latitude,
@@ -107,12 +108,14 @@ export default function Annotation({
 
     const callOutObj: mapkit.AnnotationCalloutDelegate = {};
     if (calloutElement && calloutElementRef.current !== null) {
+      // @ts-expect-error
       callOutObj.calloutElementForAnnotation = () => calloutElementRef.current;
     }
     if (
       calloutLeftAccessory
       && calloutLeftAccessoryRef.current !== null
     ) {
+      // @ts-expect-error
       callOutObj.calloutLeftAccessoryForAnnotation = () => calloutLeftAccessoryRef
         .current;
     }
@@ -120,10 +123,12 @@ export default function Annotation({
       calloutRightAccessory
       && calloutRightAccessoryRef.current !== null
     ) {
+      // @ts-expect-error
       callOutObj.calloutRightAccessoryForAnnotation = () => calloutRightAccessoryRef
         .current;
     }
     if (calloutContent && calloutContentRef.current !== null) {
+      // @ts-expect-error
       callOutObj.calloutContentForAnnotation = () => calloutContentRef.current;
     }
     if (Object.keys(callOutObj).length > 0) {
@@ -158,6 +163,15 @@ export default function Annotation({
     }
   }, [annotation, collisionMode]);
 
+  // Display Priority
+  useEffect(() => {
+    if (!annotation) return;
+    // @ts-ignore
+    if (displayPriority === undefined) { delete annotation.displayPriority; return; }
+    // @ts-ignore
+    annotation.displayPriority = toMapKitDisplayPriority(displayPriority);
+  }, [annotation, displayPriority]);
+
   // Simple values properties
   const properties = {
     title,
@@ -174,7 +188,6 @@ export default function Annotation({
     visible,
 
     clusteringIdentifier,
-    displayPriority,
 
     calloutEnabled,
   };

@@ -194,6 +194,46 @@ export function toMapKitLoadPriority(loadPriority: LoadPriority): string | null 
 }
 
 /**
+ * A value MapKit JS uses for prioritizing the visibility of specific annotations.
+ * @see {@link https://developer.apple.com/documentation/mapkitjs/annotationconstructoroptions/2991165-displaypriority}
+ */
+export enum DisplayPriority {
+  Low = 'low',
+  High = 'high',
+  Required = 'required',
+}
+
+/**
+ * Converts a mapkit-react display priority to a MapKit JS display priority.
+ * Must be called after MapKit JS is loaded.
+ * @param displayPriority The mapkit-react display priority or a number 0 to 1000
+ * @returns The MapKit JS display priority
+ */
+export function toMapKitDisplayPriority(displayPriority: DisplayPriority | number): number | null {
+  if (typeof displayPriority === 'number') {
+    if (displayPriority < 0 || displayPriority > 1000) {
+      throw new RangeError('Display priority is out of range (0 to 1000)');
+    } else {
+      return displayPriority;
+    }
+  }
+
+  switch (displayPriority) {
+    case DisplayPriority.Low:
+      // @ts-ignore
+      return mapkit.Annotation.DisplayPriority.Low;
+    case DisplayPriority.High:
+      // @ts-ignore
+      return mapkit.Annotation.DisplayPriority.High;
+    case DisplayPriority.Required:
+      // @ts-ignore
+      return mapkit.Annotation.DisplayPriority.Required;
+    default:
+      throw new RangeError('Invalid display priority');
+  }
+}
+
+/**
  * Constants indicating the visibility of different adaptive map features.
  * @see {@link https://developer.apple.com/documentation/mapkitjs/featurevisibility}
  */

@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import { createPortal } from 'react-dom';
 import MapContext from '../context/MapContext';
-import { FeatureVisibility, toMapKitFeatureVisibility } from '../util/parameters';
+import { FeatureVisibility, toMapKitDisplayPriority, toMapKitFeatureVisibility } from '../util/parameters';
 import MarkerProps from './MarkerProps';
 import forwardMapkitEvent from '../util/forwardMapkitEvent';
 import CalloutContainer from './CalloutContainer';
@@ -115,12 +115,14 @@ export default function Marker({
 
     const callOutObj: mapkit.AnnotationCalloutDelegate = {};
     if (calloutElement && calloutElementRef.current !== null) {
+      // @ts-expect-error
       callOutObj.calloutElementForAnnotation = () => calloutElementRef.current;
     }
     if (
       calloutLeftAccessory
       && calloutLeftAccessoryRef.current !== null
     ) {
+      // @ts-expect-error
       callOutObj.calloutLeftAccessoryForAnnotation = () => calloutLeftAccessoryRef
         .current;
     }
@@ -128,10 +130,12 @@ export default function Marker({
       calloutRightAccessory
       && calloutRightAccessoryRef.current !== null
     ) {
+      // @ts-expect-error
       callOutObj.calloutRightAccessoryForAnnotation = () => calloutRightAccessoryRef
         .current;
     }
     if (calloutContent && calloutContentRef.current !== null) {
+      // @ts-expect-error
       callOutObj.calloutContentForAnnotation = () => calloutContentRef.current;
     }
     if (Object.keys(callOutObj).length > 0) {
@@ -166,6 +170,15 @@ export default function Marker({
     }
   }, [marker, collisionMode]);
 
+  // Display Priority
+  useEffect(() => {
+    if (!marker) return;
+    // @ts-ignore
+    if (displayPriority === undefined) { delete marker.displayPriority; return; }
+    // @ts-ignore
+    marker.displayPriority = toMapKitDisplayPriority(displayPriority);
+  }, [marker, displayPriority]);
+
   // Simple values properties
   const properties = {
     title,
@@ -180,7 +193,6 @@ export default function Marker({
     selectedGlyphImage,
 
     clusteringIdentifier,
-    displayPriority,
 
     selected,
     animates,

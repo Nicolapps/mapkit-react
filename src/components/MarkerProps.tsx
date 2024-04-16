@@ -187,7 +187,8 @@ export default interface MarkerProps {
   /**
    * A numeric hint that the map uses to prioritize how it displays annotations.
    *
-   * Is either any number from `0` to `1000`, or a preset value: `"low"` (250), `"low"` (750), or `"required"` (1000).
+   * Is either any number from `0` to `1000`,
+   * or a preset value: `"low"` (250), `"high"` (750), or `"required"` (1000).
    *
    * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973825-displaypriority}
    */

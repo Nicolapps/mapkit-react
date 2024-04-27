@@ -1,8 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
+import React, {
+  useContext, useEffect, useRef, useState,
+} from 'react';
+import { createPortal } from 'react-dom';
 import MapContext from '../context/MapContext';
-import { FeatureVisibility, toMapKitFeatureVisibility } from '../util/parameters';
+import { FeatureVisibility, toMapKitDisplayPriority, toMapKitFeatureVisibility } from '../util/parameters';
 import MarkerProps from './MarkerProps';
 import forwardMapkitEvent from '../util/forwardMapkitEvent';
+import CalloutContainer from './CalloutContainer';
 
 export default function Marker({
   latitude,
@@ -13,10 +17,13 @@ export default function Marker({
   accessibilityLabel = null,
   subtitleVisibility = FeatureVisibility.Adaptive,
   titleVisibility = FeatureVisibility.Adaptive,
+
   clusteringIdentifier = null,
+  displayPriority = undefined,
+  collisionMode = undefined,
+
   color = '#ff5b40',
   glyphColor = 'white',
-
   glyphText = '',
   glyphImage = null,
   selectedGlyphImage = null,
@@ -27,6 +34,15 @@ export default function Marker({
   paddingLeft = 0,
   anchorOffsetX = 0,
   anchorOffsetY = 0,
+
+  calloutElement = undefined,
+  calloutContent = undefined,
+  calloutLeftAccessory = undefined,
+  calloutRightAccessory = undefined,
+
+  calloutEnabled = undefined,
+  calloutOffsetX = 0,
+  calloutOffsetY = 0,
 
   selected = false,
   animates = true,
@@ -82,6 +98,87 @@ export default function Marker({
     marker.anchorOffset = new DOMPoint(anchorOffsetX, anchorOffsetY);
   }, [marker, anchorOffsetX, anchorOffsetY]);
 
+  // CalloutOffset
+  useEffect(() => {
+    if (!marker) return;
+    marker.calloutOffset = new DOMPoint(calloutOffsetX, calloutOffsetY);
+  }, [marker, calloutOffsetX, calloutOffsetY]);
+
+  const calloutLeftAccessoryRef = useRef<HTMLDivElement>(null);
+  const calloutRightAccessoryRef = useRef<HTMLDivElement>(null);
+  const calloutContentRef = useRef<HTMLDivElement>(null);
+  const calloutElementRef = useRef<HTMLDivElement>(null);
+
+  // Callout
+  useEffect(() => {
+    if (!marker) return;
+
+    const callOutObj: mapkit.AnnotationCalloutDelegate = {};
+    if (calloutElement && calloutElementRef.current !== null) {
+      // @ts-expect-error
+      callOutObj.calloutElementForAnnotation = () => calloutElementRef.current;
+    }
+    if (
+      calloutLeftAccessory
+      && calloutLeftAccessoryRef.current !== null
+    ) {
+      // @ts-expect-error
+      callOutObj.calloutLeftAccessoryForAnnotation = () => calloutLeftAccessoryRef
+        .current;
+    }
+    if (
+      calloutRightAccessory
+      && calloutRightAccessoryRef.current !== null
+    ) {
+      // @ts-expect-error
+      callOutObj.calloutRightAccessoryForAnnotation = () => calloutRightAccessoryRef
+        .current;
+    }
+    if (calloutContent && calloutContentRef.current !== null) {
+      // @ts-expect-error
+      callOutObj.calloutContentForAnnotation = () => calloutContentRef.current;
+    }
+    if (Object.keys(callOutObj).length > 0) {
+      marker.callout = callOutObj;
+    } else {
+      // @ts-expect-error
+      delete marker.callout;
+    }
+  }, [
+    marker,
+    calloutElement,
+    calloutLeftAccessory,
+    calloutRightAccessory,
+    calloutContent,
+    calloutElementRef.current,
+    calloutLeftAccessoryRef.current,
+    calloutRightAccessoryRef.current,
+    calloutContentRef.current,
+  ]);
+
+  // Collision Mode
+  useEffect(() => {
+    if (!marker) return;
+
+    if (collisionMode === 'Circle') {
+      marker.collisionMode = mapkit.MarkerAnnotation.CollisionMode.Circle;
+    } else if (collisionMode === 'Rectangle') {
+      marker.collisionMode = mapkit.MarkerAnnotation.CollisionMode.Rectangle;
+    } else {
+      // @ts-ignore
+      delete marker.collisionMode;
+    }
+  }, [marker, collisionMode]);
+
+  // Display Priority
+  useEffect(() => {
+    if (!marker) return;
+    // @ts-ignore
+    if (displayPriority === undefined) { delete marker.displayPriority; return; }
+    // @ts-ignore
+    marker.displayPriority = toMapKitDisplayPriority(displayPriority);
+  }, [marker, displayPriority]);
+
   // Simple values properties
   const properties = {
     title,
@@ -96,12 +193,15 @@ export default function Marker({
     selectedGlyphImage,
 
     clusteringIdentifier,
+
     selected,
     animates,
     appearanceAnimation,
     draggable,
     enabled,
     visible,
+
+    calloutEnabled,
   };
   Object.entries(properties).forEach(([propertyName, prop]) => {
     useEffect(() => {
@@ -135,5 +235,47 @@ export default function Marker({
   forwardMapkitEvent(marker, 'drag-end', onDragEnd, dragEndParameters);
   forwardMapkitEvent(marker, 'dragging', onDragging, draggingParameters);
 
+  if (calloutEnabled) {
+    return (
+      <>
+        {calloutContent !== undefined && createPortal(
+          <CalloutContainer
+            ref={calloutContentRef}
+            type="content"
+          >
+            {calloutContent}
+          </CalloutContainer>,
+          document.body,
+        )}
+        {calloutLeftAccessory !== undefined && createPortal(
+          <CalloutContainer
+            ref={calloutLeftAccessoryRef}
+            type="left"
+          >
+            {calloutLeftAccessory}
+          </CalloutContainer>,
+          document.body,
+        )}
+        {calloutRightAccessory !== undefined && createPortal(
+          <CalloutContainer
+            ref={calloutRightAccessoryRef}
+            type="right"
+          >
+            {calloutRightAccessory}
+          </CalloutContainer>,
+          document.body,
+        )}
+        {calloutElement !== undefined && createPortal(
+          <CalloutContainer
+            ref={calloutElementRef}
+            type="container"
+          >
+            {calloutElement}
+          </CalloutContainer>,
+          document.body,
+        )}
+      </>
+    );
+  }
   return null;
 }

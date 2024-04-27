@@ -112,6 +112,22 @@ export declare enum LoadPriority {
  */
 export declare function toMapKitLoadPriority(loadPriority: LoadPriority): string | null;
 /**
+ * A value MapKit JS uses for prioritizing the visibility of specific annotations.
+ * @see {@link https://developer.apple.com/documentation/mapkitjs/annotationconstructoroptions/2991165-displaypriority}
+ */
+export declare enum DisplayPriority {
+    Low = "low",
+    High = "high",
+    Required = "required"
+}
+/**
+ * Converts a mapkit-react display priority to a MapKit JS display priority.
+ * Must be called after MapKit JS is loaded.
+ * @param displayPriority The mapkit-react display priority or a number 0 to 1000
+ * @returns The MapKit JS display priority
+ */
+export declare function toMapKitDisplayPriority(displayPriority: DisplayPriority | number): number | null;
+/**
  * Constants indicating the visibility of different adaptive map features.
  * @see {@link https://developer.apple.com/documentation/mapkitjs/featurevisibility}
  */

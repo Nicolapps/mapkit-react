@@ -1,0 +1,2 @@
+import{j as r}from"./jsx-runtime-670450c2.js";import{R as n}from"./index-f1f749bf.js";const a=n.forwardRef(({children:e,type:t="container"},o)=>r("div",{className:`mk-callout-${t}`,ref:o,children:e})),s=a;try{a.displayName="CalloutContainer",a.__docgenInfo={description:"",displayName:"CalloutContainer",props:{type:{defaultValue:{value:"container"},description:"",name:"type",required:!1,type:{name:"string"}}}}}catch{}export{s as C};
+//# sourceMappingURL=CalloutContainer-cb49d305.js.map

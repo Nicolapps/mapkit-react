@@ -15,3 +15,13 @@ export declare const MarkerClustering: {
     storyName: string;
     parameters: any;
 };
+export declare const CustomMarkerCallout: {
+    (): JSX.Element;
+    storyName: string;
+    parameters: any;
+};
+export declare const CustomMarkerCalloutContent: {
+    (): JSX.Element;
+    storyName: string;
+    parameters: any;
+};

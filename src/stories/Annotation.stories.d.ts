@@ -8,3 +8,8 @@ export declare const AnimatedAnnotation: {
     storyName: string;
     parameters: any;
 };
+export declare const CustomAnnotationCallout: {
+    (): JSX.Element;
+    storyName: string;
+    parameters: any;
+};

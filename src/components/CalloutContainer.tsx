@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 
 const CalloutContainer = React.forwardRef<
-  HTMLDivElement,
-  React.PropsWithChildren<{ children: ReactNode, type?: string }>
+HTMLDivElement,
+React.PropsWithChildren<{ children: ReactNode, type?: string }>
 >((
   { children, type = 'container' },
   ref,

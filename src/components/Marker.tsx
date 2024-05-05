@@ -235,47 +235,41 @@ export default function Marker({
   forwardMapkitEvent(marker, 'drag-end', onDragEnd, dragEndParameters);
   forwardMapkitEvent(marker, 'dragging', onDragging, draggingParameters);
 
-  if (calloutEnabled) {
-    return (
-      <>
-        {calloutContent !== undefined && createPortal(
-          <CalloutContainer
-            ref={calloutContentRef}
-            type="content"
-          >
-            {calloutContent}
-          </CalloutContainer>,
-          document.body,
-        )}
-        {calloutLeftAccessory !== undefined && createPortal(
-          <CalloutContainer
-            ref={calloutLeftAccessoryRef}
-            type="left"
-          >
-            {calloutLeftAccessory}
-          </CalloutContainer>,
-          document.body,
-        )}
-        {calloutRightAccessory !== undefined && createPortal(
-          <CalloutContainer
-            ref={calloutRightAccessoryRef}
-            type="right"
-          >
-            {calloutRightAccessory}
-          </CalloutContainer>,
-          document.body,
-        )}
-        {calloutElement !== undefined && createPortal(
-          <CalloutContainer
-            ref={calloutElementRef}
-            type="container"
-          >
-            {calloutElement}
-          </CalloutContainer>,
-          document.body,
-        )}
-      </>
-    );
-  }
-  return null;
+  return createPortal(
+    <div style={{ display: 'none' }}>
+      {(calloutContent !== undefined) && (
+      <CalloutContainer
+        ref={calloutContentRef}
+        type="content"
+      >
+        {calloutContent}
+      </CalloutContainer>
+      )}
+      {(calloutLeftAccessory !== undefined) && (
+      <CalloutContainer
+        ref={calloutLeftAccessoryRef}
+        type="left"
+      >
+        {calloutLeftAccessory}
+      </CalloutContainer>
+      )}
+      {(calloutRightAccessory !== undefined) && (
+      <CalloutContainer
+        ref={calloutRightAccessoryRef}
+        type="right"
+      >
+        {calloutRightAccessory}
+      </CalloutContainer>
+      )}
+      {(calloutElement !== undefined) && (
+      <CalloutContainer
+        ref={calloutElementRef}
+        type="container"
+      >
+        {calloutElement}
+      </CalloutContainer>
+      )}
+    </div>,
+    document.body,
+  );
 }

@@ -202,7 +202,7 @@ MarkerClustering.storyName = 'Clustering three markers into one';
 
 function CustomCalloutElement(
   {
-    title, subtitle, url, onClick,
+    title, subtitle, url,
   }: { title: string, subtitle: string, url: string },
 ) {
   return (
@@ -211,14 +211,12 @@ function CustomCalloutElement(
       <section>
         <p>{subtitle ?? ''}</p>
         <p><a href={url} target="_blank" rel="noreferrer">Website</a></p>
-        <button type="button" onClick={onClick}>Hide Map</button>
       </section>
     </div>
   );
 }
 
 export const CustomMarkerCallout = () => {
-  const [mapVisible, setMapVisible] = useState(true);
   const initialRegion: CoordinateRegion = useMemo(() => ({
     centerLatitude: 46.20738751546706,
     centerLongitude: 6.155891756231,
@@ -226,21 +224,19 @@ export const CustomMarkerCallout = () => {
     longitudeDelta: 0.015,
   }), []);
 
-  return (mapVisible
-    ? (
-      <Map token={token} initialRegion={initialRegion}>
-        <Marker
-          latitude={46.20738751546706}
-          longitude={6.155891756231}
-          title="Jet d’eau"
-          subtitle="Iconic landmark of Geneva"
-          calloutElement={<CustomCalloutElement title="Jet d’eau" subtitle="Iconic landmark of Geneva" url="https://en.wikipedia.org/wiki/Jet_d%27Eau" onClick={() => setMapVisible(false)} />}
-          calloutEnabled
-          calloutOffsetX={-148}
-          calloutOffsetY={-78}
-        />
-      </Map>
-    ) : <button type="button" onClick={() => setMapVisible(true)}>Show map</button>
+  return (
+    <Map token={token} initialRegion={initialRegion}>
+      <Marker
+        latitude={46.20738751546706}
+        longitude={6.155891756231}
+        title="Jet d’eau"
+        subtitle="Iconic landmark of Geneva"
+        calloutElement={<CustomCalloutElement title="Jet d’eau" subtitle="Iconic landmark of Geneva" url="https://en.wikipedia.org/wiki/Jet_d%27Eau" />}
+        calloutEnabled
+        calloutOffsetX={-148}
+        calloutOffsetY={-78}
+      />
+    </Map>
   );
 };
 CustomMarkerCallout.storyName = 'Marker with custom callout element';

@@ -1,13 +1,16 @@
-import {
+import React, {
   useContext,
   useEffect,
   useState,
   useMemo,
+  useRef,
 } from 'react';
 import { createPortal } from 'react-dom';
 import MapContext from '../context/MapContext';
 import AnnotationProps from './AnnotationProps';
 import forwardMapkitEvent from '../util/forwardMapkitEvent';
+import CalloutContainer from './CalloutContainer';
+import { toMapKitDisplayPriority } from '../util/parameters';
 
 export default function Annotation({
   latitude,
@@ -39,6 +42,18 @@ export default function Annotation({
   visible = true,
 
   clusteringIdentifier = null,
+  displayPriority = undefined,
+  collisionMode = undefined,
+
+  calloutElement = undefined,
+  calloutContent = undefined,
+  calloutLeftAccessory = undefined,
+  calloutRightAccessory = undefined,
+
+  calloutEnabled = undefined,
+  calloutOffsetX = 0,
+  calloutOffsetY = 0,
+
   draggable = false,
   enabled = true,
 
@@ -76,6 +91,87 @@ export default function Annotation({
     annotation.anchorOffset = new DOMPoint(anchorOffsetX, anchorOffsetY);
   }, [annotation, anchorOffsetX, anchorOffsetY]);
 
+  // CalloutOffset
+  useEffect(() => {
+    if (!annotation) return;
+    annotation.calloutOffset = new DOMPoint(calloutOffsetX, calloutOffsetY);
+  }, [annotation, calloutOffsetX, calloutOffsetY]);
+
+  const calloutLeftAccessoryRef = useRef<HTMLDivElement>(null);
+  const calloutRightAccessoryRef = useRef<HTMLDivElement>(null);
+  const calloutContentRef = useRef<HTMLDivElement>(null);
+  const calloutElementRef = useRef<HTMLDivElement>(null);
+
+  // Callout
+  useEffect(() => {
+    if (!annotation) return;
+
+    const callOutObj: mapkit.AnnotationCalloutDelegate = {};
+    if (calloutElement && calloutElementRef.current !== null) {
+      // @ts-expect-error
+      callOutObj.calloutElementForAnnotation = () => calloutElementRef.current;
+    }
+    if (
+      calloutLeftAccessory
+      && calloutLeftAccessoryRef.current !== null
+    ) {
+      // @ts-expect-error
+      callOutObj.calloutLeftAccessoryForAnnotation = () => calloutLeftAccessoryRef
+        .current;
+    }
+    if (
+      calloutRightAccessory
+      && calloutRightAccessoryRef.current !== null
+    ) {
+      // @ts-expect-error
+      callOutObj.calloutRightAccessoryForAnnotation = () => calloutRightAccessoryRef
+        .current;
+    }
+    if (calloutContent && calloutContentRef.current !== null) {
+      // @ts-expect-error
+      callOutObj.calloutContentForAnnotation = () => calloutContentRef.current;
+    }
+    if (Object.keys(callOutObj).length > 0) {
+      annotation.callout = callOutObj;
+    } else {
+      // @ts-expect-error
+      delete annotation.callout;
+    }
+  }, [
+    annotation,
+    calloutElement,
+    calloutLeftAccessory,
+    calloutRightAccessory,
+    calloutContent,
+    calloutElementRef.current,
+    calloutLeftAccessoryRef.current,
+    calloutRightAccessoryRef.current,
+    calloutContentRef.current,
+  ]);
+
+  // Collision Mode
+  useEffect(() => {
+    if (!annotation) return;
+
+    if (collisionMode === 'Circle') {
+      annotation.collisionMode = mapkit.Annotation.CollisionMode.Circle;
+    } else if (collisionMode === 'Rectangle') {
+      annotation.collisionMode = mapkit.Annotation.CollisionMode.Rectangle;
+    } else {
+      // @ts-ignore
+      delete annotation.collisionMode;
+    }
+  }, [annotation, collisionMode]);
+
+  // Display Priority
+  useEffect(() => {
+    if (!annotation) return;
+    // @ts-ignore
+    if (displayPriority === undefined) { delete annotation.displayPriority; return; }
+    // @ts-ignore
+    annotation.displayPriority = toMapKitDisplayPriority(displayPriority);
+  }, [annotation, displayPriority]);
+
   // Simple values properties
   const properties = {
     title,
@@ -90,7 +186,10 @@ export default function Annotation({
     draggable,
     enabled,
     visible,
+
     clusteringIdentifier,
+
+    calloutEnabled,
   };
   Object.entries(properties).forEach(([propertyName, prop]) => {
     useEffect(() => {
@@ -124,5 +223,48 @@ export default function Annotation({
   forwardMapkitEvent(annotation, 'drag-end', onDragEnd, dragEndParameters);
   forwardMapkitEvent(annotation, 'dragging', onDragging, draggingParameters);
 
+  if (calloutEnabled) {
+    return (
+      <>
+        {calloutContent !== undefined && createPortal(
+          <CalloutContainer
+            ref={calloutContentRef}
+            type="content"
+          >
+            {calloutContent}
+          </CalloutContainer>,
+          document.body,
+        )}
+        {calloutLeftAccessory !== undefined && createPortal(
+          <CalloutContainer
+            ref={calloutLeftAccessoryRef}
+            type="left"
+          >
+            {calloutLeftAccessory}
+          </CalloutContainer>,
+          document.body,
+        )}
+        {calloutRightAccessory !== undefined && createPortal(
+          <CalloutContainer
+            ref={calloutRightAccessoryRef}
+            type="right"
+          >
+            {calloutRightAccessory}
+          </CalloutContainer>,
+          document.body,
+        )}
+        {calloutElement !== undefined && createPortal(
+          <CalloutContainer
+            ref={calloutElementRef}
+            type="container"
+          >
+            {calloutElement}
+          </CalloutContainer>,
+          document.body,
+        )}
+        {createPortal(children, contentEl)}
+      </>
+    );
+  }
   return createPortal(children, contentEl);
 }

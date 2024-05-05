@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { Coordinate, FeatureVisibility } from '../util/parameters';
 
 export default interface MarkerProps {
@@ -173,5 +174,71 @@ export default interface MarkerProps {
   * An annotation needs a clusteringIdentifier to be part of an annotation cluster.
   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotations/clustering_annotations}
   */
-  clusteringIdentifier?: string | null
+  clusteringIdentifier?: string | null;
+
+  /**
+   * A mode that determines the shape of the collision frame.
+   * Rectangle | Circle | None
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973822-collisionmode}
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/collisionmode}
+   */
+  collisionMode?: 'Rectangle' | 'Circle' | null;
+
+  /**
+   * A numeric hint that the map uses to prioritize how it displays annotations.
+   *
+   * Is either any number from `0` to `1000`,
+   * or a preset value: `"low"` (250), `"high"` (750), or `"required"` (1000).
+   *
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973825-displaypriority}
+   */
+  displayPriority?: number | 'low' | 'high' | 'required';
+
+  /**
+   * An X offset that changes the annotation callout’s default placement.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973821-calloutoffset}
+   */
+  calloutOffsetX?: number;
+
+  /**
+   * An Y offset that changes the annotation callout’s default placement.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973821-calloutoffset}
+   */
+  calloutOffsetY?: number;
+
+  /**
+   * A Boolean value that determines whether the map shows an annotation’s callout.
+   * If the title is empty, the framework can’t show the standard callout even if property is true.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkit/annotation/2973820-calloutenabled}
+   */
+  calloutEnabled?: boolean;
+
+  /**
+   * Returns an element to use as a custom accessory on the left side of the callout content area.
+   *
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/annotationcalloutdelegate/2991150-calloutleftaccessoryforannotatio}
+   */
+  calloutLeftAccessory?: ReactNode;
+
+  /**
+   * Returns an element to use as a custom accessory on the right side of the callout content area.
+   *
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/annotationcalloutdelegate/2991151-calloutrightaccessoryforannotati}
+   */
+  calloutRightAccessory?: ReactNode;
+
+  /**
+   * Returns custom content for the callout bubble.
+   *
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/annotationcalloutdelegate/2991148-calloutcontentforannotation}
+   */
+  calloutContent?: ReactNode;
+
+  /**
+   * Returns an element representing a custom callout.
+   *
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/annotationcalloutdelegate/2991148-calloutcontentforannotation}
+   */
+  calloutElement?: ReactNode;
+
 }

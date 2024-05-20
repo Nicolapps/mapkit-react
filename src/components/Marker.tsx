@@ -161,9 +161,9 @@ export default function Marker({
     if (!marker) return;
 
     if (collisionMode === 'Circle') {
-      marker.collisionMode = mapkit.MarkerAnnotation.CollisionMode.Circle;
+      marker.collisionMode = mapkit.Annotation.CollisionMode.Circle;
     } else if (collisionMode === 'Rectangle') {
-      marker.collisionMode = mapkit.MarkerAnnotation.CollisionMode.Rectangle;
+      marker.collisionMode = mapkit.Annotation.CollisionMode.Rectangle;
     } else {
       // @ts-ignore
       delete marker.collisionMode;

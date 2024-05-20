@@ -201,7 +201,9 @@ export const MarkerClustering = () => {
 MarkerClustering.storyName = 'Clustering three markers into one';
 
 function CustomCalloutElement(
-  { title, subtitle, url }: { title: string, subtitle: string, url: string },
+  {
+    title, subtitle, url,
+  }: { title: string, subtitle: string, url: string },
 ) {
   return (
     <div className="landmark">

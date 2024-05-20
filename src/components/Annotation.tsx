@@ -223,48 +223,46 @@ export default function Annotation({
   forwardMapkitEvent(annotation, 'drag-end', onDragEnd, dragEndParameters);
   forwardMapkitEvent(annotation, 'dragging', onDragging, draggingParameters);
 
-  if (calloutEnabled) {
-    return (
-      <>
-        {calloutContent !== undefined && createPortal(
+  return (
+    <>
+      {createPortal(
+        <div style={{ display: 'none' }}>
+          {(calloutContent !== undefined) && (
           <CalloutContainer
             ref={calloutContentRef}
             type="content"
           >
             {calloutContent}
-          </CalloutContainer>,
-          document.body,
-        )}
-        {calloutLeftAccessory !== undefined && createPortal(
+          </CalloutContainer>
+          )}
+          {(calloutLeftAccessory !== undefined) && (
           <CalloutContainer
             ref={calloutLeftAccessoryRef}
             type="left"
           >
             {calloutLeftAccessory}
-          </CalloutContainer>,
-          document.body,
-        )}
-        {calloutRightAccessory !== undefined && createPortal(
+          </CalloutContainer>
+          )}
+          {(calloutRightAccessory !== undefined) && (
           <CalloutContainer
             ref={calloutRightAccessoryRef}
             type="right"
           >
             {calloutRightAccessory}
-          </CalloutContainer>,
-          document.body,
-        )}
-        {calloutElement !== undefined && createPortal(
+          </CalloutContainer>
+          )}
+          {(calloutElement !== undefined) && (
           <CalloutContainer
             ref={calloutElementRef}
             type="container"
           >
             {calloutElement}
-          </CalloutContainer>,
-          document.body,
-        )}
-        {createPortal(children, contentEl)}
-      </>
-    );
-  }
-  return createPortal(children, contentEl);
+          </CalloutContainer>
+          )}
+        </div>,
+        document.body,
+      )}
+      {createPortal(children, contentEl)}
+    </>
+  );
 }

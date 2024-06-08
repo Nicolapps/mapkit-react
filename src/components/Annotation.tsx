@@ -4,6 +4,7 @@ import React, {
   useState,
   useMemo,
   useRef,
+  useLayoutEffect,
 } from 'react';
 import { createPortal } from 'react-dom';
 import MapContext from '../context/MapContext';
@@ -63,22 +64,6 @@ export default function Annotation({
   const contentEl = useMemo<HTMLDivElement>(() => document.createElement('div'), []);
   const map = useContext(MapContext);
 
-  // Coordinates
-  useEffect(() => {
-    if (map === null) return undefined;
-
-    const a = new mapkit.Annotation(
-      new mapkit.Coordinate(latitude, longitude),
-      () => contentEl,
-    );
-    map.addAnnotation(a);
-    setAnnotation(a);
-
-    return () => {
-      map.removeAnnotation(a);
-    };
-  }, [map, latitude, longitude]);
-
   // Padding
   useEffect(() => {
     if (!annotation) return;
@@ -103,7 +88,7 @@ export default function Annotation({
   const calloutElementRef = useRef<HTMLDivElement>(null);
 
   // Callout
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!annotation) return;
 
     const callOutObj: mapkit.AnnotationCalloutDelegate = {};
@@ -137,6 +122,12 @@ export default function Annotation({
       // @ts-expect-error
       delete annotation.callout;
     }
+
+    // eslint-disable-next-line consistent-return
+    return () => {
+      // @ts-expect-error
+      delete annotation.callout;
+    };
   }, [
     annotation,
     calloutElement,
@@ -222,6 +213,23 @@ export default function Annotation({
   });
   forwardMapkitEvent(annotation, 'drag-end', onDragEnd, dragEndParameters);
   forwardMapkitEvent(annotation, 'dragging', onDragging, draggingParameters);
+
+  // Coordinates - This needs to be the last useEffect,
+  // as removing the annotation needs to be the last unmount action
+  useLayoutEffect(() => {
+    if (map === null) return undefined;
+
+    const a = new mapkit.Annotation(
+      new mapkit.Coordinate(latitude, longitude),
+      () => contentEl,
+    );
+    map.addAnnotation(a);
+    setAnnotation(a);
+
+    return () => {
+      map.removeAnnotation(a);
+    };
+  }, [map, latitude, longitude]);
 
   return (
     <>

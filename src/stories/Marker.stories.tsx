@@ -224,34 +224,19 @@ export const CustomMarkerCallout = () => {
     longitudeDelta: 0.015,
   }), []);
 
-  const [isMapVisible, setMapVisible] = useState(true);
-
   return (
-    <>
-      {
-      isMapVisible
-        ? (
-          <Map token={token} initialRegion={initialRegion}>
-            {[1, 1, 1].map((value, index) => (
-              <Marker
-                key={index}
-                latitude={46.20738751546706 + value * 0.001}
-                longitude={6.155891756231 + value * 0.001}
-                title="Jet d’eau"
-                subtitle="Iconic landmark of Geneva"
-                calloutElement={<CustomCalloutElement title="Jet d’eau" subtitle="Iconic landmark of Geneva" url="https://en.wikipedia.org/wiki/Jet_d%27Eau" />}
-                calloutEnabled
-                calloutOffsetX={-148}
-                calloutOffsetY={-78}
-              />
-            ))}
-          </Map>
-        )
-        : null
-    }
-      <button type="button" onClick={() => setMapVisible((prevValue) => !prevValue)}>Toggle Map</button>
-    </>
-
+    <Map token={token} initialRegion={initialRegion}>
+      <Marker
+        latitude={46.20738751546706}
+        longitude={6.155891756231}
+        title="Jet d’eau"
+        subtitle="Iconic landmark of Geneva"
+        calloutElement={<CustomCalloutElement title="Jet d’eau" subtitle="Iconic landmark of Geneva" url="https://en.wikipedia.org/wiki/Jet_d%27Eau" />}
+        calloutEnabled
+        calloutOffsetX={-148}
+        calloutOffsetY={-78}
+      />
+    </Map>
   );
 };
 CustomMarkerCallout.storyName = 'Marker with custom callout element';

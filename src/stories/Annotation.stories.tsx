@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { Meta, StoryFn } from '@storybook/react';
 
 import Map from '../components/Map';
@@ -152,53 +152,11 @@ export const CustomAnnotationCallout = () => {
     longitudeDelta: 0.015,
   }), []);
 
-  const [isMapVisible, setMapVisible] = useState(true);
-
   return (
-    <>
-      <button type="button" onClick={() => setMapVisible((prevValue) => !prevValue)}>Toggle Map</button>
-      {isMapVisible
-    && (
     <Map token={token} initialRegion={initialRegion}>
       <Annotation
-        latitude={46.207381}
-        longitude={6.15581}
-        title="Jet d’eau"
-        subtitle="Iconic landmark of Geneva"
-        calloutElement={<CustomCalloutElement title="Jet d’eau" subtitle="Iconic landmark of Geneva" url="https://en.wikipedia.org/wiki/Jet_d%27Eau" />}
-        calloutEnabled
-        calloutOffsetX={-148}
-        calloutOffsetY={-82}
-      >
-        <CustomMarker />
-      </Annotation>
-      <Annotation
-        latitude={46.207380}
-        longitude={6.15582}
-        title="Jet d’eau"
-        subtitle="Iconic landmark of Geneva"
-        calloutElement={<CustomCalloutElement title="Jet d’eau" subtitle="Iconic landmark of Geneva" url="https://en.wikipedia.org/wiki/Jet_d%27Eau" />}
-        calloutEnabled
-        calloutOffsetX={-148}
-        calloutOffsetY={-82}
-      >
-        <CustomMarker />
-      </Annotation>
-      <Annotation
-        latitude={46.207382}
-        longitude={6.15580}
-        title="Jet d’eau"
-        subtitle="Iconic landmark of Geneva"
-        calloutElement={<CustomCalloutElement title="Jet d’eau" subtitle="Iconic landmark of Geneva" url="https://en.wikipedia.org/wiki/Jet_d%27Eau" />}
-        calloutEnabled
-        calloutOffsetX={-148}
-        calloutOffsetY={-82}
-      >
-        <CustomMarker />
-      </Annotation>
-      <Annotation
-        latitude={46.20338751546406}
-        longitude={6.155391746231}
+        latitude={46.20738751546706}
+        longitude={6.155891756231}
         title="Jet d’eau"
         subtitle="Iconic landmark of Geneva"
         calloutElement={<CustomCalloutElement title="Jet d’eau" subtitle="Iconic landmark of Geneva" url="https://en.wikipedia.org/wiki/Jet_d%27Eau" />}
@@ -209,8 +167,6 @@ export const CustomAnnotationCallout = () => {
         <CustomMarker />
       </Annotation>
     </Map>
-    )}
-    </>
   );
 };
 CustomAnnotationCallout.storyName = 'Annotation with custom callout element';

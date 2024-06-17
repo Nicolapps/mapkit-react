@@ -1,5 +1,5 @@
 import React, {
-  useContext, useEffect, useRef, useState,
+  useContext, useEffect, useLayoutEffect, useRef, useState,
 } from 'react';
 import { createPortal } from 'react-dom';
 import MapContext from '../context/MapContext';
@@ -61,21 +61,6 @@ export default function Marker({
   const [marker, setMarker] = useState<mapkit.MarkerAnnotation | null>(null);
   const map = useContext(MapContext);
 
-  // Coordinates
-  useEffect(() => {
-    if (map === null) return undefined;
-
-    const m = new mapkit.MarkerAnnotation(
-      new mapkit.Coordinate(latitude, longitude),
-    );
-    map.addAnnotation(m);
-    setMarker(m);
-
-    return () => {
-      map.removeAnnotation(m);
-    };
-  }, [map, latitude, longitude]);
-
   // Enum properties
   useEffect(() => {
     if (!marker) return;
@@ -110,7 +95,7 @@ export default function Marker({
   const calloutElementRef = useRef<HTMLDivElement>(null);
 
   // Callout
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!marker) return;
 
     const callOutObj: mapkit.AnnotationCalloutDelegate = {};
@@ -144,6 +129,12 @@ export default function Marker({
       // @ts-expect-error
       delete marker.callout;
     }
+
+    // eslint-disable-next-line consistent-return
+    return () => {
+      // @ts-expect-error
+      delete marker.callout;
+    };
   }, [
     marker,
     calloutElement,
@@ -234,6 +225,21 @@ export default function Marker({
   });
   forwardMapkitEvent(marker, 'drag-end', onDragEnd, dragEndParameters);
   forwardMapkitEvent(marker, 'dragging', onDragging, draggingParameters);
+
+  // Coordinates
+  useLayoutEffect(() => {
+    if (map === null) return undefined;
+
+    const m = new mapkit.MarkerAnnotation(
+      new mapkit.Coordinate(latitude, longitude),
+    );
+    map.addAnnotation(m);
+    setMarker(m);
+
+    return () => {
+      map.removeAnnotation(m);
+    };
+  }, [map, latitude, longitude]);
 
   return createPortal(
     <div style={{ display: 'none' }}>

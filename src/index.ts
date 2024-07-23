@@ -23,3 +23,5 @@ export type {
   MapInteractionEvent,
   UserLocationChangeEvent, UserLocationError, UserLocationErrorEvent,
 } from './events';
+
+export { default as MapContext } from './context/MapContext';

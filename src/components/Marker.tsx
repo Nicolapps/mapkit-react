@@ -7,6 +7,7 @@ import { FeatureVisibility, toMapKitDisplayPriority, toMapKitFeatureVisibility }
 import MarkerProps from './MarkerProps';
 import forwardMapkitEvent from '../util/forwardMapkitEvent';
 import CalloutContainer from './CalloutContainer';
+import { AnnotationClusterContext } from './AnnotationCluster';
 
 export default function Marker({
   latitude,
@@ -18,7 +19,7 @@ export default function Marker({
   subtitleVisibility = FeatureVisibility.Adaptive,
   titleVisibility = FeatureVisibility.Adaptive,
 
-  clusteringIdentifier = null,
+  clusteringIdentifier: deprecatedClusterIdentifier = null,
   displayPriority = undefined,
   collisionMode = undefined,
 
@@ -60,6 +61,7 @@ export default function Marker({
 }: MarkerProps) {
   const [marker, setMarker] = useState<mapkit.MarkerAnnotation | null>(null);
   const map = useContext(MapContext);
+  const clusteringIdentifier = useContext(AnnotationClusterContext) ?? deprecatedClusterIdentifier;
 
   // Enum properties
   useEffect(() => {

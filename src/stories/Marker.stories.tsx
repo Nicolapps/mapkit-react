@@ -4,6 +4,7 @@ import './stories.css';
 import Map from '../components/Map';
 import Marker from '../components/Marker';
 import { CoordinateRegion, FeatureVisibility } from '../util/parameters';
+import AnnotationCluster from '../components/AnnotationCluster';
 
 // @ts-ignore
 const token = import.meta.env.STORYBOOK_MAPKIT_JS_TOKEN!;
@@ -152,7 +153,7 @@ export const MoveableMarker = () => {
   );
 };
 
-export const MarkerClustering = () => {
+export const MarkerClusteringOld = () => {
   const clusteringIdentifier = 'id';
   const [selected, setSelected] = useState<number | null>(null);
 
@@ -187,6 +188,64 @@ export const MarkerClustering = () => {
             />
           ))
         }
+      </Map>
+
+      <div className="map-overlay">
+        <div className="map-overlay-box">
+          <p>{selected ? `Selected marker #${selected}` : 'Not selected'}</p>
+        </div>
+      </div>
+    </>
+  );
+};
+
+MarkerClusteringOld.storyName = 'Clustering three markers into one (old)';
+
+export const MarkerClustering = () => {
+  const clusteringIdentifier = 'id';
+  const [selected, setSelected] = useState<number | null>(null);
+
+  const initialRegion: CoordinateRegion = useMemo(() => ({
+    centerLatitude: 46.20738751546706,
+    centerLongitude: 6.155891756231,
+    latitudeDelta: 1,
+    longitudeDelta: 1,
+  }), []);
+
+  const coordinates = [
+    { latitude: 46.20738751546706, longitude: 6.155891756231 },
+    { latitude: 46.25738751546706, longitude: 6.185891756231 },
+    { latitude: 46.28738751546706, longitude: 6.2091756231 },
+  ];
+
+  return (
+    <>
+      <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
+        <AnnotationCluster
+          clusterIdenfiier={clusteringIdentifier}
+          annotationForCluster={(memberAnnotations) => ({
+            title: 'GROUP',
+            subtitle: memberAnnotations
+              .reduce((total, clusterAnnotation) => `${total} & ${clusterAnnotation.title}`, ''),
+          })}
+        >
+
+          {
+          coordinates.map(({ latitude, longitude }, index) => (
+            <Marker
+              latitude={latitude}
+              longitude={longitude}
+              title={`Marker #${index + 1}`}
+              selected={selected === index + 1}
+              onSelect={() => setSelected(index + 1)}
+              onDeselect={() => setSelected(null)}
+              collisionMode="Circle"
+              displayPriority={750}
+              key={index}
+            />
+          ))
+        }
+        </AnnotationCluster>
       </Map>
 
       <div className="map-overlay">

@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { Meta, StoryFn } from '@storybook/react';
+import { fn } from '@storybook/test';
 
 import Map from '../components/Map';
 import Polygon from '../components/Polygon';
@@ -14,17 +15,24 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
+  args: {
+    onSelect: fn(),
+    onDeselect: fn(),
+  },
 } as Meta<typeof Polygon>;
 
 type PolygonProps = React.ComponentProps<typeof Polygon>;
 
 const Template: StoryFn<PolygonProps> = (args) => {
-  const initialRegion: CoordinateRegion = useMemo(() => ({
-    centerLatitude: 46.5185,
-    centerLongitude: 6.568,
-    latitudeDelta: 0.0035,
-    longitudeDelta: 0.0035,
-  }), []);
+  const initialRegion: CoordinateRegion = useMemo(
+    () => ({
+      centerLatitude: 46.5185,
+      centerLongitude: 6.568,
+      latitudeDelta: 0.0035,
+      longitudeDelta: 0.0035,
+    }),
+    [],
+  );
   return (
     <Map
       token={token}

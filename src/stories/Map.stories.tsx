@@ -1,13 +1,17 @@
-import React, {
-  useId, useMemo, useState,
-} from 'react';
+import React, { useId, useMemo, useState } from 'react';
 import { Meta, StoryFn } from '@storybook/react';
+import { fn } from '@storybook/test';
 import './stories.css';
 
 import Map from '../components/Map';
 import {
-  ColorScheme, MapType, Distances, LoadPriority, CoordinateRegion,
-  PointOfInterestCategory, FeatureVisibility,
+  ColorScheme,
+  MapType,
+  Distances,
+  LoadPriority,
+  CoordinateRegion,
+  PointOfInterestCategory,
+  FeatureVisibility,
 } from '../util/parameters';
 import Marker from '../components/Marker';
 import { MapInteractionEvent } from '..';
@@ -26,7 +30,22 @@ const enumArgType = (e: object) => ({
 export default {
   title: 'Components/Map',
   component: Map,
-  args: { token },
+  args: {
+    token,
+    onLoad: fn(),
+    onRegionChangeStart: fn(),
+    onRegionChangeEnd: fn(),
+    onMapTypeChange: fn(),
+    onSingleTap: fn(),
+    onDoubleTap: fn(),
+    onLongPress: fn(),
+    onClick: fn(),
+    onMouseMove: fn(),
+    onMouseDown: fn(),
+    onMouseUp: fn(),
+    onUserLocationChange: fn(),
+    onUserLocationError: fn(),
+  },
   argTypes: {
     colorScheme: enumArgType(ColorScheme),
     mapType: enumArgType(MapType),
@@ -83,7 +102,7 @@ RegionLock.args = {
 export const LiveStateUpdate = () => {
   const [theme, setTheme] = useState(ColorScheme.Light);
 
-  const options: { name: string, value: ColorScheme, id: string }[] = [
+  const options: { name: string; value: ColorScheme; id: string }[] = [
     { name: 'Light', value: ColorScheme.Light, id: useId() },
     { name: 'Dark', value: ColorScheme.Dark, id: useId() },
     { name: 'Auto', value: ColorScheme.Auto, id: useId() },
@@ -116,10 +135,10 @@ export const LiveStateUpdate = () => {
 
 export const MapInteractionEvents = () => {
   type MarkerData = {
-    latitude: number,
-    longitude: number,
-    title: string,
-    color: string,
+    latitude: number;
+    longitude: number;
+    title: string;
+    color: string;
   };
 
   const [markers, setMarkers] = useState<MarkerData[]>([]);
@@ -161,15 +180,22 @@ export const MapInteractionEvents = () => {
 };
 
 export const PointOfInterestFilters = () => {
-  const initialRegion: CoordinateRegion = useMemo(() => ({
-    centerLatitude: 40.7538,
-    centerLongitude: -73.986,
-    latitudeDelta: 0.03,
-    longitudeDelta: 0.03,
-  }), []);
+  const initialRegion: CoordinateRegion = useMemo(
+    () => ({
+      centerLatitude: 40.7538,
+      centerLongitude: -73.986,
+      latitudeDelta: 0.03,
+      longitudeDelta: 0.03,
+    }),
+    [],
+  );
 
   const categories: PointOfInterestCategory[] = useMemo(
-    () => (Object.values(PointOfInterestCategory) as Array<keyof typeof PointOfInterestCategory>)
+    () => (
+      Object.values(PointOfInterestCategory) as Array<
+      keyof typeof PointOfInterestCategory
+      >
+    )
       .filter((val) => typeof val === 'string')
       .map((str) => PointOfInterestCategory[str]),
     [],
@@ -185,7 +211,9 @@ export const PointOfInterestFilters = () => {
         token={token}
         initialRegion={initialRegion}
         showsMapTypeControl={false}
-        includedPOICategories={categories.filter((_, index) => isEnabled[index])}
+        includedPOICategories={categories.filter(
+          (_, index) => isEnabled[index],
+        )}
       />
 
       <div className="map-overlay map-overlay-top">
@@ -212,21 +240,12 @@ export const PointOfInterestFilters = () => {
 };
 PointOfInterestFilters.storyName = 'Point of Interest Filter';
 
-function ReadOnlyInput({ label, value }: { label: string, value: string }) {
+function ReadOnlyInput({ label, value }: { label: string; value: string }) {
   const id = useId();
   return (
-    <label
-      className="form-group"
-      htmlFor={id}
-    >
+    <label className="form-group" htmlFor={id}>
       {label}
-      <input
-        id={id}
-        type="text"
-        className="input"
-        value={value}
-        readOnly
-      />
+      <input id={id} type="text" className="input" value={value} readOnly />
     </label>
   );
 }
@@ -237,12 +256,15 @@ export const RegionChangeEvent = () => {
   const [latitudeDelta, setLatitudeDelta] = useState(0.010188625378894756);
   const [longitudeDelta, setLongitudeDelta] = useState(0.024314821659999097);
 
-  const initialRegion: CoordinateRegion = useMemo(() => ({
-    centerLatitude,
-    centerLongitude,
-    latitudeDelta,
-    longitudeDelta,
-  }), []);
+  const initialRegion: CoordinateRegion = useMemo(
+    () => ({
+      centerLatitude,
+      centerLongitude,
+      latitudeDelta,
+      longitudeDelta,
+    }),
+    [],
+  );
 
   return (
     <>
@@ -282,37 +304,38 @@ export const RegionChangeEvent = () => {
 };
 
 export const CustomLoadFunction = () => {
-  const initialRegion: CoordinateRegion = useMemo(() => ({
-    centerLatitude: 40.7538,
-    centerLongitude: -73.986,
-    latitudeDelta: 0.03,
-    longitudeDelta: 0.03,
-  }), []);
+  const initialRegion: CoordinateRegion = useMemo(
+    () => ({
+      centerLatitude: 40.7538,
+      centerLongitude: -73.986,
+      latitudeDelta: 0.03,
+      longitudeDelta: 0.03,
+    }),
+    [],
+  );
 
   return (
     <Map
-      load={(customLoadToken) => (
-        new Promise((resolve) => {
-          const element = document.createElement('script');
+      load={(customLoadToken) => new Promise((resolve) => {
+        const element = document.createElement('script');
+        // @ts-ignore-next-line
+        window.initMapKit = () => {
           // @ts-ignore-next-line
-          window.initMapKit = () => {
-            // @ts-ignore-next-line
-            delete window.initMapKit;
-            window.mapkit.init({
-              authorizationCallback: (done) => {
-                done(customLoadToken);
-              },
-            });
-            resolve();
-          };
-          element.src = 'https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.core.js';
-          element.dataset.callback = 'initMapKit';
-          element.dataset.initialToken = customLoadToken;
-          element.dataset.libraries = 'map';
-          element.crossOrigin = 'anonymous';
-          document.head.appendChild(element);
-        })
-      )}
+          delete window.initMapKit;
+          window.mapkit.init({
+            authorizationCallback: (done) => {
+              done(customLoadToken);
+            },
+          });
+          resolve();
+        };
+        element.src = 'https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.core.js';
+        element.dataset.callback = 'initMapKit';
+        element.dataset.initialToken = customLoadToken;
+        element.dataset.libraries = 'map';
+        element.crossOrigin = 'anonymous';
+        document.head.appendChild(element);
+      })}
       token={token}
       initialRegion={initialRegion}
       showsMapTypeControl={false}

@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { Meta, StoryFn } from '@storybook/react';
+import { fn } from '@storybook/test';
 
 import Map from '../components/Map';
 import Polyline from '../components/Polyline';
@@ -14,19 +15,30 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
+  args: {
+    onSelect: fn(),
+    onDeselect: fn(),
+  },
 } as Meta<typeof Polyline>;
 
 type PolylineProps = React.ComponentProps<typeof Polyline>;
 
 const Template: StoryFn<PolylineProps> = (args) => {
-  const initialRegion: CoordinateRegion = useMemo(() => ({
-    centerLatitude: 46.52,
-    centerLongitude: 6.57,
-    latitudeDelta: 0.07,
-    longitudeDelta: 0.03,
-  }), []);
+  const initialRegion: CoordinateRegion = useMemo(
+    () => ({
+      centerLatitude: 46.52,
+      centerLongitude: 6.57,
+      latitudeDelta: 0.07,
+      longitudeDelta: 0.03,
+    }),
+    [],
+  );
   return (
-    <Map token={token} initialRegion={initialRegion} colorScheme={ColorScheme.Dark}>
+    <Map
+      token={token}
+      initialRegion={initialRegion}
+      colorScheme={ColorScheme.Dark}
+    >
       <Polyline {...args} />
     </Map>
   );

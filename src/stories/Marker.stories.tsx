@@ -234,11 +234,6 @@ export const MarkerClustering = () => {
       <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
         <AnnotationCluster
           clusterIdenfier={clusteringIdentifier}
-          annotationForCluster={(memberAnnotations) => ({
-            title: 'GROUP',
-            subtitle: memberAnnotations
-              .reduce((total, clusterAnnotation) => `${total} & ${clusterAnnotation.title}`, ''),
-          })}
         >
 
           {

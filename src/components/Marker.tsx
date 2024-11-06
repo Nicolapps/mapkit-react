@@ -7,7 +7,7 @@ import { FeatureVisibility, toMapKitDisplayPriority, toMapKitFeatureVisibility }
 import MarkerProps from './MarkerProps';
 import forwardMapkitEvent from '../util/forwardMapkitEvent';
 import CalloutContainer from './CalloutContainer';
-import { AnnotationClusterContext } from './AnnotationCluster';
+import { AnnotationClusterIdentifierContext } from './AnnotationCluster';
 
 export default function Marker({
   latitude,
@@ -61,7 +61,7 @@ export default function Marker({
 }: MarkerProps) {
   const [marker, setMarker] = useState<mapkit.MarkerAnnotation | null>(null);
   const map = useContext(MapContext);
-  const clusteringIdentifier = useContext(AnnotationClusterContext) ?? deprecatedClusterIdentifier;
+  const clusteringIdentifier = useContext(AnnotationClusterIdentifierContext) ?? deprecatedClusterIdentifier;
 
   // Enum properties
   useEffect(() => {

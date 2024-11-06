@@ -12,7 +12,7 @@ import AnnotationProps from './AnnotationProps';
 import forwardMapkitEvent from '../util/forwardMapkitEvent';
 import CalloutContainer from './CalloutContainer';
 import { toMapKitDisplayPriority } from '../util/parameters';
-import { AnnotationClusterContext } from './AnnotationCluster';
+import { AnnotationClusterIdentifierContext } from './AnnotationCluster';
 
 export default function Annotation({
   latitude,
@@ -64,7 +64,7 @@ export default function Annotation({
   const [annotation, setAnnotation] = useState<mapkit.Annotation | null>(null);
   const contentEl = useMemo<HTMLDivElement>(() => document.createElement('div'), []);
   const map = useContext(MapContext);
-  const clusteringIdentifier = useContext(AnnotationClusterContext) ?? deprecatedClusterIdentifier;
+  const clusteringIdentifier = useContext(AnnotationClusterIdentifierContext) ?? deprecatedClusterIdentifier;
 
   // Padding
   useEffect(() => {

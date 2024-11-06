@@ -1,21 +1,40 @@
 import React, {
-  createContext, useContext, useEffect, useState,
+  createContext, useContext, useEffect, useMemo, useState,
 } from 'react';
-import { createPortal } from 'react-dom';
 import AnnotationClusterProps from './AnnotationClusterProps';
 import MapContext from '../context/MapContext';
 
-export const AnnotationClusterContext = createContext<string | null>(null);
+export const AnnotationClusterContext = createContext<{
+  memberAnnotations: mapkit.Annotation[], coordinate: mapkit.Coordinate
+}>({
+  memberAnnotations: [],
+  // @ts-ignore
+  coordinate: undefined,
+});
+
+export const AnnotationClusterIdentifierContext = createContext<string | null>(null);
+
+export const useClusterAnnotation = () => useContext(AnnotationClusterContext);
 
 export default function AnnotationCluster({
   children,
   annotationForCluster,
-  clusterIdenfiier,
+  clusterIdenfier,
 }: AnnotationClusterProps) {
+  const contentEl = useMemo<HTMLDivElement>(() => document.createElement('div'), []);
+
   const map = useContext(MapContext);
   const [
     existingClusterFunc, setExistingClusterFunc,
   ] = useState<((clusterAnnotation: mapkit.Annotation) => void) | undefined>(undefined);
+
+  const [memberAnnotations, setMemberAnnotations] = useState<mapkit.Annotation[]>([]);
+  const [clusterCoordinate, setClusterCoordinate] = useState<mapkit.Coordinate>();
+
+  const annotationContextValue = useMemo(() => ({
+    memberAnnotations,
+    coordinate: clusterCoordinate,
+  }), [memberAnnotations, clusterCoordinate]);
 
   // Coordinates
   useEffect(() => {
@@ -26,34 +45,18 @@ export default function AnnotationCluster({
     }
 
     map.annotationForCluster = (clusterAnnotation) => {
-      if (clusterAnnotation.clusteringIdentifier === clusterIdenfiier) {
+      if (clusterAnnotation.clusteringIdentifier === clusterIdenfier) {
         if (annotationForCluster) {
-          const annotation = annotationForCluster(clusterAnnotation.memberAnnotations);
-          const { children: annotationChildren } = annotation;
-          delete annotation.children;
-          if (annotationChildren) {
-            const contentEl = document.createElement('div');
-            createPortal(annotationChildren, contentEl);
+          setMemberAnnotations(clusterAnnotation.memberAnnotations);
+          setClusterCoordinate(clusterAnnotation.coordinate);
 
-            const a = new mapkit.Annotation(
-              new mapkit.Coordinate(
-                clusterAnnotation.coordinate.latitude,
-                clusterAnnotation.coordinate.longitude,
-              ),
-              () => contentEl,
-            );
-
-            /* Object.assign(
-              a,
-              annotation,
-            ); */
-
-            return a;
-          }
-
-          Object.assign(
-            clusterAnnotation,
-            annotation,
+          // Return an empty annotation to remove the default cluster
+          return new mapkit.Annotation(
+            new mapkit.Coordinate(
+              clusterAnnotation.coordinate.latitude,
+              clusterAnnotation.coordinate.longitude,
+            ),
+            () => contentEl,
           );
         }
         return clusterAnnotation;
@@ -74,8 +77,12 @@ export default function AnnotationCluster({
   }, [map]);
 
   return (
-    <AnnotationClusterContext.Provider value={clusterIdenfiier}>
-      {children}
+    // @ts-ignore
+    <AnnotationClusterContext.Provider value={annotationContextValue}>
+      {clusterCoordinate ? annotationForCluster : null}
+      <AnnotationClusterIdentifierContext.Provider value={clusterIdenfier}>
+        {children}
+      </AnnotationClusterIdentifierContext.Provider>
     </AnnotationClusterContext.Provider>
   );
 }

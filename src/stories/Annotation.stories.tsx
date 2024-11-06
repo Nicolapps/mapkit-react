@@ -5,13 +5,13 @@ import { fn } from '@storybook/test';
 import Map from '../components/Map';
 import Annotation from '../components/Annotation';
 import { CoordinateRegion, FeatureVisibility } from '../util/parameters';
-import AnnotationCluster from '../components/AnnotationCluster';
+import AnnotationCluster, { useClusterAnnotation } from '../components/AnnotationCluster';
 
 // @ts-ignore
 const token = import.meta.env.STORYBOOK_MAPKIT_JS_TOKEN!;
 
 // SVG from https://webkul.github.io/vivid
-function CustomMarker() {
+function CustomMarker({ color = '#FF6E6E' }: { color?: string }) {
   return (
     <svg
       width="24px"
@@ -28,7 +28,7 @@ function CustomMarker() {
                 <path
                   d="M14,0 C21.732,0 28,5.641 28,12.6 C28,23.963 14,36 14,36 C14,36 0,24.064 0,12.6 C0,5.641 6.268,0 14,0 Z"
                   id="Shape"
-                  fill="#FF6E6E"
+                  fill={color}
                 />
                 <circle
                   fill="#0C0058"
@@ -221,6 +221,21 @@ export const CustomAnnotationCallout = () => {
 };
 CustomAnnotationCallout.storyName = 'Annotation with custom callout element';
 
+function ClusterAnnotation() {
+  const { coordinate, memberAnnotations } = useClusterAnnotation();
+
+  return (
+    <Annotation
+      latitude={coordinate.latitude}
+      longitude={coordinate.longitude}
+      title="GROUP"
+      subtitle={memberAnnotations.map((clusterAnnotation) => clusterAnnotation.title).join(' & ')}
+    >
+      <CustomMarker color="#0000FF" />
+    </Annotation>
+  );
+}
+
 export const AnnotationClustering = () => {
   const clusteringIdentifier = 'id';
   const [selected, setSelected] = useState<number | null>(null);
@@ -242,17 +257,8 @@ export const AnnotationClustering = () => {
     <>
       <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
         <AnnotationCluster
-          clusterIdenfiier={clusteringIdentifier}
-          annotationForCluster={(memberAnnotations) => ({
-            title: 'GROUP',
-            subtitle: memberAnnotations
-              .reduce((total, clusterAnnotation) => `${total} & ${clusterAnnotation.title}`, ''),
-            children: (
-              <div>
-                Test
-              </div>
-            ),
-          })}
+          clusterIdenfier={clusteringIdentifier}
+          annotationForCluster={<ClusterAnnotation />}
         >
           {coordinates.map(({ latitude, longitude }, index) => (
             <Annotation

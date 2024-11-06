@@ -1,7 +1,5 @@
 module.exports = {
   stories: [
-    '../src/stories/Map.stories.tsx',
-    '../src/**/*.stories.mdx',
     '../src/**/*.stories.@(js|jsx|ts|tsx)'
   ],
 
@@ -14,7 +12,5 @@ module.exports = {
 
   framework: '@storybook/react-vite',
 
-  docs: {
-    autodocs: true
-  }
+  docs: {}
 };

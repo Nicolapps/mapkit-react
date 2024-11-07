@@ -93,7 +93,6 @@ export default function Annotation({
   // Callout
   useLayoutEffect(() => {
     if (!annotation) return;
-
     const callOutObj: mapkit.AnnotationCalloutDelegate = {};
     if (calloutElement && calloutElementRef.current !== null) {
       // @ts-expect-error
@@ -239,7 +238,7 @@ export default function Annotation({
         map.removeAnnotation(a);
       }
     };
-  }, [map, latitude, longitude]);
+  }, [map, latitude, longitude, clusterAnnotation]);
 
   return (
     <>

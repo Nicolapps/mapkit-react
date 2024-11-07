@@ -236,18 +236,23 @@ export const AnnotationClustering = () => {
     { latitude: 46.20738751546706, longitude: 6.155891756231 },
     { latitude: 46.25738751546706, longitude: 6.185891756231 },
     { latitude: 46.28738751546706, longitude: 6.2091756231 },
+    { latitude: 46.20738751546706, longitude: 6.185891756231 },
+    { latitude: 46.25738751546706, longitude: 6.2091756231 },
   ];
 
   const annotationClusterFunc = useCallback((memberAnnotations: mapkit.Annotation[], coordinate: mapkit.Coordinate) => (
     <Annotation
       latitude={coordinate.latitude}
       longitude={coordinate.longitude}
-      title="GROUP"
-      subtitle={memberAnnotations.map((clusterAnnotation) => clusterAnnotation.title).join(' & ')}
+      calloutElement={(
+        <div>{memberAnnotations.map((clusterAnnotation) => clusterAnnotation.title).join(' & ')}</div>
+      )}
+      onSelect={() => setSelected(memberAnnotations.map((clusterAnnotation) => clusterAnnotation.title).join(' & '))}
+      selected={selected === memberAnnotations.map((clusterAnnotation) => clusterAnnotation.title).join(' & ')}
     >
       <CustomMarker color="#0000FF" />
     </Annotation>
-  ), []);
+  ), [selected]);
 
   return (
     <>

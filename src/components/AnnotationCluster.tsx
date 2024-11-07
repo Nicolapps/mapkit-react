@@ -1,5 +1,5 @@
 import React, {
-  createContext, useContext, useEffect, useMemo, useState,
+  createContext, Fragment, useContext, useEffect, useState,
 } from 'react';
 import { createPortal } from 'react-dom';
 import AnnotationClusterProps from './AnnotationClusterProps';
@@ -13,16 +13,16 @@ export default function AnnotationCluster({
   annotationForCluster,
   clusterIdenfier,
 }: AnnotationClusterProps) {
-  const contentEl = useMemo<HTMLDivElement>(() => document.createElement('div'), []);
-
   const map = useContext(MapContext);
   const [
     existingClusterFunc, setExistingClusterFunc,
   ] = useState<((clusterAnnotation: mapkit.Annotation) => void) | undefined>(undefined);
-
-  const [memberAnnotations, setMemberAnnotations] = useState<mapkit.Annotation[]>([]);
-  const [clusterCoordinate, setClusterCoordinate] = useState<mapkit.Coordinate>();
-  const [clusterAnnotation, setClusterAnnotation] = useState<mapkit.Annotation>();
+  const [clusterAnnotations, setClusterAnnotations] = useState<{
+    contentElement: HTMLDivElement,
+    annotation: mapkit.Annotation,
+    coordinate: mapkit.Coordinate,
+    memberAnnotations: mapkit.Annotation[]
+  }[]>([]);
 
   // Coordinates
   useEffect(() => {
@@ -34,29 +34,34 @@ export default function AnnotationCluster({
 
     map.annotationForCluster = (clusterAnnotationData) => {
       if (clusterAnnotationData.clusteringIdentifier === clusterIdenfier) {
-        setMemberAnnotations(clusterAnnotationData.memberAnnotations);
-        setClusterCoordinate(clusterAnnotationData.coordinate);
-
         if (annotationForCluster) {
-          if (!clusterAnnotation) {
-            const a = new mapkit.Annotation(
-              new mapkit.Coordinate(
-                clusterAnnotationData.coordinate.latitude,
-                clusterAnnotationData.coordinate.longitude,
-              ),
-              () => contentEl,
-            );
-            setClusterAnnotation(a);
-            return a;
+          const annotation = clusterAnnotations.find((a) => a.coordinate.latitude == clusterAnnotationData.coordinate.latitude
+          && a.coordinate.longitude == clusterAnnotationData.coordinate.longitude);
+          if (annotation) {
+            return annotation.annotation;
           }
-          return clusterAnnotation;
+
+          const contentElement = document.createElement('div');
+          const a = new mapkit.Annotation(
+            new mapkit.Coordinate(
+              clusterAnnotationData.coordinate.latitude,
+              clusterAnnotationData.coordinate.longitude,
+            ),
+            () => contentElement,
+          );
+
+          setClusterAnnotations((annotations) => [...annotations, {
+            contentElement,
+            annotation: a,
+            coordinate: clusterAnnotationData.coordinate,
+            memberAnnotations: clusterAnnotationData.memberAnnotations,
+          }]);
+
+          return a;
         }
 
         return clusterAnnotationData;
       }
-
-      setMemberAnnotations([]);
-      setClusterCoordinate(undefined);
 
       return existingClusterFunc
         ? existingClusterFunc(clusterAnnotationData)
@@ -74,19 +79,25 @@ export default function AnnotationCluster({
     };
   }, [map]);
 
+  console.log('clusterAnnotation', clusterAnnotations);
+
   return (
     <>
-      {clusterCoordinate && annotationForCluster && clusterAnnotation
-        ? createPortal(
-          <ClusterAnnotationContext.Provider value={clusterAnnotation}>
-            {annotationForCluster(
-              memberAnnotations,
-              clusterCoordinate,
-            )}
-          </ClusterAnnotationContext.Provider>,
-          contentEl,
-        )
-        : null}
+      {annotationForCluster && clusterAnnotations.map(({
+        contentElement, annotation, coordinate, memberAnnotations,
+      }) => (
+        <Fragment key={`${coordinate.latitude}_${coordinate.longitude}`}>
+          {createPortal(
+            <ClusterAnnotationContext.Provider value={annotation}>
+              {annotationForCluster(
+                memberAnnotations,
+                coordinate,
+              )}
+            </ClusterAnnotationContext.Provider>,
+            contentElement,
+          )}
+        </Fragment>
+      ))}
       <AnnotationClusterIdentifierContext.Provider value={clusterIdenfier}>
         {children}
       </AnnotationClusterIdentifierContext.Provider>

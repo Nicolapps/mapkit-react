@@ -1,20 +1,12 @@
 import React, {
   createContext, useContext, useEffect, useMemo, useState,
 } from 'react';
+import { createPortal } from 'react-dom';
 import AnnotationClusterProps from './AnnotationClusterProps';
 import MapContext from '../context/MapContext';
 
-export const AnnotationClusterContext = createContext<{
-  memberAnnotations: mapkit.Annotation[], coordinate: mapkit.Coordinate
-}>({
-  memberAnnotations: [],
-  // @ts-ignore
-  coordinate: undefined,
-});
-
 export const AnnotationClusterIdentifierContext = createContext<string | null>(null);
-
-export const useClusterAnnotation = () => useContext(AnnotationClusterContext);
+export const ClusterAnnotationContext = createContext<mapkit.Annotation | undefined>(undefined);
 
 export default function AnnotationCluster({
   children,
@@ -30,11 +22,7 @@ export default function AnnotationCluster({
 
   const [memberAnnotations, setMemberAnnotations] = useState<mapkit.Annotation[]>([]);
   const [clusterCoordinate, setClusterCoordinate] = useState<mapkit.Coordinate>();
-
-  const annotationContextValue = useMemo(() => ({
-    memberAnnotations,
-    coordinate: clusterCoordinate,
-  }), [memberAnnotations, clusterCoordinate]);
+  const [clusterAnnotation, setClusterAnnotation] = useState<mapkit.Annotation>();
 
   // Coordinates
   useEffect(() => {
@@ -44,25 +32,35 @@ export default function AnnotationCluster({
       setExistingClusterFunc(map.annotationForCluster);
     }
 
-    map.annotationForCluster = (clusterAnnotation) => {
-      if (clusterAnnotation.clusteringIdentifier === clusterIdenfier) {
-        if (annotationForCluster) {
-          setMemberAnnotations(clusterAnnotation.memberAnnotations);
-          setClusterCoordinate(clusterAnnotation.coordinate);
+    map.annotationForCluster = (clusterAnnotationData) => {
+      if (clusterAnnotationData.clusteringIdentifier === clusterIdenfier) {
+        setMemberAnnotations(clusterAnnotationData.memberAnnotations);
+        setClusterCoordinate(clusterAnnotationData.coordinate);
 
-          // Return an empty annotation to remove the default cluster
-          return new mapkit.Annotation(
-            new mapkit.Coordinate(
-              clusterAnnotation.coordinate.latitude,
-              clusterAnnotation.coordinate.longitude,
-            ),
-            () => contentEl,
-          );
+        if (annotationForCluster) {
+          if (!clusterAnnotation) {
+            const a = new mapkit.Annotation(
+              new mapkit.Coordinate(
+                clusterAnnotationData.coordinate.latitude,
+                clusterAnnotationData.coordinate.longitude,
+              ),
+              () => contentEl,
+            );
+            setClusterAnnotation(a);
+            return a;
+          }
+          return clusterAnnotation;
         }
-        return clusterAnnotation;
+
+        return clusterAnnotationData;
       }
 
-      return existingClusterFunc ? existingClusterFunc(clusterAnnotation) : clusterAnnotation;
+      setMemberAnnotations([]);
+      setClusterCoordinate(undefined);
+
+      return existingClusterFunc
+        ? existingClusterFunc(clusterAnnotationData)
+        : clusterAnnotationData;
     };
 
     return () => {
@@ -77,12 +75,21 @@ export default function AnnotationCluster({
   }, [map]);
 
   return (
-    // @ts-ignore
-    <AnnotationClusterContext.Provider value={annotationContextValue}>
-      {clusterCoordinate ? annotationForCluster : null}
+    <>
+      {clusterCoordinate && annotationForCluster && clusterAnnotation
+        ? createPortal(
+          <ClusterAnnotationContext.Provider value={clusterAnnotation}>
+            {annotationForCluster(
+              memberAnnotations,
+              clusterCoordinate,
+            )}
+          </ClusterAnnotationContext.Provider>,
+          contentEl,
+        )
+        : null}
       <AnnotationClusterIdentifierContext.Provider value={clusterIdenfier}>
         {children}
       </AnnotationClusterIdentifierContext.Provider>
-    </AnnotationClusterContext.Provider>
+    </>
   );
 }

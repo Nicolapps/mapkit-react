@@ -1,11 +1,11 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Meta, StoryFn } from '@storybook/react';
 import { fn } from '@storybook/test';
 
 import Map from '../components/Map';
 import Annotation from '../components/Annotation';
 import { CoordinateRegion, FeatureVisibility } from '../util/parameters';
-import AnnotationCluster, { useClusterAnnotation } from '../components/AnnotationCluster';
+import AnnotationCluster from '../components/AnnotationCluster';
 
 // @ts-ignore
 const token = import.meta.env.STORYBOOK_MAPKIT_JS_TOKEN!;
@@ -221,21 +221,6 @@ export const CustomAnnotationCallout = () => {
 };
 CustomAnnotationCallout.storyName = 'Annotation with custom callout element';
 
-function ClusterAnnotation() {
-  const { coordinate, memberAnnotations } = useClusterAnnotation();
-
-  return (
-    <Annotation
-      latitude={coordinate.latitude}
-      longitude={coordinate.longitude}
-      title="GROUP"
-      subtitle={memberAnnotations.map((clusterAnnotation) => clusterAnnotation.title).join(' & ')}
-    >
-      <CustomMarker color="#0000FF" />
-    </Annotation>
-  );
-}
-
 export const AnnotationClustering = () => {
   const clusteringIdentifier = 'id';
   const [selected, setSelected] = useState<number | null>(null);
@@ -253,12 +238,23 @@ export const AnnotationClustering = () => {
     { latitude: 46.28738751546706, longitude: 6.2091756231 },
   ];
 
+  const annotationClusterFunc = useCallback((memberAnnotations: mapkit.Annotation[], coordinate: mapkit.Coordinate) => (
+    <Annotation
+      latitude={coordinate.latitude}
+      longitude={coordinate.longitude}
+      title="GROUP"
+      subtitle={memberAnnotations.map((clusterAnnotation) => clusterAnnotation.title).join(' & ')}
+    >
+      <CustomMarker color="#0000FF" />
+    </Annotation>
+  ), []);
+
   return (
     <>
       <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
         <AnnotationCluster
           clusterIdenfier={clusteringIdentifier}
-          annotationForCluster={<ClusterAnnotation />}
+          annotationForCluster={annotationClusterFunc}
         >
           {coordinates.map(({ latitude, longitude }, index) => (
             <Annotation

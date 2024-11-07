@@ -12,7 +12,7 @@ import AnnotationProps from './AnnotationProps';
 import forwardMapkitEvent from '../util/forwardMapkitEvent';
 import CalloutContainer from './CalloutContainer';
 import { toMapKitDisplayPriority } from '../util/parameters';
-import { AnnotationClusterIdentifierContext } from './AnnotationCluster';
+import { AnnotationClusterIdentifierContext, ClusterAnnotationContext } from './AnnotationCluster';
 
 export default function Annotation({
   latitude,
@@ -64,6 +64,7 @@ export default function Annotation({
   const [annotation, setAnnotation] = useState<mapkit.Annotation | null>(null);
   const contentEl = useMemo<HTMLDivElement>(() => document.createElement('div'), []);
   const map = useContext(MapContext);
+  const clusterAnnotation = useContext(ClusterAnnotationContext);
   const clusteringIdentifier = useContext(AnnotationClusterIdentifierContext) ?? deprecatedClusterIdentifier;
 
   // Padding
@@ -225,11 +226,18 @@ export default function Annotation({
       new mapkit.Coordinate(latitude, longitude),
       () => contentEl,
     );
-    map.addAnnotation(a);
-    setAnnotation(a);
+
+    if (clusterAnnotation !== undefined) {
+      setAnnotation(clusterAnnotation);
+    } else {
+      map.addAnnotation(a);
+      setAnnotation(a);
+    }
 
     return () => {
-      map.removeAnnotation(a);
+      if (!clusterAnnotation) {
+        map.removeAnnotation(a);
+      }
     };
   }, [map, latitude, longitude]);
 
@@ -272,7 +280,7 @@ export default function Annotation({
         </div>,
         document.body,
       )}
-      {createPortal(children, contentEl)}
+      {clusterAnnotation !== undefined ? children : createPortal(children, contentEl)}
     </>
   );
 }

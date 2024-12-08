@@ -1,5 +1,6 @@
 import React, { useId, useMemo, useState } from 'react';
 import { Meta, StoryFn } from '@storybook/react';
+import { fn } from '@storybook/test';
 import './stories.css';
 import Map from '../components/Map';
 import Marker from '../components/Marker';
@@ -15,7 +16,13 @@ const enumArgType = (e: object) => ({
 export default {
   title: 'Components/Marker',
   component: Marker,
-  args: {},
+  args: {
+    onSelect: fn(),
+    onDeselect: fn(),
+    onDragStart: fn(),
+    onDragEnd: fn(),
+    onDragging: fn(),
+  },
   argTypes: {
     subtitleVisibility: enumArgType(FeatureVisibility),
     titleVisibility: enumArgType(FeatureVisibility),
@@ -28,12 +35,15 @@ export default {
 type MarkerProps = React.ComponentProps<typeof Marker>;
 
 const Template: StoryFn<MarkerProps> = (args) => {
-  const initialRegion: CoordinateRegion = useMemo(() => ({
-    centerLatitude: 48,
-    centerLongitude: 14,
-    latitudeDelta: 22,
-    longitudeDelta: 55,
-  }), []);
+  const initialRegion: CoordinateRegion = useMemo(
+    () => ({
+      centerLatitude: 48,
+      centerLongitude: 14,
+      latitudeDelta: 22,
+      longitudeDelta: 55,
+    }),
+    [],
+  );
   return (
     <Map token={token} initialRegion={initialRegion}>
       <Marker {...args} />
@@ -47,12 +57,15 @@ Default.args = { latitude: 46.52, longitude: 6.57 };
 export const TwoWayBindingSelected = () => {
   const [selected, setSelected] = useState(false);
 
-  const initialRegion: CoordinateRegion = useMemo(() => ({
-    centerLatitude: 46.20738751546706,
-    centerLongitude: 6.155891756231,
-    latitudeDelta: 0.007,
-    longitudeDelta: 0.015,
-  }), []);
+  const initialRegion: CoordinateRegion = useMemo(
+    () => ({
+      centerLatitude: 46.20738751546706,
+      centerLongitude: 6.155891756231,
+      latitudeDelta: 0.007,
+      longitudeDelta: 0.015,
+    }),
+    [],
+  );
 
   const checkboxId = useId();
 
@@ -95,12 +108,15 @@ export const MoveableMarker = () => {
   const idLatitude = useId();
   const idLongitude = useId();
 
-  const initialRegion: CoordinateRegion = useMemo(() => ({
-    centerLatitude: 46.20738751546706,
-    centerLongitude: 6.155891756231,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
-  }), []);
+  const initialRegion: CoordinateRegion = useMemo(
+    () => ({
+      centerLatitude: 46.20738751546706,
+      centerLongitude: 6.155891756231,
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.01,
+    }),
+    [],
+  );
 
   return (
     <>
@@ -120,10 +136,7 @@ export const MoveableMarker = () => {
 
       <div className="map-overlay map-overlay-top">
         <div className="map-overlay-box map-overlay-inputs">
-          <label
-            className="form-group"
-            htmlFor={idLatitude}
-          >
+          <label className="form-group" htmlFor={idLatitude}>
             Latitude
             <input
               id={idLatitude}
@@ -133,10 +146,7 @@ export const MoveableMarker = () => {
               onChange={(e) => setLatitude(Number(e.target.value))}
             />
           </label>
-          <label
-            className="form-group"
-            htmlFor={idLongitude}
-          >
+          <label className="form-group" htmlFor={idLongitude}>
             Longitude
             <input
               id={idLatitude}
@@ -156,12 +166,15 @@ export const MarkerClustering = () => {
   const clusteringIdentifier = 'id';
   const [selected, setSelected] = useState<number | null>(null);
 
-  const initialRegion: CoordinateRegion = useMemo(() => ({
-    centerLatitude: 46.20738751546706,
-    centerLongitude: 6.155891756231,
-    latitudeDelta: 1,
-    longitudeDelta: 1,
-  }), []);
+  const initialRegion: CoordinateRegion = useMemo(
+    () => ({
+      centerLatitude: 46.20738751546706,
+      centerLongitude: 6.155891756231,
+      latitudeDelta: 1,
+      longitudeDelta: 1,
+    }),
+    [],
+  );
 
   const coordinates = [
     { latitude: 46.20738751546706, longitude: 6.155891756231 },
@@ -172,21 +185,19 @@ export const MarkerClustering = () => {
   return (
     <>
       <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
-        {
-          coordinates.map(({ latitude, longitude }, index) => (
-            <Marker
-              latitude={latitude}
-              longitude={longitude}
-              title={`Marker #${index + 1}`}
-              selected={selected === index + 1}
-              onSelect={() => setSelected(index + 1)}
-              onDeselect={() => setSelected(null)}
-              clusteringIdentifier={clusteringIdentifier}
-              collisionMode="Circle"
-              displayPriority={750}
-            />
-          ))
-        }
+        {coordinates.map(({ latitude, longitude }, index) => (
+          <Marker
+            latitude={latitude}
+            longitude={longitude}
+            title={`Marker #${index + 1}`}
+            selected={selected === index + 1}
+            onSelect={() => setSelected(index + 1)}
+            onDeselect={() => setSelected(null)}
+            clusteringIdentifier={clusteringIdentifier}
+            collisionMode="Circle"
+            displayPriority={750}
+          />
+        ))}
       </Map>
 
       <div className="map-overlay">
@@ -200,29 +211,40 @@ export const MarkerClustering = () => {
 
 MarkerClustering.storyName = 'Clustering three markers into one';
 
-function CustomCalloutElement(
-  {
-    title, subtitle, url,
-  }: { title: string, subtitle: string, url: string },
-) {
+function CustomCalloutElement({
+  title,
+  subtitle,
+  url,
+}: {
+  title: string;
+  subtitle: string;
+  url: string;
+}) {
   return (
     <div className="landmark">
       <h1>{title ?? ''}</h1>
       <section>
         <p>{subtitle ?? ''}</p>
-        <p><a href={url} target="_blank" rel="noreferrer">Website</a></p>
+        <p>
+          <a href={url} target="_blank" rel="noreferrer">
+            Website
+          </a>
+        </p>
       </section>
     </div>
   );
 }
 
 export const CustomMarkerCallout = () => {
-  const initialRegion: CoordinateRegion = useMemo(() => ({
-    centerLatitude: 46.20738751546706,
-    centerLongitude: 6.155891756231,
-    latitudeDelta: 0.007,
-    longitudeDelta: 0.015,
-  }), []);
+  const initialRegion: CoordinateRegion = useMemo(
+    () => ({
+      centerLatitude: 46.20738751546706,
+      centerLongitude: 6.155891756231,
+      latitudeDelta: 0.007,
+      longitudeDelta: 0.015,
+    }),
+    [],
+  );
 
   return (
     <Map token={token} initialRegion={initialRegion}>
@@ -231,7 +253,13 @@ export const CustomMarkerCallout = () => {
         longitude={6.155891756231}
         title="Jet d’eau"
         subtitle="Iconic landmark of Geneva"
-        calloutElement={<CustomCalloutElement title="Jet d’eau" subtitle="Iconic landmark of Geneva" url="https://en.wikipedia.org/wiki/Jet_d%27Eau" />}
+        calloutElement={(
+          <CustomCalloutElement
+            title="Jet d’eau"
+            subtitle="Iconic landmark of Geneva"
+            url="https://en.wikipedia.org/wiki/Jet_d%27Eau"
+          />
+        )}
         calloutEnabled
         calloutOffsetX={-148}
         calloutOffsetY={-78}
@@ -241,7 +269,13 @@ export const CustomMarkerCallout = () => {
 };
 CustomMarkerCallout.storyName = 'Marker with custom callout element';
 
-function CustomCalloutContent({ title, subtitle }: { title: string, subtitle: string }) {
+function CustomCalloutContent({
+  title,
+  subtitle,
+}: {
+  title: string;
+  subtitle: string;
+}) {
   return (
     <div className="custom-annotation-content">
       <h2>{title ?? ''}</h2>
@@ -262,7 +296,18 @@ function CustomCalloutRightAccessory({ url }: { url: string }) {
   return (
     <div className="custom-annotation-info">
       <a href={url} target="_blank" rel="noreferrer">
-        <svg width="20px" height="20px" viewBox="0 0 20 20" stroke="#333" strokeWidth="2" fill="none" fillRule="evenodd" strokeLinecap="round" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          width="20px"
+          height="20px"
+          viewBox="0 0 20 20"
+          stroke="#333"
+          strokeWidth="2"
+          fill="none"
+          fillRule="evenodd"
+          strokeLinecap="round"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <circle cx="10" cy="10" r="9" />
           <line x1="10" y1="9" x2="10" y2="15" />
           <circle cx="10" cy="5" r="0.1" />
@@ -273,12 +318,15 @@ function CustomCalloutRightAccessory({ url }: { url: string }) {
 }
 
 export const CustomMarkerCalloutContent = () => {
-  const initialRegion: CoordinateRegion = useMemo(() => ({
-    centerLatitude: 46.20738751546706,
-    centerLongitude: 6.155891756231,
-    latitudeDelta: 0.007,
-    longitudeDelta: 0.015,
-  }), []);
+  const initialRegion: CoordinateRegion = useMemo(
+    () => ({
+      centerLatitude: 46.20738751546706,
+      centerLongitude: 6.155891756231,
+      latitudeDelta: 0.007,
+      longitudeDelta: 0.015,
+    }),
+    [],
+  );
 
   return (
     <Map token={token} initialRegion={initialRegion}>
@@ -287,9 +335,18 @@ export const CustomMarkerCalloutContent = () => {
         longitude={6.155891756231}
         title="Jet d’eau"
         subtitle="Iconic landmark of Geneva"
-        calloutContent={<CustomCalloutContent title="Jet d’eau" subtitle="Iconic landmark of Geneva" />}
-        calloutLeftAccessory={<CustomCalloutLeftAccessory src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Le_jet_d-eau_de_Genève.jpg/480px-Le_jet_d-eau_de_Genève.jpg" />}
-        calloutRightAccessory={<CustomCalloutRightAccessory url="https://en.wikipedia.org/wiki/Jet_d%27Eau" />}
+        calloutContent={(
+          <CustomCalloutContent
+            title="Jet d’eau"
+            subtitle="Iconic landmark of Geneva"
+          />
+        )}
+        calloutLeftAccessory={
+          <CustomCalloutLeftAccessory src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Le_jet_d-eau_de_Genève.jpg/480px-Le_jet_d-eau_de_Genève.jpg" />
+        }
+        calloutRightAccessory={
+          <CustomCalloutRightAccessory url="https://en.wikipedia.org/wiki/Jet_d%27Eau" />
+        }
         calloutEnabled
       />
     </Map>

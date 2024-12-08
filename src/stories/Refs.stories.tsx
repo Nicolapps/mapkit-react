@@ -1,10 +1,15 @@
 import React, { useCallback, useMemo, useRef } from 'react';
 import { Meta, StoryFn } from '@storybook/react';
+import { fn } from '@storybook/test';
 import './stories.css';
 
 import Map from '../components/Map';
 import {
-  ColorScheme, MapType, Distances, LoadPriority, CoordinateRegion,
+  ColorScheme,
+  MapType,
+  Distances,
+  LoadPriority,
+  CoordinateRegion,
 } from '../util/parameters';
 
 // @ts-ignore
@@ -20,7 +25,22 @@ const enumArgType = (e: object) => ({
 export default {
   title: 'MapKit JS refs/Map',
   component: Map,
-  args: { token },
+  args: {
+    token,
+    onLoad: fn(),
+    onRegionChangeStart: fn(),
+    onRegionChangeEnd: fn(),
+    onMapTypeChange: fn(),
+    onSingleTap: fn(),
+    onDoubleTap: fn(),
+    onLongPress: fn(),
+    onClick: fn(),
+    onMouseMove: fn(),
+    onMouseDown: fn(),
+    onMouseUp: fn(),
+    onUserLocationChange: fn(),
+    onUserLocationError: fn(),
+  },
   argTypes: {
     colorScheme: enumArgType(ColorScheme),
     mapType: enumArgType(MapType),
@@ -31,7 +51,8 @@ export default {
     layout: 'fullscreen',
     docs: {
       description: {
-        component: 'To access methods or properties not exposed by mapkit-react, you can access the `map` object provided by MapKit JS using a reference.',
+        component:
+          'To access methods or properties not exposed by mapkit-react, you can access the `map` object provided by MapKit JS using a reference.',
       },
     },
   },
@@ -72,7 +93,7 @@ MapReference.args = {
   initialRegion: {
     centerLatitude: 37.7812,
     centerLongitude: -122.44755,
-    latitudeDelta: 0.10,
+    latitudeDelta: 0.1,
     longitudeDelta: 0.11,
   },
 };
@@ -80,12 +101,15 @@ MapReference.args = {
 export const OnLoadEvent = () => {
   const mapRef = useRef<mapkit.Map>(null);
 
-  const initialRegion: CoordinateRegion = useMemo(() => ({
-    centerLatitude: 48.92630099185955,
-    centerLongitude: 10.615092941674959,
-    latitudeDelta: 24.17307048317351,
-    longitudeDelta: 43.4436668867213,
-  }), []);
+  const initialRegion: CoordinateRegion = useMemo(
+    () => ({
+      centerLatitude: 48.92630099185955,
+      centerLongitude: 10.615092941674959,
+      latitudeDelta: 24.17307048317351,
+      longitudeDelta: 43.4436668867213,
+    }),
+    [],
+  );
 
   return (
     <Map
@@ -93,16 +117,12 @@ export const OnLoadEvent = () => {
       ref={mapRef}
       initialRegion={initialRegion}
       onLoad={() => {
-        mapRef.current!.setRegionAnimated(new mapkit.CoordinateRegion(
-          new mapkit.Coordinate(
-            46.76753351386031,
-            8.208099002907204,
+        mapRef.current!.setRegionAnimated(
+          new mapkit.CoordinateRegion(
+            new mapkit.Coordinate(46.76753351386031, 8.208099002907204),
+            new mapkit.CoordinateSpan(2.017148245608759, 4.684076997007793),
           ),
-          new mapkit.CoordinateSpan(
-            2.017148245608759,
-            4.684076997007793,
-          ),
-        ));
+        );
       }}
     />
   );

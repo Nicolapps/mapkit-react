@@ -1,7 +1,7 @@
-module.exports = {
+import type { StorybookConfig } from '@storybook/react-vite';
+
+const config: StorybookConfig = {
   stories: [
-    '../src/stories/Map.stories.tsx',
-    '../src/**/*.stories.mdx',
     '../src/**/*.stories.@(js|jsx|ts|tsx)'
   ],
 
@@ -14,7 +14,7 @@ module.exports = {
 
   framework: '@storybook/react-vite',
 
-  docs: {
-    autodocs: true
-  }
+  docs: {}
 };
+
+export default config;

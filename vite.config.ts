@@ -7,7 +7,12 @@ import * as path from 'path';
 export default defineConfig({
   plugins: [
     dts(),
-    react(),
+    react({
+      jsxRuntime: 'automatic',
+      babel: {
+        plugins: ['@babel/plugin-transform-react-jsx'],
+      },
+    }),
   ],
   build: {
     lib: {

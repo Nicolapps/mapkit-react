@@ -49,6 +49,7 @@
     "@storybook/react": "^7.3.2",
     "@storybook/react-vite": "^7.3.2",
     "@storybook/testing-library": "^0.2.0",
+    "@babel/plugin-transform-react-jsx": "^7.25.9",
     "@types/apple-mapkit-js-browser": "^5.65.3",
     "@types/react": "^18.0.25",
     "@typescript-eslint/eslint-plugin": "^5.44.0",

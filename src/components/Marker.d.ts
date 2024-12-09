@@ -1,3 +1,3 @@
-import React from 'react';
+import React from '../../node_modules/react';
 import MarkerProps from './MarkerProps';
 export default function Marker({ latitude, longitude, title, subtitle, accessibilityLabel, subtitleVisibility, titleVisibility, clusteringIdentifier, displayPriority, collisionMode, color, glyphColor, glyphText, glyphImage, selectedGlyphImage, paddingTop, paddingRight, paddingBottom, paddingLeft, anchorOffsetX, anchorOffsetY, calloutElement, calloutContent, calloutLeftAccessory, calloutRightAccessory, calloutEnabled, calloutOffsetX, calloutOffsetY, selected, animates, appearanceAnimation, visible, draggable, enabled, onSelect, onDeselect, onDragStart, onDragEnd, onDragging, }: MarkerProps): React.ReactPortal;

@@ -1,27 +1,48 @@
-declare const _default: import("@storybook/types").ComponentAnnotations<import("@storybook/react/dist/types-0a347bb9").R, import("..").MarkerProps>;
+import React from '../../node_modules/react';
+declare const _default: import("@storybook/csf").ComponentAnnotations<import("@storybook/react/dist/types-a5624094").R, import("..").MarkerProps>;
 export default _default;
-export declare const Default: import("@storybook/types").AnnotatedStoryFn<import("@storybook/react/dist/types-0a347bb9").R, import("..").MarkerProps>;
+export declare const Default: import("@storybook/csf").AnnotatedStoryFn<import("@storybook/react/dist/types-a5624094").R, import("..").MarkerProps>;
 export declare const TwoWayBindingSelected: {
-    (): JSX.Element;
+    (): React.JSX.Element;
     storyName: string;
-    parameters: any;
+    __docgenInfo: {
+        description: string;
+        methods: never[];
+        displayName: string;
+    };
 };
 export declare const MoveableMarker: {
-    (): JSX.Element;
-    parameters: any;
+    (): React.JSX.Element;
+    __docgenInfo: {
+        description: string;
+        methods: never[];
+        displayName: string;
+    };
 };
 export declare const MarkerClustering: {
-    (): JSX.Element;
+    (): React.JSX.Element;
     storyName: string;
-    parameters: any;
+    __docgenInfo: {
+        description: string;
+        methods: never[];
+        displayName: string;
+    };
 };
 export declare const CustomMarkerCallout: {
-    (): JSX.Element;
+    (): React.JSX.Element;
     storyName: string;
-    parameters: any;
+    __docgenInfo: {
+        description: string;
+        methods: never[];
+        displayName: string;
+    };
 };
 export declare const CustomMarkerCalloutContent: {
-    (): JSX.Element;
+    (): React.JSX.Element;
     storyName: string;
-    parameters: any;
+    __docgenInfo: {
+        description: string;
+        methods: never[];
+        displayName: string;
+    };
 };

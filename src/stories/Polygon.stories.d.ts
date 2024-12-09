@@ -1,3 +1,3 @@
-declare const _default: import("@storybook/types").ComponentAnnotations<import("@storybook/react/dist/types-0a347bb9").R, import("..").PolygonProps>;
+declare const _default: import("@storybook/csf").ComponentAnnotations<import("@storybook/react/dist/types-a5624094").R, import("..").PolygonProps>;
 export default _default;
-export declare const Default: import("@storybook/types").AnnotatedStoryFn<import("@storybook/react/dist/types-0a347bb9").R, import("..").PolygonProps>;
+export declare const Default: import("@storybook/csf").AnnotatedStoryFn<import("@storybook/react/dist/types-a5624094").R, import("..").PolygonProps>;

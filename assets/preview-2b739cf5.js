@@ -1,0 +1,1 @@
+import{j as o}from"./jsx-runtime-50395f49.js";import"./index-9fa1aa67.js";const c={controls:{matchers:{color:/(background|color)$/i,date:/Date$/}}},e=[t=>o.jsx("div",{style:{width:"100vw",height:"100vh"},children:o.jsx(t,{})})],a=["autodocs"];export{e as decorators,c as parameters,a as tags};

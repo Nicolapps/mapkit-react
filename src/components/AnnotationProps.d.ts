@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode } from '../../node_modules/react';
 import { Coordinate } from '../util/parameters';
 export default interface AnnotationProps {
     /**

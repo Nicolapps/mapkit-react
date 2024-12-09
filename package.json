@@ -1,6 +1,6 @@
 {
   "name": "mapkit-react",
-  "version": "1.15.2",
+  "version": "1.15.3-0",
   "description": "A React wrapper for MapKit JS",
   "author": "Nicolas Ettlin",
   "license": "MIT",

@@ -17,7 +17,6 @@ export default function forwardMapkitEvent<E>(
 ) {
   useEffect(() => {
     if (!element || !handler) return undefined;
-
     // @ts-ignore
     const mapkitHandler = (e) => {
       handler(eventMap(e));

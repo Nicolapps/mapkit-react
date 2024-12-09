@@ -65,6 +65,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/VladyslavParashchenko"><img src="https://avatars.githubusercontent.com/u/18124826?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Vladyslav Parashchenko</b></sub></a><br /><a href="https://github.com/Nicolapps/mapkit-react/commits?author=VladyslavParashchenko" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Adrastopoulos"><img src="https://avatars.githubusercontent.com/u/76796897?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Gabriel Hall</b></sub></a><br /><a href="https://github.com/Nicolapps/mapkit-react/commits?author=Adrastopoulos" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/nikischin"><img src="https://avatars.githubusercontent.com/u/49103409?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Tim Nikischin</b></sub></a><br /><a href="https://github.com/Nicolapps/mapkit-react/commits?author=nikischin" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/KlotzJesse"><img src="https://avatars.githubusercontent.com/u/9445140?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jesse Klotz</b></sub></a><br /><a href="https://github.com/Nicolapps/mapkit-react/commits?author=KlotzJesse" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>

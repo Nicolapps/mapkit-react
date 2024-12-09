@@ -35,9 +35,9 @@
     {
       "files": "vite.config.ts",
       "rules": {
-        "import/no-extraneous-dependencies": {
+        "import/no-extraneous-dependencies": ["error", {
           "devDependencies": false
-        }
+        }]
       }
     }
   ]

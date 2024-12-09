@@ -6,7 +6,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: bahmutov/npm-install@v1
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 22
+          cache: 'npm'
+      - name: Install NPM dependencies
+        run: npm ci
       - name: Check EditorConfig
         run: npx editorconfig-checker
         shell: bash

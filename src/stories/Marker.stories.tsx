@@ -295,7 +295,7 @@ function CustomCalloutLeftAccessory({ src }: { src: string }) {
 function CustomCalloutRightAccessory({ url }: { url: string }) {
   return (
     <div className="custom-annotation-info">
-      <a href={url} target="_blank" rel="noreferrer">
+      <a href={url} target="_blank" rel="noreferrer" aria-label="Learn more">
         <svg
           width="20px"
           height="20px"

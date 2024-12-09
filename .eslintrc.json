@@ -31,6 +31,14 @@
         "react/jsx-props-no-spreading": 0,
         "react/function-component-definition": 0
       }
+    },
+    {
+      "files": "vite.config.ts",
+      "rules": {
+        "import/no-extraneous-dependencies": {
+          "devDependencies": false
+        }
+      }
     }
   ]
 }

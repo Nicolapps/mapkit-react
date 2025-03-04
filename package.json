@@ -57,7 +57,7 @@
     "@types/react-dom": "^18.0.10",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
     "@typescript-eslint/parser": "^5.44.0",
-    "@vitejs/plugin-react": "^3.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
     "babel-loader": "^8.3.0",
     "eslint": "^8.28.0",
     "eslint-config-airbnb": "^19.0.4",
@@ -72,7 +72,7 @@
     "storybook": "^8.6.3",
     "tslib": "^2.4.1",
     "typescript": "^4.9.3",
-    "vite": "^4.0.3",
+    "vite": "^6.2.0",
     "vite-plugin-dts": "^1.7.1"
   }
 }

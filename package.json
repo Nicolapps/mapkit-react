@@ -59,7 +59,6 @@
     "@typescript-eslint/parser": "^5.44.0",
     "@vitejs/plugin-react": "^3.0.0",
     "babel-loader": "^8.3.0",
-    "editorconfig-checker": "^5.1.1",
     "eslint": "^8.28.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",

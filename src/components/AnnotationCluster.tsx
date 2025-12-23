@@ -62,10 +62,9 @@ function ClusterContentMeasurer({ annotation, children }: { annotation: mapkit.A
     if (!ref.current) return;
     const updateOffset = () => {
        const height = ref.current?.offsetHeight || 0;
-       // Only apply default callout offset if user hasn't explicitly set one
-       if (initialCalloutOffset.current?.y === 0 && initialCalloutOffset.current?.x === 0) {
-         annotation.calloutOffset = new DOMPoint(0, -height / 2);
-       }
+       // Always apply vertical centering, but preserve any user-set horizontal offset
+       const xOffset = initialCalloutOffset.current?.x ?? 0;
+       annotation.calloutOffset = new DOMPoint(xOffset, height / 2);
     };
     
     // Initial

@@ -1,5 +1,5 @@
 import React, {
-  createContext, Fragment, useContext, useEffect, useId, useState,
+  createContext, Fragment, useContext, useEffect, useId, useState, useRef,
 } from 'react';
 import { createPortal } from 'react-dom';
 import AnnotationClusterProps from './AnnotationClusterProps';
@@ -25,6 +25,12 @@ export default function AnnotationCluster({
     coordinate: mapkit.Coordinate,
     memberAnnotations: mapkit.Annotation[]
   }[]>([]);
+  const clusterAnnotationsRef = useRef<{
+    contentElement: HTMLDivElement,
+    annotation: mapkit.Annotation,
+    coordinate: mapkit.Coordinate,
+    memberAnnotations: mapkit.Annotation[]
+  }[]>([]);
 
   // Coordinates
   useEffect(() => {
@@ -37,7 +43,7 @@ export default function AnnotationCluster({
     map.annotationForCluster = (clusterAnnotationData) => {
       if (clusterAnnotationData.clusteringIdentifier === clusterIdenfier) {
         if (annotationForCluster) {
-          const annotation = clusterAnnotations.find(
+          const annotation = clusterAnnotationsRef.current.find(
             (a) => a.coordinate.latitude === clusterAnnotationData.coordinate.latitude
           && a.coordinate.longitude === clusterAnnotationData.coordinate.longitude,
           );

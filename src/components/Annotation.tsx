@@ -173,7 +173,7 @@ export default function Annotation({
 
     size,
 
-    selected,
+    // Note: 'selected' is handled separately to avoid conflicts with MapKit's internal selection
     animates,
     appearanceAnimation,
     draggable,
@@ -193,6 +193,17 @@ export default function Annotation({
       annotation[propertyName] = prop;
     }, [annotation, prop]);
   });
+
+  // Handle 'selected' separately to avoid fighting with MapKit's selection
+  // Only set selected when the prop value differs from the current annotation state
+  useEffect(() => {
+    if (!annotation) return;
+    if (selected === undefined) return;
+    // Only update if the values actually differ to avoid deselecting when MapKit just selected
+    if (annotation.selected !== selected) {
+      annotation.selected = selected;
+    }
+  }, [annotation, selected]);
 
   // Events
   const handlerWithoutParameters = () => { };

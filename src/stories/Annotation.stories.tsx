@@ -223,7 +223,7 @@ CustomAnnotationCallout.storyName = 'Annotation with custom callout element';
 
 export const AnnotationClustering = () => {
   const clusteringIdentifier = 'id';
-  const [selected, setSelected] = useState<number | null>(null);
+  const [selected, setSelected] = useState<string | null>(null);
 
   const initialRegion: CoordinateRegion = useMemo(() => ({
     centerLatitude: 46.20738751546706,
@@ -233,11 +233,11 @@ export const AnnotationClustering = () => {
   }), []);
 
   const coordinates = [
-    { latitude: 46.20738751546706, longitude: 6.155891756231 },
-    { latitude: 46.25738751546706, longitude: 6.185891756231 },
-    { latitude: 46.28738751546706, longitude: 6.2091756231 },
-    { latitude: 46.20738751546706, longitude: 6.185891756231 },
-    { latitude: 46.25738751546706, longitude: 6.2091756231 },
+    { latitude: 46.20738751546706, longitude: 6.155891756231, someId: 'A' },
+    { latitude: 46.25738751546706, longitude: 6.185891756231, someId: 'B' },
+    { latitude: 46.28738751546706, longitude: 6.2091756231, someId: 'C' },
+    { latitude: 46.20738751546706, longitude: 6.185891756231, someId: 'D' },
+    { latitude: 46.25738751546706, longitude: 6.2091756231, someId: 'E' },
   ];
 
   const annotationClusterFunc = useCallback((memberAnnotations: mapkit.Annotation[], coordinate: mapkit.Coordinate) => (
@@ -245,10 +245,11 @@ export const AnnotationClustering = () => {
       latitude={coordinate.latitude}
       longitude={coordinate.longitude}
       calloutElement={(
-        <div style={{ whiteSpace: 'nowrap', backgroundColor: 'white' }}>{memberAnnotations.map((clusterAnnotation) => clusterAnnotation.title).join(' & ')}</div>
+        <div style={{ whiteSpace: 'nowrap', backgroundColor: 'white', padding: '4px 8px', borderRadius: '8px' }}>{memberAnnotations.map((clusterAnnotation) => clusterAnnotation.title).join(' & ')}</div>
       )}
       onSelect={() => setSelected(memberAnnotations.map((clusterAnnotation) => clusterAnnotation.title).join(' & '))}
       selected={selected === memberAnnotations.map((clusterAnnotation) => clusterAnnotation.title).join(' & ')}
+      calloutOffsetY={-40}
     >
       <CustomMarker color="#0000FF" />
     </Annotation>
@@ -258,17 +259,17 @@ export const AnnotationClustering = () => {
     <>
       <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
         <AnnotationCluster annotationForCluster={annotationClusterFunc}>
-          {coordinates.map(({ latitude, longitude }, index) => (
+          {coordinates.map(({ latitude, longitude, someId }) => (
             <Annotation
               latitude={latitude}
               longitude={longitude}
-              title={`Marker #${index + 1}`}
-              selected={selected === index + 1}
-              onSelect={() => setSelected(index + 1)}
+              title={`Marker ${someId}`}
+              selected={selected === someId}
+              onSelect={() => setSelected(someId)}
               onDeselect={() => setSelected(null)}
               collisionMode="Circle"
               displayPriority={750}
-              key={index}
+              key={someId}
             >
               <CustomMarker />
             </Annotation>

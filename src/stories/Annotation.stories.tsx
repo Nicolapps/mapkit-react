@@ -245,7 +245,7 @@ export const AnnotationClustering = () => {
       latitude={coordinate.latitude}
       longitude={coordinate.longitude}
       calloutElement={(
-        <div>{memberAnnotations.map((clusterAnnotation) => clusterAnnotation.title).join(' & ')}</div>
+        <div style={{ whiteSpace: 'nowrap', backgroundColor: 'white' }}>{memberAnnotations.map((clusterAnnotation) => clusterAnnotation.title).join(' & ')}</div>
       )}
       onSelect={() => setSelected(memberAnnotations.map((clusterAnnotation) => clusterAnnotation.title).join(' & '))}
       selected={selected === memberAnnotations.map((clusterAnnotation) => clusterAnnotation.title).join(' & ')}
@@ -257,10 +257,7 @@ export const AnnotationClustering = () => {
   return (
     <>
       <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
-        <AnnotationCluster
-          clusterIdenfier={clusteringIdentifier}
-          annotationForCluster={annotationClusterFunc}
-        >
+        <AnnotationCluster annotationForCluster={annotationClusterFunc}>
           {coordinates.map(({ latitude, longitude }, index) => (
             <Annotation
               latitude={latitude}

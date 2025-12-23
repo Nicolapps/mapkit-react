@@ -4,5 +4,4 @@ export default interface AnnotationClusterProps {
     coordinate: mapkit.Coordinate,
   ) => React.ReactNode;
   children: React.ReactNode;
-  clusterIdenfier: string;
 }

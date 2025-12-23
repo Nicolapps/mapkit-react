@@ -1,5 +1,5 @@
 import React, {
-  createContext, Fragment, useContext, useEffect, useState,
+  createContext, Fragment, useContext, useEffect, useId, useState,
 } from 'react';
 import { createPortal } from 'react-dom';
 import AnnotationClusterProps from './AnnotationClusterProps';
@@ -11,12 +11,14 @@ export const ClusterAnnotationContext = createContext<mapkit.Annotation | undefi
 export default function AnnotationCluster({
   children,
   annotationForCluster,
-  clusterIdenfier,
 }: AnnotationClusterProps) {
+  const clusterIdenfier = useId();
   const map = useContext(MapContext);
+
   const [
     existingClusterFunc, setExistingClusterFunc,
   ] = useState<((clusterAnnotation: mapkit.Annotation) => void) | undefined>(undefined);
+
   const [clusterAnnotations, setClusterAnnotations] = useState<{
     contentElement: HTMLDivElement,
     annotation: mapkit.Annotation,
@@ -35,8 +37,11 @@ export default function AnnotationCluster({
     map.annotationForCluster = (clusterAnnotationData) => {
       if (clusterAnnotationData.clusteringIdentifier === clusterIdenfier) {
         if (annotationForCluster) {
-          const annotation = clusterAnnotations.find((a) => a.coordinate.latitude == clusterAnnotationData.coordinate.latitude
-          && a.coordinate.longitude == clusterAnnotationData.coordinate.longitude);
+          const annotation = clusterAnnotations.find(
+            (a) => a.coordinate.latitude === clusterAnnotationData.coordinate.latitude
+          && a.coordinate.longitude === clusterAnnotationData.coordinate.longitude,
+          );
+
           if (annotation) {
             return annotation.annotation;
           }

@@ -12,6 +12,7 @@ import AnnotationProps from './AnnotationProps';
 import forwardMapkitEvent from '../util/forwardMapkitEvent';
 import CalloutContainer from './CalloutContainer';
 import { toMapKitDisplayPriority } from '../util/parameters';
+import { AnnotationClusterIdentifierContext, ClusterAnnotationContext } from './AnnotationCluster';
 
 export default function Annotation({
   latitude,
@@ -42,7 +43,7 @@ export default function Annotation({
   appearanceAnimation = '',
   visible = true,
 
-  clusteringIdentifier = null,
+  clusteringIdentifier: deprecatedClusterIdentifier = null,
   displayPriority = undefined,
   collisionMode = undefined,
 
@@ -63,6 +64,8 @@ export default function Annotation({
   const [annotation, setAnnotation] = useState<mapkit.Annotation | null>(null);
   const contentEl = useMemo<HTMLDivElement>(() => document.createElement('div'), []);
   const map = useContext(MapContext);
+  const clusterAnnotation = useContext(ClusterAnnotationContext);
+  const clusteringIdentifier = useContext(AnnotationClusterIdentifierContext) ?? deprecatedClusterIdentifier;
 
   // Padding
   useEffect(() => {
@@ -90,7 +93,6 @@ export default function Annotation({
   // Callout
   useLayoutEffect(() => {
     if (!annotation) return;
-
     const callOutObj: mapkit.AnnotationCalloutDelegate = {};
     if (calloutElement && calloutElementRef.current !== null) {
       // @ts-expect-error
@@ -171,7 +173,7 @@ export default function Annotation({
 
     size,
 
-    selected,
+    // Note: 'selected' is handled separately to avoid conflicts with MapKit's internal selection
     animates,
     appearanceAnimation,
     draggable,
@@ -191,6 +193,17 @@ export default function Annotation({
       annotation[propertyName] = prop;
     }, [annotation, prop]);
   });
+
+  // Handle 'selected' separately to avoid fighting with MapKit's selection
+  // Only set selected when the prop value differs from the current annotation state
+  useEffect(() => {
+    if (!annotation) return;
+    if (selected === undefined) return;
+    // Only update if the values actually differ to avoid deselecting when MapKit just selected
+    if (annotation.selected !== selected) {
+      annotation.selected = selected;
+    }
+  }, [annotation, selected]);
 
   // Events
   const handlerWithoutParameters = () => { };
@@ -223,13 +236,20 @@ export default function Annotation({
       new mapkit.Coordinate(latitude, longitude),
       () => contentEl,
     );
-    map.addAnnotation(a);
-    setAnnotation(a);
+
+    if (clusterAnnotation !== undefined) {
+      setAnnotation(clusterAnnotation);
+    } else {
+      map.addAnnotation(a);
+      setAnnotation(a);
+    }
 
     return () => {
-      map.removeAnnotation(a);
+      if (!clusterAnnotation) {
+        map.removeAnnotation(a);
+      }
     };
-  }, [map, latitude, longitude]);
+  }, [map, latitude, longitude, clusterAnnotation]);
 
   return (
     <>
@@ -270,7 +290,7 @@ export default function Annotation({
         </div>,
         document.body,
       )}
-      {createPortal(children, contentEl)}
+      {clusterAnnotation !== undefined ? children : createPortal(children, contentEl)}
     </>
   );
 }

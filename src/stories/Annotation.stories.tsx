@@ -1,16 +1,17 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Meta, StoryFn } from '@storybook/react';
 import { fn } from '@storybook/test';
 
 import Map from '../components/Map';
 import Annotation from '../components/Annotation';
 import { CoordinateRegion, FeatureVisibility } from '../util/parameters';
+import AnnotationCluster from '../components/AnnotationCluster';
 
 // @ts-ignore
 const token = import.meta.env.STORYBOOK_MAPKIT_JS_TOKEN!;
 
 // SVG from https://webkul.github.io/vivid
-function CustomMarker() {
+function CustomMarker({ color = '#FF6E6E' }: { color?: string }) {
   return (
     <svg
       width="24px"
@@ -27,7 +28,7 @@ function CustomMarker() {
                 <path
                   d="M14,0 C21.732,0 28,5.641 28,12.6 C28,23.963 14,36 14,36 C14,36 0,24.064 0,12.6 C0,5.641 6.268,0 14,0 Z"
                   id="Shape"
-                  fill="#FF6E6E"
+                  fill={color}
                 />
                 <circle
                   fill="#0C0058"
@@ -219,3 +220,70 @@ export const CustomAnnotationCallout = () => {
   );
 };
 CustomAnnotationCallout.storyName = 'Annotation with custom callout element';
+
+export const AnnotationClustering = () => {
+  const clusteringIdentifier = 'id';
+  const [selected, setSelected] = useState<string | null>(null);
+
+  const initialRegion: CoordinateRegion = useMemo(() => ({
+    centerLatitude: 46.20738751546706,
+    centerLongitude: 6.155891756231,
+    latitudeDelta: 1,
+    longitudeDelta: 1,
+  }), []);
+
+  const coordinates = [
+    { latitude: 46.20738751546706, longitude: 6.155891756231, someId: 'A' },
+    { latitude: 46.25738751546706, longitude: 6.185891756231, someId: 'B' },
+    { latitude: 46.28738751546706, longitude: 6.2091756231, someId: 'C' },
+    { latitude: 46.20738751546706, longitude: 6.185891756231, someId: 'D' },
+    { latitude: 46.25738751546706, longitude: 6.2091756231, someId: 'E' },
+  ];
+
+  const annotationClusterFunc = useCallback((memberAnnotations: mapkit.Annotation[], coordinate: mapkit.Coordinate) => (
+    <Annotation
+      latitude={coordinate.latitude}
+      longitude={coordinate.longitude}
+      calloutElement={(
+        <div style={{ whiteSpace: 'nowrap', backgroundColor: 'white', padding: '4px 8px', borderRadius: '8px' }}>{memberAnnotations.map((clusterAnnotation) => clusterAnnotation.title).join(' & ')}</div>
+      )}
+      onSelect={() => setSelected(memberAnnotations.map((clusterAnnotation) => clusterAnnotation.title).join(' & '))}
+      selected={selected === memberAnnotations.map((clusterAnnotation) => clusterAnnotation.title).join(' & ')}
+      calloutOffsetY={-40}
+    >
+      <CustomMarker color="#0000FF" />
+    </Annotation>
+  ), [selected]);
+
+  return (
+    <>
+      <Map token={token} initialRegion={initialRegion} paddingBottom={44}>
+        <AnnotationCluster annotationForCluster={annotationClusterFunc}>
+          {coordinates.map(({ latitude, longitude, someId }) => (
+            <Annotation
+              latitude={latitude}
+              longitude={longitude}
+              title={`Marker ${someId}`}
+              selected={selected === someId}
+              onSelect={() => setSelected(someId)}
+              onDeselect={() => setSelected(null)}
+              collisionMode="Circle"
+              displayPriority={750}
+              key={someId}
+            >
+              <CustomMarker />
+            </Annotation>
+          ))}
+        </AnnotationCluster>
+      </Map>
+
+      <div className="map-overlay">
+        <div className="map-overlay-box">
+          <p>{selected ? `Selected annotation #${selected}` : 'Not selected'}</p>
+        </div>
+      </div>
+    </>
+  );
+};
+
+AnnotationClustering.storyName = 'Clustering three annotations into one';

@@ -185,6 +185,12 @@ export default interface MapProps {
   cameraBoundary?: CoordinateRegion;
 
   /**
+   * The altitude of the camera relative to the elevation of the center of the map.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/map/3257749-cameradistance}
+   */
+  cameraDistance?: number;
+
+  /**
    * The minimum allowed distance of the camera from the center of the map in meters.
    */
   minCameraDistance?: number;
@@ -193,6 +199,42 @@ export default interface MapProps {
    * The maximum allowed distance of the camera from the center of the map in meters.
    */
   maxCameraDistance?: number;
+
+  /**
+   * The map coordinate at the center of the map view.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/map/2973914-center}
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/map/2973935-setcenteranimated}
+   */
+  center?: { latitude: number, longitude: number };
+
+  /**
+   * The area the map is displaying.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/map/2973924-region}
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/map/2973936-setregionanimated}
+   */
+  region?: CoordinateRegion;
+
+  /**
+   * The map’s rotation, in degrees.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/map/2991322-rotation}
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/map/2991323-setrotationanimated}
+   */
+  rotation?: number;
+
+  /**
+  * The visible area of the map, in map units.
+  * @see {@link https://developer.apple.com/documentation/mapkitjs/map/2973951-visiblemaprect}
+  * @see {@link https://developer.apple.com/documentation/mapkitjs/map/2973937-setvisiblemaprectanimated}
+  */
+  visibleMapRect?: { x: number, y: number, width: number, height: number };
+
+  /**
+   * Set the animation parameter for the change listener function of the center, rotation,
+   * cameraDistance or region update.
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/map/2973935-setcenteranimated}
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/map/2973936-setregionanimated}
+   */
+  regionUpdateAnimates?: boolean;
 
   /**
    * The map has loaded.

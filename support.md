@@ -38,10 +38,10 @@
 
 | Feature                              | Supported          |
 | ------------------------------------ | ------------------ |
-| MapConstructorOptions.visibleMapRect | ❌                 |
+| MapConstructorOptions.visibleMapRect | ✅                 |
 | MapConstructorOptions.region         | ✅ (initialRegion) |
-| MapConstructorOptions.center         | ❌                 |
-| MapConstructorOptions.rotation       | ❌                 |
+| MapConstructorOptions.center         | ✅                 |
+| MapConstructorOptions.rotation       | ✅                 |
 | MapConstructorOptions.tintColor      | ❌                 |
 
 #### Appearance and controls
@@ -105,12 +105,12 @@
 
 | Feature         | Supported                                |
 | --------------- | ---------------------------------------- |
-| center          | ❌                                       |
-| region          | ❌                                       |
-| rotation        | ❌                                       |
-| visibleMapRect  | ❌                                       |
+| center          | ✅                                       |
+| region          | ✅                                       |
+| rotation        | ✅                                       |
+| visibleMapRect  | ✅                                       |
 | cameraBoundary  | ✅                                       |
-| cameraDistance  | ❌                                       |
+| cameraDistance  | ✅                                       |
 | cameraZoomRange | ✅ (minCameraDistance/maxCameraDistance) |
 
 #### Controls

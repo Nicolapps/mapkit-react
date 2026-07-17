@@ -4,17 +4,26 @@ import {
   PointOfInterestCategory,
   FeatureVisibility,
 } from '../util/parameters';
+import { MapKitToken } from '../util/token';
 
 export default interface MapProps {
   /**
    * Custom load method for MapKit JS.
+   * Receives the same token (or provider) as the `token` prop.
+   * When using a custom load, you own `mapkit.init` and authorization.
    */
-  load?: (token: string) => Promise<void>;
+  load?: (token: MapKitToken) => Promise<void>;
 
   /**
-   * The token provided by MapKit JS.
+   * A MapKit JS JWT string, or a function that returns one (sync or async).
+   *
+   * MapKit JS may request a token throughout a session when the previous one
+   * expires. Use a provider function to mint short-lived tokens from your
+   * server — never put your MapKit private key in client-side code.
+   *
+   * @see {@link https://developer.apple.com/documentation/mapkitjs/mapkitinitializationoptions/authorizationcallback}
    */
-  token: string;
+  token: MapKitToken;
 
   /**
    * The map’s color scheme when displaying standard or muted standard map types.

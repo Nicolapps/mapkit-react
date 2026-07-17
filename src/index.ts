@@ -23,3 +23,6 @@ export type {
   MapInteractionEvent,
   UserLocationChangeEvent, UserLocationError, UserLocationErrorEvent,
 } from './events';
+
+export type { MapKitToken } from './util/token';
+export { resolveMapKitToken } from './util/token';

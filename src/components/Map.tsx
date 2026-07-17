@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import { useMediaQuery } from 'usehooks-ts';
 import MapContext from '../context/MapContext';
-import load from '../util/loader';
+import load, { setMapKitToken } from '../util/loader';
 import {
   ColorScheme, Distances, FeatureVisibility, LoadPriority, MapType,
   fromMapKitMapType,
@@ -73,10 +73,21 @@ const Map = React.forwardRef<mapkit.Map | null, React.PropsWithChildren<MapProps
   const element = useRef<HTMLDivElement>(null);
   const exists = useRef<boolean>(false);
 
+  // MapKit may re-invoke authorizationCallback mid-session (e.g. JWT expiry).
+  // We only need the *latest* token available for those later calls — not to
+  // run work when `token` changes — so a ref (synced during render) is a
+  // better fit than useEffect. Init still runs once below; this just keeps
+  // the default loader's provider current. Custom `load` owns its own auth.
+  const tokenRef = useRef(token);
+  tokenRef.current = token;
+  if (typeof customLoad !== 'function') {
+    setMapKitToken(tokenRef.current);
+  }
+
   // Load the map
   useEffect(() => {
     const loadMap = typeof customLoad === 'function' ? customLoad : load;
-    loadMap(token).then(() => {
+    loadMap(tokenRef.current).then(() => {
       if (exists.current) return;
       const options = initialRegion
         ? { region: toMapKitCoordinateRegion(initialRegion) }

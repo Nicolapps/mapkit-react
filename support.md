@@ -7,7 +7,7 @@
 | Feature                                 | Supported                                                                             |
 | --------------------------------------- | ------------------------------------------------------------------------------------- |
 | MapKitInitOptions.language              | ❌                                                                                    |
-| MapKitInitOptions.authorizationCallback | ⚠️<br><small>You can only pass token as strings, callbacks are not supported.</small> |
+| MapKitInitOptions.authorizationCallback | ✅<br><small>Pass a JWT string or a provider function via the <code>token</code> prop (<code>string \| () =&gt; string \| Promise&lt;string&gt;</code>). MapKit may re-invoke the provider throughout a session.</small> |
 
 ### Properties
 

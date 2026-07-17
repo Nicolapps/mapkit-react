@@ -38,6 +38,26 @@ function MyComponent() {
 }
 ```
 
+You can also pass a function that returns a token (sync or async). MapKit JS may call this throughout a session when it needs a new token — for example when a short-lived JWT expires. Prefer minting tokens on your server; never put your MapKit private key in client-side code.
+
+```tsx
+function MyComponent() {
+  return (
+    <Map
+      token={async () => {
+        const res = await fetch('/api/mapkit-token');
+        if (!res.ok) throw new Error('Failed to fetch MapKit token');
+        return res.text();
+      }}
+    >
+      <Marker latitude={46.52} longitude={6.57} />
+    </Map>
+  );
+}
+```
+
+MapKit JS is initialized once per page, so all `<Map>` instances share the same authorization context — use a single token source for the whole app.
+
 You can see all the supported parameters in Storybook (see above).
 
 ## Features

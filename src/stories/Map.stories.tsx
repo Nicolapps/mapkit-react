@@ -15,6 +15,7 @@ import {
 } from '../util/parameters';
 import Marker from '../components/Marker';
 import { MapInteractionEvent } from '..';
+import { resolveMapKitToken } from '../util/token';
 
 // @ts-ignore
 const token = import.meta.env.STORYBOOK_MAPKIT_JS_TOKEN!;
@@ -303,6 +304,34 @@ export const RegionChangeEvent = () => {
   );
 };
 
+export const TokenProvider = () => {
+  const initialRegion: CoordinateRegion = useMemo(
+    () => ({
+      centerLatitude: 40.7538,
+      centerLongitude: -73.986,
+      latitudeDelta: 0.03,
+      longitudeDelta: 0.03,
+    }),
+    [],
+  );
+
+  // Simulates a short-lived token from your backend. MapKit may call this
+  // again during a session when it needs a fresh JWT.
+  return (
+    <Map
+      token={async () => {
+        await new Promise((r) => {
+          setTimeout(r, 50);
+        });
+        return token;
+      }}
+      initialRegion={initialRegion}
+      showsMapTypeControl={false}
+    />
+  );
+};
+TokenProvider.storyName = 'Token Provider Function';
+
 export const CustomLoadFunction = () => {
   const initialRegion: CoordinateRegion = useMemo(
     () => ({
@@ -324,16 +353,19 @@ export const CustomLoadFunction = () => {
           delete window.initMapKit;
           window.mapkit.init({
             authorizationCallback: (done) => {
-              done(customLoadToken);
+              resolveMapKitToken(customLoadToken).then(done);
             },
           });
           resolve();
         };
         element.src = 'https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.core.js';
         element.dataset.callback = 'initMapKit';
-        element.dataset.initialToken = customLoadToken;
         element.dataset.libraries = 'map';
         element.crossOrigin = 'anonymous';
+        // initialToken only accepts a string JWT
+        if (typeof customLoadToken === 'string') {
+          element.dataset.initialToken = customLoadToken;
+        }
         document.head.appendChild(element);
       })}
       token={token}
